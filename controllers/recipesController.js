@@ -17,16 +17,10 @@ const get = async (req, res) => {
   });
 };
 
-const search = async (req, res) => {
+const searchByTitle = async (req, res) => {
   const { title, ingredients, page = 1, limit = 10 } = req.query;
-  console.log(req.query);
-
-  // pagination and filter
   const skip = (page - 1) * limit;
-
-  const condition = title
-    ? { title: { $regex: title, $options: 'i' } }
-    : { ingredients: { $regex: ingredients, $options: 'i' } };
+  const condition = { title: { $regex: title, $options: 'i' } };
   const pagination = { skip, limit };
 
   console.log(condition, pagination);
@@ -36,6 +30,8 @@ const search = async (req, res) => {
     status: 'Success',
     code: 200,
     data: {
+      currentPage: page,
+      countRecipes: results.length,
       recipes: results,
     },
   });
@@ -43,5 +39,5 @@ const search = async (req, res) => {
 
 module.exports = {
   get,
-  search,
+  searchByTitle,
 };
