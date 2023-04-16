@@ -13,7 +13,17 @@ const getRecipes = async (condition, pagination) => {
   return recipes;
 };
 
+const getRecipesById = async (id) => {
+  const result = await Recipes.findOne({ _id: id });
+
+  if (!result) {
+    throw new AppError(404, `Recipes with id ${id} not found`);
+  }
+  return result;
+};
+
 module.exports = {
   getAllRecipes,
   getRecipes,
+  getRecipesById
 };
