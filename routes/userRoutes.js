@@ -1,9 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const { register} = require('../controllers/userController');
+const { signup,
+	login,
+	logout,
+	getUser,
+	updateUserAvatar,
+	updateUser,
+	verify,
+	reVerify } = require('../controllers/userController');
 const { asyncWrapper } = require('../helpers/asyncWrapper')
-// const { authMiddleware } =  require('../middlewares/authMiddleware')
-// const { upload } = require('../middlewares/uploadMiddleware')
+const { protectPath } =  require('../middlewares/authMiddleware')
+const { uploadCloud } = require('../middlewares/uploadMiddleware')
 
 // user/subscribe
 
@@ -21,4 +28,5 @@ router.post(
 	asyncWrapper(updateUserAvatar)
 );
 
-router.post('/register', asyncWrapper(register));
+
+// router.post('/register', asyncWrapper(register));

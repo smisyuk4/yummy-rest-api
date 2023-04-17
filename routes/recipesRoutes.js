@@ -3,8 +3,8 @@ const router = express.Router();
 
 const {
   get,
-  search,
   searchByTitle,
+  searchByIngredients,
   getRecipesByIdController,
   getAllRecipesController,
   popularRecipesController,
@@ -34,5 +34,7 @@ router.get("/:id", asyncWrapper(getRecipesByIdController));
 router.get("/search", asyncWrapper(searchByTitle));
 
 router.get("/recipes/popular-recipes", asyncWrapper(popularRecipesController));
+
+router.get('/ingredients', asyncWrapper(searchByIngredients));
 
 module.exports = { recipesRouter: router };
