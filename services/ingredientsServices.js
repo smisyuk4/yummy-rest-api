@@ -3,8 +3,8 @@ const { Ingredients } = require('./schemas/ingredients')
 const { Recipes } = require('./schemas/recipes')
 const { User } = require('./schemas/users')
 
-const getAllIngredients = async (condition, pagination ) => {
-    return Ingredients.find(condition, "", pagination)
+const getAllIngredients = async() => {
+  return Ingredients.find();
   }
 
 

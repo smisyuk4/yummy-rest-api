@@ -6,6 +6,7 @@ const ingredientsSchema = new Schema(
     ttl: {
       type: String,
       trim: true,
+      require: [true, 'Set title of ingredient'],
     },
     desc: {
       type: String,
