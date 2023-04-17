@@ -6,6 +6,7 @@ const {
   searchByTitle,
   searchByIngredients,
   getCategoryListController,
+  getCategoryController,
   getRecipesByIdController,
   getAllRecipesController,
 } = require("../controllers/recipesController");
@@ -30,6 +31,8 @@ router.get("/", asyncWrapper(get));
 router.get("/category-list", getCategoryListController);
 
 router.get("/main-page", asyncWrapper(getAllRecipesController));
+
+router.get("/:category", asyncWrapper(getCategoryController));
 
 router.get("/:id", asyncWrapper(getRecipesByIdController));
 

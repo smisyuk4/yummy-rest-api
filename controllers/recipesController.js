@@ -3,12 +3,30 @@ const {
   getRecipes,
   getRecipesById,
   getRecipesMain,
+  getCategory,
+  getAllCategoryWithFourRecipes,
 } = require("../services/recipesServices");
 const { Recipes } = require("../services/schemas/recipes");
 const { getAllIngredients } = require("../services/ingredientsServices");
 
 // const { contactValidSchema } = require('../service/schemas/contactValidSchema');
 // const { ValidationError } = require('../helpers/error');
+const resultCategory = [
+  "Beef",
+  "Breakfast",
+  "Chicken",
+  "Dessert",
+  "Goat",
+  "Lamb",
+  "Miscellaneous",
+  "Pasta",
+  "Pork",
+  "Seafood",
+  "Side",
+  "Starter",
+  "Vegan",
+  "Vegetarian",
+];
 
 const get = async (req, res) => {
   const condition = {};
@@ -78,22 +96,6 @@ const searchByIngredients = async (req, res) => {
 };
 
 const getCategoryListController = (req, res) => {
-  const resultCategory = [
-    "Beef",
-    "Breakfast",
-    "Chicken",
-    "Dessert",
-    "Goat",
-    "Lamb",
-    "Miscellaneous",
-    "Pasta",
-    "Pork",
-    "Seafood",
-    "Side",
-    "Starter",
-    "Vegan",
-    "Vegetarian",
-  ];
   res.json({ resultCategory });
 };
 
@@ -103,15 +105,35 @@ const getRecipesByIdController = async (req, res) => {
   res.json({ result });
 };
 
+//! Запрос возвращает все рецепты (ниже переделал по другому - все категории по 4 рецепта)
+// const getAllRecipesController = async (req, res, next) => {
+//   const recipes = await Recipes.find({});
+//   res.json({
+//     status: "success",
+//     code: 200,
+//     data: {
+//       result: recipes,
+//     },
+//   });
+// };
 const getAllRecipesController = async (req, res, next) => {
-  const recipes = await Recipes.find({});
-  res.json({
-    status: "success",
-    code: 200,
-    data: {
-      result: recipes,
-    },
-  });
+  const limit = 4;
+
+  const resultAllCategory = await getAllCategoryWithFourRecipes(
+    resultCategory,
+    { limit }
+  );
+  res.json({ resultAllCategory });
+};
+
+const getCategoryController = async (req, res, next) => {
+  const category = req.params.category;
+
+  const { page = 1, limit = 8 } = req.query;
+  const skip = (+page - 1) * +limit;
+
+  const resultCategory = await getCategory(category, { skip, limit });
+  res.json({ resultCategory });
 };
 
 module.exports = {
@@ -121,4 +143,5 @@ module.exports = {
   getRecipesByIdController,
   getAllRecipesController,
   getCategoryListController,
+  getCategoryController,
 };
