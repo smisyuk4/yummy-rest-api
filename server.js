@@ -7,17 +7,17 @@ const { userRouter } = require('./routes/userRoutes')
 const { recipesRouter } = require('./routes/recipesRoutes')
 const { ingredientsRouter } = require('./routes/ingredientsRoutes')
 
-const { errorMiddleware } = require('./middlewares/errorMiddleware')
+// const { errorMiddleware } = require('./middlewares/errorMiddleware')
 
 const app = express()
 app.use(express.json())
 app.use(cors())
 app.use(express.static('public'))
 
-app.use('/user', userRouter)
+// app.use('/user', userRouter)
 app.use('/recipes', recipesRouter)
 app.use('/ingredients', ingredientsRouter)
-app.use('/popular-recipe')
+// app.use('/popular-recipe')
 
 app.use((_, res, __) => {
     res.status(404).json({
@@ -28,7 +28,7 @@ app.use((_, res, __) => {
     });
   });
   
-app.use(errorMiddleware)
+// app.use(errorMiddleware)
 
 const PORT = process.env.PORT || 3000;
 const uriDb = process.env.MONGO_URI;

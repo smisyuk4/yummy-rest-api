@@ -3,9 +3,10 @@ const router = express.Router();
 
 const {
   get,
-  search,
   searchByTitle,
-  getRecipesByIdController,getAllRecipesController
+  searchByIngredients,
+  getRecipesByIdController,
+  getAllRecipesController,
 } = require("../controllers/recipesController");
 const { popularRecipes } = require("../controllers/popularRecipesController");
 
@@ -26,11 +27,13 @@ const { asyncWrapper } = require("../helpers/asyncWrapper");
 
 router.get('/', asyncWrapper(get));
 
-router.get('/main-page', asyncWrapper(getAllRecipesController));
+// router.get('/main-page', asyncWrapper(getAllRecipesController));
 
-router.get('/:id', asyncWrapper(getRecipesByIdController));
+// router.get('/:id', asyncWrapper(getRecipesByIdController));
 
 router.get('/search', asyncWrapper(searchByTitle));
+
+router.get('/ingredients', asyncWrapper(searchByIngredients));
 
 router.get("/recipes/popular-recipes", asyncWrapper(popularRecipes));
 
