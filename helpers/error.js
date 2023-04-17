@@ -1,9 +1,9 @@
-class ContactBaseError extends Error {
-    constructor(message){
-        super(message)
-        this.status = 400;
-    }
-}
+// class ContactBaseError extends Error {
+//     constructor(message){
+//         super(message)
+//         this.status = 400;
+//     }
+// }
 
 // class ValidationError extends ContactBaseError {
 //     constructor(message){
@@ -12,12 +12,12 @@ class ContactBaseError extends Error {
 //     }
 // }
 
-class WrongParametersError extends ContactBaseError {
-    constructor(message){
-        super(message)
-        this.status = 404;
-    }
-}
+// class WrongParametersError extends ContactBaseError {
+//     constructor(message){
+//         super(message)
+//         this.status = 404;
+//     }
+// }
 
 // class ConflictError extends ContactBaseError {
 //     constructor(message){
@@ -33,10 +33,10 @@ class WrongParametersError extends ContactBaseError {
 //     }
 // }
 
-module.exports = {
-    ContactBaseError,
+// module.exports = {
+    // ContactBaseError,
     // ValidationError,
-    WrongParametersError,
+    // WrongParametersError,
     // ConflictError,
     // NotAuthorizedError,
-}
+// }
