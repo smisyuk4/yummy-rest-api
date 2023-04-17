@@ -1,27 +1,39 @@
-import {User} from '../services/schemas/users'
+const {User} = require('../services/schemas/users')
+const {findUser, updateUser} = require('../services/userServices')
+const sendEmail = require('../helpers/sendEmail')
+const HttpError = require('../helpers/HttpError')
 
-const subscribe = async (req, res, next) => {
-    try {
 
+const subscribe = async (req, res) => {
         const {email} = req.body
-        const user = await User.findOne({email})
+
+        const user = await findUser({email})
+        const id = user._id
+        
         if(email != user.email) {
-            throw new Error
+            throw HttpError(404, `Not found user with ${email}`)
+        }
+
+        const sub = {
+            subscription: true,
+        }
+        
+        const data = await updateUser( id, sub)
+        if(!data) {
+            throw HttpError(400, "Not found user")
         }
         const letter = {
             to: email,
             subject: "You have subscribed successful",
+            html: `<p>You are subscribe successfully on Yummy's news.</p>`
         }
-
-        // await sendEmail(letter)
+        console.log(letter)
+        await sendEmail(letter)
 
         res.status(200).json({
-            massage: "Subscription letter send"
+            message: "Subscription letter send"
         })
-    }
-    catch (error) {
-        next(error)
-    }
+        
 }
 
 module.exports = subscribe
