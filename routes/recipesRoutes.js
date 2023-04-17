@@ -27,7 +27,7 @@ const { asyncWrapper } = require("../helpers/asyncWrapper");
 
 router.get("/", asyncWrapper(get));
 
-router.get("/category-list", asyncWrapper(getCategoryListController));
+router.get("/category-list", getCategoryListController);
 
 router.get("/main-page", asyncWrapper(getAllRecipesController));
 
