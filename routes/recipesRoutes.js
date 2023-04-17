@@ -5,10 +5,14 @@ const {
   get,
   searchByTitle,
   searchByIngredients,
+  getCategoryListController,
+  getCategoryController,
   getRecipesByIdController,
   getAllRecipesController,
   popularRecipesController,
 } = require("../controllers/recipesController");
+
+const { popularRecipes } = require("../controllers/popularRecipesController");
 
 const { asyncWrapper } = require("../helpers/asyncWrapper");
 
@@ -27,7 +31,11 @@ const { asyncWrapper } = require("../helpers/asyncWrapper");
 
 router.get("/", asyncWrapper(get));
 
+router.get("/category-list", getCategoryListController);
+
 router.get("/main-page", asyncWrapper(getAllRecipesController));
+
+router.get("/category/:category", asyncWrapper(getCategoryController));
 
 router.get("/:id", asyncWrapper(getRecipesByIdController));
 
