@@ -1,21 +1,9 @@
 const {User} = require("./schemas/users");
 
-const createUser = newContact => {
-	return User.create(newContact);
-};
+const createUser = ({ email, password }) => {
+    return User.create({ email, password })
+}
 
-const updateUser = (id, fields) => {
-	return User.findByIdAndUpdate({_id: id}, fields, {new: true});
-};
-const getUserById = id => {
-	return User.findById(id);
-};
-const getUserByFild = find => {
-	return User.findOne(find);
-};
 module.exports = {
-	createUser,
-	updateUser,
-	getUserById,
-	getUserByFild,
-};
+    createUser,
+}
