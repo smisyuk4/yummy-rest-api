@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { get, search, searchByTitle, getRecipesByIdController } = require('../controllers/recipesController');
+const { get, search, searchByTitle, getRecipesByIdController, getAllRecipesController } = require('../controllers/recipesController');
 
 const { asyncWrapper } = require('../helpers/asyncWrapper')
 // const {getAllRecipes} = require
@@ -16,11 +16,14 @@ const { asyncWrapper } = require('../helpers/asyncWrapper')
 // recipes/favorite
 // recipes/popular-recipe
 
-router.get('/', asyncWrapper(get));
+// router.get('/', asyncWrapper(get));
+
+
+router.get('/main-page', asyncWrapper(getAllRecipesController));
+
 router.get('/:id', asyncWrapper(getRecipesByIdController));
 
-
-
 router.get('/search', asyncWrapper(searchByTitle));
+
 
 module.exports = { recipesRouter: router };

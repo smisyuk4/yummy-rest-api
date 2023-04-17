@@ -22,8 +22,9 @@ const getRecipesById = async (id) => {
   return result;
 };
 
+
 module.exports = {
   getAllRecipes,
   getRecipes,
-  getRecipesById
+  getRecipesById,
 };
