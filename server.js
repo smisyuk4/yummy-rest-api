@@ -17,6 +17,7 @@ app.use(express.static('public'))
 app.use('/user', userRouter)
 app.use('/recipes', recipesRouter)
 app.use('/ingredients', ingredientsRouter)
+app.use('/popular-recipe')
 
 app.use((_, res, __) => {
     res.status(404).json({
