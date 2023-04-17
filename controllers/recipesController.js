@@ -106,7 +106,7 @@ const getRecipesByIdController = async (req, res) => {
   res.json({ result });
 };
 
-//! Запрос возвращает все рецепты (ниже переделал по другому - все категории по 4 рецепта)
+//! Запрос возвращает все рецепты (ниже переделал по другому - все категории по 4 рецепта )
 // const getAllRecipesController = async (req, res, next) => {
 //   const recipes = await Recipes.find({});
 //   res.json({
