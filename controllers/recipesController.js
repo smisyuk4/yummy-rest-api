@@ -1,6 +1,10 @@
-
-const { getAllRecipes, getRecipes, getRecipesById, getRecipesMain } = require('../services/recipesServices');
-const { Recipes} = require('../services/schemas/recipes');
+const {
+  getAllRecipes,
+  getRecipes,
+  getRecipesById,
+  getRecipesMain,
+} = require("../services/recipesServices");
+const { Recipes } = require("../services/schemas/recipes");
 
 // const { contactValidSchema } = require('../service/schemas/contactValidSchema');
 // const { ValidationError } = require('../helpers/error');
@@ -45,18 +49,29 @@ const getRecipesByIdController = async (req, res) => {
   res.json({ result });
 };
 
-
-
 const getAllRecipesController = async (req, res, next) => {
-    const recipes = await Recipes.find({});
-    res.json({
-      status: "success",
-      code: 200,
-      data: {
-        result: recipes,
-      },
-    });
+  const recipes = await Recipes.find({});
+  res.json({
+    status: "success",
+    code: 200,
+    data: {
+      result: recipes,
+    },
+  });
+};
 
+const popularRecipesController = async (req, res) => {
+  const favoriteLength = await getAllRecipes.keys(favorite).length;
+  // const mostPopular = ?
+  // result
+
+  res.json({
+    status: "Success",
+    code: 200,
+    data: {
+      result,
+    },
+  });
 };
 
 module.exports = {
@@ -64,4 +79,5 @@ module.exports = {
   searchByTitle,
   getRecipesByIdController,
   getAllRecipesController,
+  popularRecipesController,
 };
