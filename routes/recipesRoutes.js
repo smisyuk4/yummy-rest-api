@@ -9,10 +9,13 @@ const {
   getCategoryController,
   getRecipesByIdController,
   getAllRecipesController,
+  popularRecipesController,
 } = require("../controllers/recipesController");
+
 const { popularRecipes } = require("../controllers/popularRecipesController");
 
 const { asyncWrapper } = require("../helpers/asyncWrapper");
+
 // const {getAllRecipes} = require
 // const { authMiddleware } =  require('../middlewares/authMiddleware')
 // const { upload } = require('../middlewares/uploadMiddleware')
@@ -38,8 +41,8 @@ router.get("/:id", asyncWrapper(getRecipesByIdController));
 
 router.get("/search", asyncWrapper(searchByTitle));
 
-router.get("/ingredients", asyncWrapper(searchByIngredients));
+router.get("/recipes/popular-recipes", asyncWrapper(popularRecipesController));
 
-router.get("/recipes/popular-recipes", asyncWrapper(popularRecipes));
+router.get('/ingredients', asyncWrapper(searchByIngredients));
 
 module.exports = { recipesRouter: router };

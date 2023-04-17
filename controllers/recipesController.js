@@ -135,6 +135,30 @@ const getCategoryController = async (req, res, next) => {
 
   const resultCategory = await getCategory(category, { skip, limit });
   res.json({ resultCategory });
+  
+  const recipes = await Recipes.find({});
+  res.json({
+
+    status: 'success',
+    code: 200,
+    data: {
+      result: recipes,
+    },
+  });
+};
+
+const popularRecipesController = async (req, res) => {
+  const favoriteLength = await getAllRecipes.keys(favorite).length;
+  // const mostPopular = ?
+  // result
+
+  res.json({
+    status: "Success",
+    code: 200,
+    data: {
+      result,
+    },
+  });
 };
 
 module.exports = {
@@ -145,4 +169,5 @@ module.exports = {
   getAllRecipesController,
   getCategoryListController,
   getCategoryController,
+  popularRecipesController,
 };
