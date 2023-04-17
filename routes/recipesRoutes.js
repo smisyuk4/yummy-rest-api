@@ -32,7 +32,7 @@ router.get("/category-list", getCategoryListController);
 
 router.get("/main-page", asyncWrapper(getAllRecipesController));
 
-router.get("/:category", asyncWrapper(getCategoryController));
+router.get("/category/:category", asyncWrapper(getCategoryController));
 
 router.get("/:id", asyncWrapper(getRecipesByIdController));
 

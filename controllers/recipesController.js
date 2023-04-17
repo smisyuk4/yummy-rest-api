@@ -101,6 +101,7 @@ const getCategoryListController = (req, res) => {
 
 const getRecipesByIdController = async (req, res) => {
   const id = req.params.id;
+  console.log(id);
   const result = await getRecipesById(id);
   res.json({ result });
 };
@@ -128,6 +129,7 @@ const getAllRecipesController = async (req, res, next) => {
 
 const getCategoryController = async (req, res, next) => {
   const category = req.params.category;
+  console.log(category);
 
   const { page = 1, limit = 8 } = req.query;
   const skip = (+page - 1) * +limit;
