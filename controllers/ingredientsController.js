@@ -6,9 +6,8 @@ const {
   // const { ValidationError } = require('../helpers/error');
   
   const get = async (req, res) => {
-    const condition = {}
-  
-    const results = await getAllIngredients(condition);
+
+    const results = await getAllIngredients();
   
     res.json({
       status: 'Success',
