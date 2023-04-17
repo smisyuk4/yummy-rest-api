@@ -1,7 +1,7 @@
 const { Ingredients } = require('./schemas/ingredients')
 
-const getAllIngredients = async (condition, pagination ) => {
-    return Ingredients.find(condition, "", pagination)
+const getAllIngredients = async() => {
+  return Ingredients.find();
   }
 
 module.exports = {

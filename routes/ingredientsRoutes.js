@@ -10,6 +10,6 @@ const { asyncWrapper } = require('../helpers/asyncWrapper')
 // ingredients/list
 // ingredients/shopping-list
 
-router.get('/', asyncWrapper(get));
+router.get('/list', asyncWrapper(get));
 
 module.exports = { ingredientsRouter: router };
