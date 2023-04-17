@@ -1,9 +1,7 @@
-const {
-  getAllRecipes,
-  getRecipes,
-  getRecipesById,
-} = require("../services/recipesServices");
-const { Recipes } = require("../services/schemas/recipes");
+
+const { getAllRecipes, getRecipes, getRecipesById, getRecipesMain } = require('../services/recipesServices');
+const { Recipes} = require('../services/schemas/recipes');
+
 // const { contactValidSchema } = require('../service/schemas/contactValidSchema');
 // const { ValidationError } = require('../helpers/error');
 
@@ -47,8 +45,23 @@ const getRecipesByIdController = async (req, res) => {
   res.json({ result });
 };
 
+
+
+const getAllRecipesController = async (req, res, next) => {
+    const recipes = await Recipes.find({});
+    res.json({
+      status: "success",
+      code: 200,
+      data: {
+        result: recipes,
+      },
+    });
+
+};
+
 module.exports = {
   get,
   searchByTitle,
   getRecipesByIdController,
+  getAllRecipesController,
 };
