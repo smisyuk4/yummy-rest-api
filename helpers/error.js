@@ -12,12 +12,12 @@ class ContactBaseError extends Error {
 //     }
 // }
 
-// class WrongParametersError extends ContactBaseError {
-//     constructor(message){
-//         super(message)
-//         this.status = 404;
-//     }
-// }
+class WrongParametersError extends ContactBaseError {
+    constructor(message){
+        super(message)
+        this.status = 404;
+    }
+}
 
 // class ConflictError extends ContactBaseError {
 //     constructor(message){
@@ -36,7 +36,7 @@ class ContactBaseError extends Error {
 module.exports = {
     ContactBaseError,
     // ValidationError,
-    // WrongParametersError,
+    WrongParametersError,
     // ConflictError,
     // NotAuthorizedError,
 }
