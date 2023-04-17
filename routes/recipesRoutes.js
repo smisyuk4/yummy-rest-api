@@ -5,6 +5,7 @@ const {
   get,
   searchByTitle,
   searchByIngredients,
+  getCategoryListController,
   getRecipesByIdController,
   getAllRecipesController,
 } = require("../controllers/recipesController");
@@ -25,6 +26,8 @@ const { asyncWrapper } = require("../helpers/asyncWrapper");
 // recipes/popular-recipe
 
 router.get("/", asyncWrapper(get));
+
+router.get("/category-list", asyncWrapper(getCategoryListController));
 
 router.get("/main-page", asyncWrapper(getAllRecipesController));
 

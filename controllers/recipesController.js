@@ -3,9 +3,9 @@ const {
   getRecipes,
   getRecipesById,
   getRecipesMain,
-} = require('../services/recipesServices');
-const { Recipes } = require('../services/schemas/recipes');
-const { getAllIngredients } = require('../services/ingredientsServices')
+} = require("../services/recipesServices");
+const { Recipes } = require("../services/schemas/recipes");
+const { getAllIngredients } = require("../services/ingredientsServices");
 
 // const { contactValidSchema } = require('../service/schemas/contactValidSchema');
 // const { ValidationError } = require('../helpers/error');
@@ -16,7 +16,7 @@ const get = async (req, res) => {
   const results = await getAllRecipes(condition);
 
   res.json({
-    status: 'Success',
+    status: "Success",
     code: 200,
     data: {
       ingretients: results,
@@ -27,14 +27,14 @@ const get = async (req, res) => {
 const searchByTitle = async (req, res) => {
   const { title, page = 1, limit = 10 } = req.query;
   const skip = (page - 1) * limit;
-  const condition = { title: { $regex: title, $options: 'i' } };
+  const condition = { title: { $regex: title, $options: "i" } };
   const pagination = { skip, limit };
 
   console.log(condition, pagination);
   const results = await getRecipes(condition, pagination);
 
   res.json({
-    status: 'Success',
+    status: "Success",
     code: 200,
     data: {
       currentPage: page,
@@ -47,15 +47,15 @@ const searchByTitle = async (req, res) => {
 const searchByIngredients = async (req, res) => {
   const { ttl, page = 1, limit = 10 } = req.query;
   const skip = (page - 1) * limit;
-  const condition = { ttl: { $regex: ttl, $options: 'i' } };
+  const condition = { ttl: { $regex: ttl, $options: "i" } };
   const pagination = { skip, limit };
 
   console.log(condition, pagination);
   const allIngredients = await getAllIngredients(condition, pagination);
 
   const exampleEngredients = [
-    { _id: '640c2dd963a319ea671e3746', ttl: 'Potatoes' },
-    { _id: '640c2dd963a319ea671e3768', ttl: 'Small Potatoes' },
+    { _id: "640c2dd963a319ea671e3746", ttl: "Potatoes" },
+    { _id: "640c2dd963a319ea671e3768", ttl: "Small Potatoes" },
   ];
 
   console.log(allIngredients);
@@ -67,7 +67,7 @@ const searchByIngredients = async (req, res) => {
   const recipesByIngredients = await getRecipes(conditionSearch, pagination);
 
   res.json({
-    status: 'Success',
+    status: "Success",
     code: 200,
     data: {
       // currentPage: page,
@@ -75,6 +75,26 @@ const searchByIngredients = async (req, res) => {
       recipes: recipesByIngredients,
     },
   });
+};
+
+const getCategoryListController = (req, res) => {
+  const resultCategory = [
+    "Beef",
+    "Breakfast",
+    "Chicken",
+    "Dessert",
+    "Goat",
+    "Lamb",
+    "Miscellaneous",
+    "Pasta",
+    "Pork",
+    "Seafood",
+    "Side",
+    "Starter",
+    "Vegan",
+    "Vegetarian",
+  ];
+  res.json({ resultCategory });
 };
 
 const getRecipesByIdController = async (req, res) => {
@@ -86,7 +106,7 @@ const getRecipesByIdController = async (req, res) => {
 const getAllRecipesController = async (req, res, next) => {
   const recipes = await Recipes.find({});
   res.json({
-    status: 'success',
+    status: "success",
     code: 200,
     data: {
       result: recipes,
@@ -100,4 +120,5 @@ module.exports = {
   searchByIngredients,
   getRecipesByIdController,
   getAllRecipesController,
+  getCategoryListController,
 };
