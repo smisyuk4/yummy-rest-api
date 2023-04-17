@@ -86,10 +86,25 @@ const getRecipesByIdController = async (req, res) => {
 const getAllRecipesController = async (req, res, next) => {
   const recipes = await Recipes.find({});
   res.json({
+
     status: 'success',
     code: 200,
     data: {
       result: recipes,
+    },
+  });
+};
+
+const popularRecipesController = async (req, res) => {
+  const favoriteLength = await getAllRecipes.keys(favorite).length;
+  // const mostPopular = ?
+  // result
+
+  res.json({
+    status: "Success",
+    code: 200,
+    data: {
+      result,
     },
   });
 };
@@ -100,4 +115,5 @@ module.exports = {
   searchByIngredients,
   getRecipesByIdController,
   getAllRecipesController,
+  popularRecipesController,
 };

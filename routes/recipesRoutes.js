@@ -7,11 +7,11 @@ const {
   searchByIngredients,
   getRecipesByIdController,
   getAllRecipesController,
+  popularRecipesController,
 } = require("../controllers/recipesController");
-const { popularRecipes } = require("../controllers/popularRecipesController");
-
 
 const { asyncWrapper } = require("../helpers/asyncWrapper");
+
 // const {getAllRecipes} = require
 // const { authMiddleware } =  require('../middlewares/authMiddleware')
 // const { upload } = require('../middlewares/uploadMiddleware')
@@ -25,16 +25,16 @@ const { asyncWrapper } = require("../helpers/asyncWrapper");
 // recipes/favorite
 // recipes/popular-recipe
 
-router.get('/', asyncWrapper(get));
+router.get("/", asyncWrapper(get));
 
-// router.get('/main-page', asyncWrapper(getAllRecipesController));
+router.get("/main-page", asyncWrapper(getAllRecipesController));
 
-// router.get('/:id', asyncWrapper(getRecipesByIdController));
+router.get("/:id", asyncWrapper(getRecipesByIdController));
 
-router.get('/search', asyncWrapper(searchByTitle));
+router.get("/search", asyncWrapper(searchByTitle));
+
+router.get("/recipes/popular-recipes", asyncWrapper(popularRecipesController));
 
 router.get('/ingredients', asyncWrapper(searchByIngredients));
-
-router.get("/recipes/popular-recipes", asyncWrapper(popularRecipes));
 
 module.exports = { recipesRouter: router };
