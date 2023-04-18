@@ -2,7 +2,7 @@ const {HttpError} = require("../helpers/HttpError");
 
 const errorMiddleware = (error, req, res, next) => {
 	if (!error.message) {
-		return next(HttpError(error.status));
+		error = HttpError(error.status);
 	}
 	res.status(500).json({message: error.message});
 };
