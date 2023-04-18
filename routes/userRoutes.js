@@ -1,16 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const { signup,
+const {
+	signup,
 	login,
 	logout,
 	getUser,
 	updateUserAvatar,
 	updateUser,
 	verify,
-	reVerify } = require('../controllers/userController');
-const { asyncWrapper } = require('../helpers/asyncWrapper')
-const { protectPath } =  require('../middlewares/authMiddleware')
-const { uploadCloud } = require('../middlewares/uploadMiddleware')
+	reVerify,
+} = require("../controllers/userController");
+const {asyncWrapper} = require("../helpers/asyncWrapper");
+const {protectPath} = require("../middlewares/authMiddleware");
+const {uploadCloud} = require("../middlewares/uploadMiddleware");
 
 // user/subscribe
 
@@ -21,12 +23,11 @@ router.post("/verify", asyncWrapper(reVerify));
 router.use(protectPath);
 router.post("/logout", asyncWrapper(logout));
 router.get("/current", asyncWrapper(getUser));
-router.post("/update", asyncWrapper(updateUser));
+router.patch("/update", asyncWrapper(updateUser));
 router.post(
 	"/avatars",
 	uploadCloud.single("avatar"),
 	asyncWrapper(updateUserAvatar)
 );
 
-
-// router.post('/register', asyncWrapper(register));
+module.exports = {userRouter: router};
