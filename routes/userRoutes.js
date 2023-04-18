@@ -1,6 +1,8 @@
 const express = require("express");
 
-const { signup,
+const router = express.Router();
+const {
+	signup,
 	login,
 	logout,
 	getUser,
@@ -24,13 +26,12 @@ router.post("/verify", asyncWrapper(reVerify));
 router.use(protectPath);
 router.post("/logout", asyncWrapper(logout));
 router.get("/current", asyncWrapper(getUser));
-router.post("/update", asyncWrapper(updateUser));
+router.patch("/update", asyncWrapper(updateUser));
 router.post(
 	"/avatars",
 	uploadCloud.single("avatar"),
 	asyncWrapper(updateUserAvatar)
 );
+router.post("/subscribe", asyncWrapper(subscribe));
 
-
-// router.post('/register', asyncWrapper(register));
-module.exports = router
+module.exports = {userRouter: router};

@@ -1,10 +1,13 @@
+
 const { createSubscription } = require('../services/subsctiptionServices');
 const { getUserByFild, updateUser } = require('../services/userServices');
 const sendEmail = require('../helpers/sendEmail');
 const { HttpError } = require('../helpers/HttpError');
 
+
 const subscribe = async (req, res) => {
-  const { email } = req.body;
+	const {email} = req.body;
+
 
 // find current user
   const user = await getUserByFild({email});
@@ -38,9 +41,10 @@ const subscribe = async (req, res) => {
 
   await sendEmail(letter);
 
-  res.status(200).json({
-    message: 'Subscription letter send',
-  });
+
+	res.status(200).json({
+		message: "Subscription letter send",
+	});
 };
 
-module.exports = { subscribe };
+module.exports = {subscribe};
