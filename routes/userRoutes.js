@@ -10,6 +10,7 @@ const {
 	verify,
 	reVerify,
 } = require("../controllers/userController");
+const {subscribe} = require("../controllers/subscribeController");
 const {asyncWrapper} = require("../helpers/asyncWrapper");
 const {protectPath} = require("../middlewares/authMiddleware");
 const {uploadCloud} = require("../middlewares/uploadMiddleware");
@@ -29,5 +30,6 @@ router.post(
 	uploadCloud.single("avatar"),
 	asyncWrapper(updateUserAvatar)
 );
+router.post("/subscribe", asyncWrapper(subscribe));
 
 module.exports = {userRouter: router};

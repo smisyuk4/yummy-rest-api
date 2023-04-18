@@ -10,11 +10,11 @@ const sendEmailToken = (email, token) => {
 	};
 	sgMail.send(msg);
 };
-const sendEmail = (email, html) => {
+const sendEmail = ({to, subject, html}) => {
 	const msg = {
-		to: email,
+		to,
 		from: process.env.SENDGRID_FROM_EMAIL,
-		subject: "Activate user",
+		subject,
 		html,
 	};
 	sgMail.send(msg);
