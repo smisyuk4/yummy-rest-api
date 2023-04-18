@@ -1,5 +1,4 @@
 const { HttpError } = require("../helpers/HttpError");
-
 const { Recipes } = require("./schemas/recipes");
 
 const getAllRecipes = async (condition, pagination) => {
@@ -15,7 +14,13 @@ const getRecipes = async (condition, pagination) => {
   return recipes;
 };
 
+const getPopularRecipes = async (condition, pagination) => {
+  const recipes = Recipes.find(condition, "", pagination);
+  return recipes.sort((a, b) => b.favourite - a.favourite);
+};
+
 const getRecipesById = async (id) => {
+
   const result = await Recipes.findOne({ _id: id });
 
   if (!result) {
@@ -82,10 +87,12 @@ const getAllFavorite = async (user) => {
   return allFavorite;
 };
 
+
 module.exports = {
   getAllRecipes,
   getRecipes,
   getRecipesById,
+  getPopularRecipes,
   getCategory,
   getAllCategoryWithFourRecipes,
   getAllFavorite,

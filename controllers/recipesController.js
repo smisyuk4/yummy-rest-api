@@ -2,6 +2,8 @@ const {
   getAllRecipes,
   getRecipes,
   getRecipesById,
+  getRecipesMain,
+  getPopularRecipes,
   getCategory,
   getAllCategoryWithFourRecipes,
   addToFavorite,
@@ -140,8 +142,7 @@ const getCategoryController = async (req, res, next) => {
   
   const recipes = await Recipes.find({});
   res.json({
-
-    status: 'success',
+    status: "success",
     code: 200,
     data: {
       result: recipes,
@@ -150,9 +151,8 @@ const getCategoryController = async (req, res, next) => {
 };
 
 const popularRecipesController = async (req, res) => {
-  const favoriteLength = await getAllRecipes.keys(favorite).length;
-  // const mostPopular = ?
-  // result
+  const favourite = req.params.favourite;
+  const result = await getPopularRecipes(favourite);
 
   res.json({
     status: "Success",
