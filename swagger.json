@@ -301,6 +301,31 @@
                     }
                 }
             }
+        },
+        "/recipes": {
+            "get": {
+                "tags": ["Recipes"],
+                "summary": "Get all recipes",
+
+                "parameters": [],
+                "requestBody": { },
+                "responses": {
+                    "200": {
+                        "description": "Get all recipes success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AllRecipesResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Not found recipes",
+                        "content": {}
+                    }
+                }
+            }
         }
 
     },
@@ -476,6 +501,45 @@
                             "description": "User's email",
                             "example": "test@gmail.com"
                         }
+                    }
+                }
+            },
+            "AllRecipesResponse": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "description": "User's id",
+                            "example": "643d3fa2adbcdfdd8d8496fa"
+                        },
+                        "title": {
+                            "type": "string",
+                            "description": "Title recipe",
+                            "example": "Mediterranean Pasta Salad"
+                        },
+                        "area": {
+                            "type": "string",
+                            "description": "Area recipe",
+                            "example": "Italian"
+                        }, 
+                        "instructions": {
+                            "type": "string",
+                            "description": "instructions recipe",
+                            "example": "instructions text"
+                        }, 
+                        "description": {
+                            "type": "string",
+                            "description": "description recipe",
+                            "example": "description recipe"
+                        },
+                        "thumb": {
+                            "type": "string",
+                            "description": "url img recipe",
+                            "example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+                        }
+
                     }
                 }
             }
