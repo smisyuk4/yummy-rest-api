@@ -2,7 +2,6 @@ const {
   getAllRecipes,
   getRecipes,
   getRecipesById,
-  getRecipesMain,
   getCategory,
   getAllCategoryWithFourRecipes,
 } = require("../services/recipesServices");
