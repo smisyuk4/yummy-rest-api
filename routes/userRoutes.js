@@ -1,4 +1,5 @@
 const express = require("express");
+
 const router = express.Router();
 const {
 	signup,
@@ -8,14 +9,15 @@ const {
 	updateUserAvatar,
 	updateUser,
 	verify,
-	reVerify,
-} = require("../controllers/userController");
-const {subscribe} = require("../controllers/subscribeController");
-const {asyncWrapper} = require("../helpers/asyncWrapper");
-const {protectPath} = require("../middlewares/authMiddleware");
-const {uploadCloud} = require("../middlewares/uploadMiddleware");
+	reVerify } = require('../controllers/userController');
+const { subscribe } = require('../controllers/subscribeController')
+const { asyncWrapper } = require('../helpers/asyncWrapper')
+const { protectPath } =  require('../middlewares/authMiddleware')
+const { uploadCloud } = require('../middlewares/uploadMiddleware')
 
-// user/subscribe
+const router = express.Router();
+
+router.post('/subscribe', asyncWrapper(subscribe))
 
 router.post("/register", asyncWrapper(signup));
 router.post("/login", asyncWrapper(login));

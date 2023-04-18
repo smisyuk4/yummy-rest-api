@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static("public"));
 
+
 app.use("/user", userRouter);
 app.use("/recipes", recipesRouter);
 app.use("/ingredients", ingredientsRouter);
@@ -29,6 +30,7 @@ app.use((_, res, __) => {
 });
 
 // app.use(errorMiddleware)
+
 
 const PORT = process.env.PORT || 3000;
 const uriDb = process.env.MONGO_URI;

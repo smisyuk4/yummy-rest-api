@@ -1,5 +1,6 @@
 const {User} = require("./schemas/users");
 
+
 const createUser = newContact => {
 	return User.create(newContact);
 };
@@ -20,3 +21,4 @@ module.exports = {
 	getUserById,
 	getUserByFild,
 };
+
