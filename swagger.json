@@ -1,0 +1,485 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Yummy API",
+        "version": "v1"
+    },
+    "consumes": ["application/json", "multipart/form-data"],
+    "produces": ["application/json"],
+    "servers": [
+        {
+            "url": "http://localhost:3000"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Authorization endpoints"
+        },
+        {
+            "name": "Recipes",
+            "description": "Recipes endpoints"
+        },
+        {
+            "name": "Ingredients",
+            "description": "Ingredients endpoints"
+        }
+    ],
+
+
+    "paths": {
+        "/user/register": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Registration user",
+
+                "parameters": [],
+                "requestBody": {
+                    "description": "registration body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegistrationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Succesfully registration",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegistrationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error validation req body",
+                        "content": {}
+                    },
+                    "409": {
+                        "description": "Email in use",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Login user",
+
+                "parameters": [],
+                "requestBody": {
+                    "description": "registration body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Succesfully registration",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error validation req body",
+                        "content": {}
+                    },
+                    "409": {
+                        "description": "Email in use",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/user/logout": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Logout user",
+
+                "parameters": [],
+                "requestBody": {
+                    "description": "logout body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LogoutRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "User is logout",
+                        "content": { }
+                    },
+                    "401": {
+                        "description": "Not authorized",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/user/current": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Get current user",
+                "parameters": [],
+                "requestBody": {
+                    "description": "current user body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CurrentUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Current user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CurrentUserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorized",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/user/verify": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Reverify user",
+                "parameters": [],
+                "requestBody": {
+                    "description": "reverify body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Verify user success",
+                        "content": { }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {}
+                    },
+                    "400": {
+                        "description": "Verification has already been passed",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/user/verify/{verificationToken}": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Verify user",
+                "parameters": [
+                    {
+                        "name": "verificationToken",
+                        "in": "path",
+                        "required": true,
+                        "description": "simple parameter",
+                        "schema": {
+                            "type": "string",
+                            "example": "9baa4d40-5257-49fa-9303-6e27f2f89dd2"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "verify body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Verification successful",
+                        "content": { }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/user/update": {
+            "patch": {
+                "tags": ["Auth"],
+                "summary": "Update user",
+
+                "parameters": [],
+                "requestBody": {
+                    "description": "update body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Succesfully update user",
+                        "content": { }
+                    },
+                    "400": {
+                        "description": "error validation req body",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/user/subscribe": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Update subscription user",
+
+                "parameters": [],
+                "requestBody": {
+                    "description": "update subscription body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateSubscriptionRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Subscription letter send",
+                        "content": { }
+                    },
+                    "400": {
+                        "description": "Not found user",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not not user's email",
+                        "content": {}
+                    }
+                }
+            }
+        }
+
+    },
+    "components": {
+        "schemas": {
+            "RegistrationRequest": {
+                "type": "object",
+                "required": ["name", "email", "password"],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "User's name",
+                        "example": "Devid Jonson"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "example": "test@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User's password",
+                        "example": "HhJOg325656=*35"
+                    }
+                }
+            },
+            "RegistrationResponse": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "User's name",
+                        "example": "Devid Jonson"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "example": "test@gmail.com"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "User's id",
+                        "example": "643d3fa2adbcdfdd8d8496fa"
+                    },
+                    "avatarURL": {
+                        "type": "string",
+                        "description": "User's url avatar",
+                        "example": "https://s.gravatar.com/avatar/561db9e65d56a1ae3cc98fefc629d"
+                    }
+                }
+            },
+
+            "LoginRequest": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "example": "test@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User's password",
+                        "example": "HhJOg325656=*35"
+                    }
+                }
+            },
+            "LoginResponse": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "email": {
+                                "type": "string",
+                                "description": "User's email",
+                                "example": "test@gmail.com"
+                            },
+                            "subscription": {
+                                "type": "boolean",
+                                "description": "User's subscription",
+                                "example": "true"
+                            }
+                        }
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "User's token",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M"
+                    }
+                    
+                }
+            },
+            "LogoutRequest": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "User's id",
+                        "example": "643d3fa2adbcdfdd8d8496fa"
+                    }
+                }
+            },
+            "CurrentUserRequest": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "User's id",
+                        "example": "643d3fa2adbcdfdd8d8496fa"
+                    }
+                }
+            },
+            "CurrentUserResponse": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "User's name",
+                        "example": "Devid Jonson"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "example": "test@gmail.com"
+                    },
+                    "avatarURL": {
+                        "type": "string",
+                        "description": "User's url avatar",
+                        "example": "https://s.gravatar.com/avatar/561db9e65d56a1ae3cc98fefc629d"
+                    },
+                    "registeredAt": {
+                        "type": "date",
+                        "description": "User's registeredAt",
+                        "example": "2023-04-17T12:46:26.114+00:00"
+                    }
+                }
+            },
+            "VerifyRequest": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "example": "test@gmail.com"
+                    }
+                }
+            },
+            "UpdateUserRequest": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "User's id",
+                        "example": "643d3fa2adbcdfdd8d8496fa"
+                    }
+                }
+            },
+            "UpdateSubscriptionRequest": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                    "type": "object",
+                    "required": ["email"],
+                    "properties": {
+                        "email": {
+                            "type": "string",
+                            "description": "User's email",
+                            "example": "test@gmail.com"
+                        }
+                    }
+                }
+            }
+
+            }
+        }
+    }
