@@ -16,12 +16,12 @@ const getRecipes = async (condition, pagination) => {
 };
 
 const getRecipesById = async (id) => {
-  const result = await Recipes.findOne({ _id: id });
+  // const result = await Recipes.findOne({ _id: id });
 
-  if (!result) {
-    throw new HttpError(404, `Recipes with id ${id} not found`);
-  }
-  return result;
+  // if (!result) {
+  //   throw new HttpError(404, `Recipes with id ${id} not found`);
+  // }
+  // return result;
 };
 
 const getCategory = async (category, { skip, limit }) => {
