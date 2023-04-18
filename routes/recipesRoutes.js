@@ -12,7 +12,7 @@ const {
   popularRecipesController,
 } = require("../controllers/recipesController");
 
-const { popularRecipes } = require("../controllers/popularRecipesController");
+// const { popularRecipes } = require("../controllers/popularRecipesController");
 
 const { asyncWrapper } = require("../helpers/asyncWrapper");
 
