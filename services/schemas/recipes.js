@@ -6,7 +6,6 @@ const recipesSchema = new Schema({
   title: {
     type: String,
     trim: true,
-    // required: [true, 'Set password for user'],
   },
   category: {
     type: String,
