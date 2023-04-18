@@ -16,11 +16,10 @@ const getRecipes = async (condition, pagination) => {
 
 const getPopularRecipes = async (condition, pagination) => {
   const recipes = Recipes.find(condition, "", pagination);
-  return recipes.sort((a, b) => b.favourite - a.favourite);
+  return recipes.sort((a, b) => b.favorite - a.favorite);
 };
 
 const getRecipesById = async (id) => {
-
   const result = await Recipes.findOne({ _id: id });
 
   if (!result) {
@@ -58,35 +57,32 @@ const getAllCategoryWithFourRecipes = async (resultCategory, { limit }) => {
 const addToFavorite = async (id, user) => {
   try {
     await Recipes.findByIdAndUpdate(
-    { _id: id },
-    { $addToSet: { favorite: { $each: [user] } } }
-  );
+      { _id: id },
+      { $addToSet: { favorite: { $each: [user] } } }
+    );
   } catch (err) {
-      throw new HttpError(500, err.message);
+    throw new HttpError(500, err.message);
   }
-  
 };
 
 const removeFromFavorite = async (id, user) => {
   try {
-    await Recipes.findByIdAndUpdate(
-    { _id: id },
-    { $pull: { favorite: user } }
-  );
+    await Recipes.findByIdAndUpdate({ _id: id }, { $pull: { favorite: user } });
   } catch (err) {
     throw new HttpError(500, err.message);
   }
-  
 };
 
 const getAllFavorite = async (user) => {
-  const allFavorite = await Recipes.find({ favorite: { $elemMath: { user } } })
+  const allFavorite = await Recipes.find({ favorite: { $elemMath: { user } } });
   if (!allFavorite) {
-    throw new HttpError(404, `User with id ${user} does not have favorite recipes`);
+    throw new HttpError(
+      404,
+      `User with id ${user} does not have favorite recipes`
+    );
   }
   return allFavorite;
 };
-
 
 module.exports = {
   getAllRecipes,

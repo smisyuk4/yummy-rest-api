@@ -139,7 +139,7 @@ const getCategoryController = async (req, res, next) => {
 
   const resultCategory = await getCategory(category, { skip, limit });
   res.json({ resultCategory });
-  
+
   const recipes = await Recipes.find({});
   res.json({
     status: "success",
@@ -151,8 +151,14 @@ const getCategoryController = async (req, res, next) => {
 };
 
 const popularRecipesController = async (req, res) => {
-  const favourite = req.params.favourite;
-  const result = await getPopularRecipes(favourite);
+  const favoriteRecipes = await getAllRecipes({
+    favorite: { $exists: true },
+    $where: "this.favorite.length>1",
+  });
+
+  const result = getPopularRecipes(favoriteRecipes);
+
+  console.log(favoriteRecipes);
 
   res.json({
     status: "Success",
@@ -164,19 +170,19 @@ const popularRecipesController = async (req, res) => {
 };
 
 const addToFavoriteController = async (req, res) => {
-    await addToFavorite(req.params.id, req.user._id);
-    res.json({ message: "success" })
-}
+  await addToFavorite(req.params.id, req.user._id);
+  res.json({ message: "success" });
+};
 
 const removeFromFavoriteController = async (req, res) => {
-    await removeFromFavorite(req.params.id, req.user._id);
-    res.json({ message: "success" })
-}
+  await removeFromFavorite(req.params.id, req.user._id);
+  res.json({ message: "success" });
+};
 
 const getAllFavoriteController = async (req, res) => {
-    const allFavorite = await getAllFavorite(req.user._id);
-    res.json({allFavorite});
-}
+  const allFavorite = await getAllFavorite(req.user._id);
+  res.json({ allFavorite });
+};
 
 module.exports = {
   get,

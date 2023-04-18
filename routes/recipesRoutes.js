@@ -45,14 +45,22 @@ router.get("/:id", asyncWrapper(getRecipesByIdController));
 
 router.get("/search", asyncWrapper(searchByTitle));
 
-router.get("/recipes/popular-recipes", asyncWrapper(popularRecipesController));
+router.get("/popular-recipes", asyncWrapper(popularRecipesController));
 
-router.get('/ingredients', asyncWrapper(searchByIngredients));
+router.get("/ingredients", asyncWrapper(searchByIngredients));
 
-router.get('/favorite',protectPath, asyncWrapper(getAllFavoriteController))
+router.get("/favorite", protectPath, asyncWrapper(getAllFavoriteController));
 
-router.patch('/favotite/:id', protectPath, asyncWrapper(addToFavoriteController));
+router.patch(
+  "/favotite/:id",
+  protectPath,
+  asyncWrapper(addToFavoriteController)
+);
 
-router.patch('/favorite/:id', protectPath, asyncWrapper(removeFromFavoriteController));
+router.patch(
+  "/favorite/:id",
+  protectPath,
+  asyncWrapper(removeFromFavoriteController)
+);
 
 module.exports = { recipesRouter: router };
