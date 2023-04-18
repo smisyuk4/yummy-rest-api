@@ -6,15 +6,15 @@ const sendEmailToken = (email, token) => {
 		to: email,
 		from: process.env.SENDGRID_FROM_EMAIL,
 		subject: "Activate user",
-		html: `<p>For verify your email click on link below</p> <a href="http://127.0.0.1:3000/user/verify/${token}" target="blank">${token}</>`,
+		html: `<p>For verify your email click on link below</p> <a href="https://smisyuk4.github.io/yummy-react-frontend/verify/${token}" target="blank">${token}</>`,
 	};
 	sgMail.send(msg);
 };
-const sendEmail = (email, html) => {
+const sendEmail = ({to, subject, html}) => {
 	const msg = {
-		to: email,
+		to,
 		from: process.env.SENDGRID_FROM_EMAIL,
-		subject: "Activate user",
+		subject,
 		html,
 	};
 	sgMail.send(msg);
