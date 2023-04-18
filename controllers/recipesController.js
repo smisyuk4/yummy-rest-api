@@ -4,6 +4,9 @@ const {
   getRecipesById,
   getCategory,
   getAllCategoryWithFourRecipes,
+  addToFavorite,
+  removeFromFavorite,
+  getAllFavorite,
 } = require("../services/recipesServices");
 const { Recipes } = require("../services/schemas/recipes");
 const { getAllIngredients } = require("../services/ingredientsServices");
@@ -160,6 +163,21 @@ const popularRecipesController = async (req, res) => {
   });
 };
 
+const addToFavoriteController = async (req, res) => {
+    await addToFavorite(req.params.id, req.user._id);
+    res.json({ message: "success" })
+}
+
+const removeFromFavoriteController = async (req, res) => {
+    await removeFromFavorite(req.params.id, req.user._id);
+    res.json({ message: "success" })
+}
+
+const getAllFavoriteController = async (req, res) => {
+    const allFavorite = await getAllFavorite(req.user._id);
+    res.json({allFavorite});
+}
+
 module.exports = {
   get,
   searchByTitle,
@@ -169,4 +187,7 @@ module.exports = {
   getCategoryListController,
   getCategoryController,
   popularRecipesController,
+  addToFavoriteController,
+  removeFromFavoriteController,
+  getAllFavoriteController,
 };

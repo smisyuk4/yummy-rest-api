@@ -50,10 +50,45 @@ const getAllCategoryWithFourRecipes = async (resultCategory, { limit }) => {
   return AllCategoryWithFourRecipes;
 };
 
+const addToFavorite = async (id, user) => {
+  try {
+    await Recipes.findByIdAndUpdate(
+    { _id: id },
+    { $addToSet: { favorite: { $each: [user] } } }
+  );
+  } catch (err) {
+      throw new HttpError(500, err.message);
+  }
+  
+};
+
+const removeFromFavorite = async (id, user) => {
+  try {
+    await Recipes.findByIdAndUpdate(
+    { _id: id },
+    { $pull: { favorite: user } }
+  );
+  } catch (err) {
+    throw new HttpError(500, err.message);
+  }
+  
+};
+
+const getAllFavorite = async (user) => {
+  const allFavorite = await Recipes.find({ favorite: { $elemMath: { user } } })
+  if (!allFavorite) {
+    throw new HttpError(404, `User with id ${user} does not have favorite recipes`);
+  }
+  return allFavorite;
+};
+
 module.exports = {
   getAllRecipes,
   getRecipes,
   getRecipesById,
   getCategory,
   getAllCategoryWithFourRecipes,
+  getAllFavorite,
+  addToFavorite,
+  removeFromFavorite,
 };

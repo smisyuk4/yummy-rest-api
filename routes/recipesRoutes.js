@@ -10,11 +10,15 @@ const {
   getRecipesByIdController,
   getAllRecipesController,
   popularRecipesController,
+  getAllFavoriteController,
+  addToFavoriteController,
+  removeFromFavoriteController,
 } = require("../controllers/recipesController");
 
 // const { popularRecipes } = require("../controllers/popularRecipesController");
 
 const { asyncWrapper } = require("../helpers/asyncWrapper");
+const { protectPath } = require("../middlewares/authMiddleware");
 
 // const {getAllRecipes} = require
 // const { authMiddleware } =  require('../middlewares/authMiddleware')
@@ -44,5 +48,11 @@ router.get("/search", asyncWrapper(searchByTitle));
 router.get("/recipes/popular-recipes", asyncWrapper(popularRecipesController));
 
 router.get('/ingredients', asyncWrapper(searchByIngredients));
+
+router.get('/favorite',protectPath, asyncWrapper(getAllFavoriteController))
+
+router.patch('/favotite/:id', protectPath, asyncWrapper(addToFavoriteController));
+
+router.patch('/favorite/:id', protectPath, asyncWrapper(removeFromFavoriteController));
 
 module.exports = { recipesRouter: router };
