@@ -47,6 +47,9 @@ const recipesSchema = new Schema({
   ingredients: {
     type: Array,
   },
+  favorite: {
+    type: Array,
+  },
 },
 {versionKey: false, timestamps: true}
 );
