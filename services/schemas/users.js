@@ -40,6 +40,30 @@ const userSchema = new Schema(
 		verificationToken: {
 			type: String,
 		},
+		shoppingList: {
+			_id: false,
+			type: [
+			  {
+			   ingredientId: {
+				type: mongoose.Types.ObjectId,
+				ref: "Ingredient",
+			  },
+			   measure: {
+				type: String,
+				trim: true,
+			  },
+			   ttl: {
+				  type: String,
+				  default: "",
+				},
+			   thb: {
+				  type: String,
+				  default: "",
+				},
+			  }
+			],
+			default: [],
+		  },
 	},
 	{versionKey: false, timestamps: true}
 );
