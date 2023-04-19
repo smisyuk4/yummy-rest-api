@@ -484,122 +484,108 @@
         }
       }
     },
-    "/recipes/search?title={value}": {
-        "get": {
-            "tags": ["Recipes"],
-            "summary": "Get recipes by title",
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "value",
-                    "description": "Recipes by title",
-                    "schema": {
-                        "type": "string",
-                        "example": "Beef"
-                    }
-                },
-                {
-                    "in": "header",
-                    "type": "string",
-                    "required": true,
-                    "name": "auth",
-                    "description": "Bearer token to access these api endpoints",
-                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
-                }
-            ],
-            "responses": {
-                "200": {
-                    "description": "success",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/GetRecipesByTitle"
-                            }
-                        }
-                    }
-                },
-                "404": {
-                    "description": "Recipes with Beef not found",
-                    "content": {}
-                }
+    "/recipes/search?title={text}": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get recipes by title",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "text",
+            "description": "Recipes by title",
+            "schema": {
+              "type": "string",
+              "example": "Beef"
             }
-        }
-    },
-    "/recipes/search?title={value}&page={pageCount}&limit={cardsLimit}": {
-        "get": {
-            "tags": ["Recipes"],
-            "summary": "Get recipes by title with pagination",
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "value",
-                    "description": "Title",
-                    "schema": {
-                        "type": "string",
-                        "example": "Cheese"
-                    }
-                },
-{
-                    "in": "path",
-                    "name": "pageCount",
-                    "description": "page count",
-                    "schema": {
-                        "type": "string",
-                        "example": "1"
-                    }
-                },
-
-
-{
-                    "in": "path",
-                    "name": "cardsLimit",
-                    "description": "count cards of page",
-                    "schema": {
-                        "type": "string",
-                        "example": "10"
-                    }
-                },
-
-
-                {
-                    "in": "header",
-                    "type": "string",
-                    "required": true,
-                    "name": "auth",
-                    "description": "Bearer token to access these api endpoints",
-                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+          },
+          {
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "name": "auth",
+            "description": "Bearer token to access these api endpoints",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRecipesByTitle"
                 }
-            ],
-            "responses": {
-                "200": {
-                    "description": "success",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/GetRecipesByTitleWithPagination"
-                            }
-                        }
-                    }
-                },
-                "404": {
-                    "description": "Recipes with Cheese not found",
-                    "content": {}
-                }
+              }
             }
+          },
+          "404": {
+            "description": "Recipes with Beef not found",
+            "content": {}
+          }
         }
+      }
     },
+    "/recipes/search?title={text}&page={numP}&limit={numL}": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get recipes by title with pagination",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "text",
+            "description": "Title",
+            "schema": {
+              "type": "string",
+              "example": "beef"
+            }
+          },
+          {
+            "in": "path",
+            "name": "numP",
+            "description": "page count",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          },
 
+          {
+            "in": "path",
+            "name": "numL",
+            "description": "count cards of page",
+            "schema": {
+              "type": "string",
+              "example": "10"
+            }
+          },
 
-
-
-
-
-
-
-
-
-
-
+          {
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "name": "auth",
+            "description": "Bearer token to access these api endpoints",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRecipesByTitleWithPagination"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipes with Cheese not found",
+            "content": {}
+          }
+        }
+      }
+    },
 
     "/ingredients/global": {
       "get": {
@@ -1152,129 +1138,259 @@
       "GetRecipesByTitle": {
         "type": "array",
         "items": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "description": "Recipes id",
-                    "example": "643d3fa2adbcdfdd8d8496fa"
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Recipes id",
+              "example": "643d3fa2adbcdfdd8d8496fa"
+            },
+            "title": {
+              "type": "string",
+              "description": "Title recipe",
+              "example": "Irish stew"
+            },
+            "category": {
+              "type": "string",
+              "description": "Category name",
+              "example": "Beef"
+            },
+            "area": {
+              "type": "string",
+              "description": "Area recipe",
+              "example": "Irish"
+            },
+            "instructions": {
+              "type": "string",
+              "description": "instructions recipe",
+              "example": "Heat the oven to 180C/350F/gas mark 4..."
+            },
+            "description": {
+              "type": "string",
+              "description": "description recipe",
+              "example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+            },
+            "thumb": {
+              "type": "string",
+              "description": "url img recipe",
+              "example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+            },
+            "preview": {
+              "type": "string",
+              "description": "url img recipe",
+              "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+            },
+            "time": {
+              "type": "string",
+              "description": "Сooking time",
+              "example": "160"
+            },
+            "youtube": {
+              "type": "string",
+              "description": "Сooking video",
+              "example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+            },
+            "tags": {
+              "type": "array",
+              "description": "tags of recipes",
+              "example": ["Stew", "Meat"]
+            },
+            "createdAt": {
+              "type": "string",
+              "description": "When a recipe is added",
+              "example": "2023-03-11T19:25:33.240Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "description": "When a recipe was updated",
+              "example": "2023-04-18T23:21:07.061Z"
+            },
+            "ingredients": {
+              "type": "array",
+              "description": "ingredients of recipe",
+              "example": [
+                {
+                  "id": "640c2dd963a319ea671e3796",
+                  "measure": "300g soaked overnight in water"
+                },
+                {
+                  "id": "640c2dd963a319ea671e370c",
+                  "measure": "2kg cut into 3cm cubes"
+                }
+              ]
+            }
+          }
+        }
+      },
+
+      "GetRecipesByTitleWithPagination": {
+        "type": "object",
+        "properties": {
+          "currentPage": {
+            "type": "string",
+            "example": "1"
+          },
+          "countRecipes": {
+            "type": "string",
+            "example": "10"
+          },
+          "recipes": {
+            "type": "array",
+            "example": [
+              {
+                "_id": {
+                  "type": "string",
+                  "example": "640cd5ac2d9fecf12e889811"
                 },
                 "title": {
-                    "type": "string",
-                    "description": "Title recipe",
-                    "example": "Irish stew"
+                  "type": "string",
+                  "example": "Beef Brisket Pot Roast"
                 },
                 "category": {
-                    "type": "string",
-                    "description": "Category name",
-                    "example": "Beef"
+                  "type": "string",
+                  "example": "Beef"
                 },
                 "area": {
-                    "type": "string",
-                    "description": "Area recipe",
-                    "example": "Irish"
+                  "type": "string",
+                  "example": "American"
                 },
                 "instructions": {
-                    "type": "string",
-                    "description": "instructions recipe",
-                    "example": "Heat the oven to 180C/350F/gas mark 4..."
+                  "type": "string",
+                  "example": "1 Prepare the brisket for cooking: On one side of the brisket there should be a layer of fat, which you want. If there are any large chunks of fat, cut them off and discard them. Large pieces of fat will not be able to render out completely.\r\nUsing a sharp knife, score the fat in parallel lines, about 3/4-inch apart. Slice through the fat, not the beef. Repeat in the opposite direction to make a cross-hatch pattern.\r\nSalt the brisket well and let it sit at room temperature for 30 minutes.\r\n \r\n2 Sear the brisket: You'll need an oven-proof, thick-bottomed pot with a cover, or Dutch oven, that is just wide enough to hold the brisket roast with a little room for the onions.\r\nPat the brisket dry and place it, fatty side down, into the pot and place it on medium high heat. Cook for 5-8 minutes, lightly sizzling, until the fat side is nicely browned. (If the roast seems to be cooking too fast, turn the heat down to medium. You want a steady sizzle, not a raging sear.)\r\nTurn the brisket over and cook for a few minutes more to brown the other side.\r\n\r\n3 Sauté the onions and garlic: When the brisket has browned, remove it from the pot and set aside. There should be a couple tablespoons of fat rendered in the pot, if not, add some olive oil.\r\nAdd"
                 },
                 "description": {
-                    "type": "string",
-                    "description": "description recipe",
-                    "example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+                  "type": "string",
+                  "example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
                 },
                 "thumb": {
-                    "type": "string",
-                    "description": "url img recipe",
-                    "example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+                  "type": "string",
+                  "example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
                 },
                 "preview": {
-                    "type": "string",
-                    "description": "url img recipe",
-                    "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+                  "type": "string",
+                  "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
                 },
                 "time": {
-                    "type": "string",
-                    "description": "Сooking time",
-                    "example": "160"
+                  "type": "string",
+                  "example": "160"
                 },
                 "youtube": {
-                    "type": "string",
-                    "description": "Сooking video",
-                    "example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+                  "type": "string",
+                  "example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
                 },
                 "tags": {
-                    "type": "array",
-                    "description": "tags of recipes",
-                    "example": ["Stew", "Meat"]
+                  "type": "array",
+                  "example": ["Stew", "Meat"]
                 },
                 "createdAt": {
-                    "type": "string",
-                    "description": "When a recipe is added",
-                    "example": "2023-03-11T19:25:33.240Z"
+                  "type": "string",
+                  "example": "2023-03-11T19:25:33.240Z"
                 },
                 "updatedAt": {
-                    "type": "string",
-                    "description": "When a recipe was updated",
-                    "example": "2023-04-18T23:21:07.061Z"
+                  "type": "string",
+                  "example": "2023-04-18T23:21:07.061Z"
                 },
                 "ingredients": {
-                    "type": "array",
-                    "description": "ingredients of recipe",
-                    "example": [
-                        {
-                            "id": "640c2dd963a319ea671e3796",
-                            "measure": "300g soaked overnight in water"
-                        },
-                        {
-                            "id": "640c2dd963a319ea671e370c",
-                            "measure": "2kg cut into 3cm cubes"
-                        }
-                    ]
-                }
-            }
-        }
-    },
-
-
-
-    "GetRecipesByTitleWithPagination": {
-                 "type": "object",
-
-                 "properties": {
-                   "categories": {
-        
-        
-                       "type": "array",
-                       "items": {
-                           "type": "object",
-                           "properties": {
-                               "id": {
-                                   "type": "string",
-                                   "description": "Recipes id",
-                                   "example": "643d3fa2adbcdfdd8d8496fa"
-                               },
-                               "title": {}
-                            }
-                        }
-
+                  "type": "array",
+                  "example": [
+                    {
+                      "id": "640c2dd963a319ea671e3796",
+                      "measure": "300g soaked overnight in water"
+                    },
+                    {
+                      "id": "640c2dd963a319ea671e370c",
+                      "measure": "2kg cut into 3cm cubes"
                     }
-
-
+                  ]
+                },
+                "favorite": {
+                  "type": "array",
+                  "example": [
+                    "640cd5ac2d9fecfasdasd12e889811",
+                    "w4rt434terfsdcfadsfasd",
+                    "erwerwfsdfcas"
+                  ]
                 }
-
-
-            },
-
-
-
-
-
-
-
-
-
+              },
+              {
+                "_id": {
+                  "type": "string",
+                  "example": "640cd5ac2d9fecf12e889811"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Beef Brisket Pot Roast"
+                },
+                "category": {
+                  "type": "string",
+                  "example": "Beef"
+                },
+                "area": {
+                  "type": "string",
+                  "example": "American"
+                },
+                "instructions": {
+                  "type": "string",
+                  "example": "1 Prepare the brisket for cooking: On one side of the brisket there should be a layer of fat, which you want. If there are any large chunks of fat, cut them off and discard them. Large pieces of fat will not be able to render out completely.\r\nUsing a sharp knife, score the fat in parallel lines, about 3/4-inch apart. Slice through the fat, not the beef. Repeat in the opposite direction to make a cross-hatch pattern.\r\nSalt the brisket well and let it sit at room temperature for 30 minutes.\r\n \r\n2 Sear the brisket: You'll need an oven-proof, thick-bottomed pot with a cover, or Dutch oven, that is just wide enough to hold the brisket roast with a little room for the onions.\r\nPat the brisket dry and place it, fatty side down, into the pot and place it on medium high heat. Cook for 5-8 minutes, lightly sizzling, until the fat side is nicely browned. (If the roast seems to be cooking too fast, turn the heat down to medium. You want a steady sizzle, not a raging sear.)\r\nTurn the brisket over and cook for a few minutes more to brown the other side.\r\n\r\n3 Sauté the onions and garlic: When the brisket has browned, remove it from the pot and set aside. There should be a couple tablespoons of fat rendered in the pot, if not, add some olive oil.\r\nAdd"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+                },
+                "thumb": {
+                  "type": "string",
+                  "example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+                },
+                "preview": {
+                  "type": "string",
+                  "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+                },
+                "time": {
+                  "type": "string",
+                  "example": "160"
+                },
+                "youtube": {
+                  "type": "string",
+                  "example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+                },
+                "tags": {
+                  "type": "array",
+                  "example": ["Stew", "Meat"]
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2023-03-11T19:25:33.240Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2023-04-18T23:21:07.061Z"
+                },
+                "ingredients": {
+                  "type": "array",
+                  "example": [
+                    {
+                      "id": "640c2dd963a319ea671e3796",
+                      "measure": "300g soaked overnight in water"
+                    },
+                    {
+                      "id": "640c2dd963a319ea671e370c",
+                      "measure": "2kg cut into 3cm cubes"
+                    }
+                  ]
+                },
+                "favorite": {
+                  "type": "array",
+                  "example": [
+                    "640cd5ac2d9fecfasdasd12e889811",
+                    "w4rt434terfsdcfadsfasd",
+                    "erwerwfsdfcas"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
 
       "GetAllRecipesByIngredientRequest": {
         "type": "object",

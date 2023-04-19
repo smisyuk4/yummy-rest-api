@@ -6,3 +6,6 @@
 
 ## swagger local 
 - `http://localhost:3010/api-docs/`
+
+## herocu
+-`git push heroku main`
