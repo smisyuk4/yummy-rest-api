@@ -8,9 +8,12 @@ const {
   addToFavorite,
   removeFromFavorite,
   getAllFavorite,
-} = require('../services/recipesServices');
-const { Recipes } = require('../services/schemas/recipes');
-const { getAllIngredients } = require('../services/ingredientsServices');
+
+} = require("../services/recipesServices");
+const { Recipes } = require("../services/schemas/recipes");
+const { getAllIngredients } = require("../services/ingredientsServices");
+const { HttpError } = require("../helpers/HttpError");
+
 
 const resultCategory = [
   'Beef',
@@ -97,12 +100,20 @@ const searchByIngredients = async (req, res) => {
 };
 
 const getCategoryListController = (req, res) => {
-  res.json({ resultCategory });
+  if (!resultCategory) {
+    throw new HttpError(404, `Categories ${category} not found`);
+  }
+  res.json({
+    status: "success",
+    code: 200,
+    data: {
+      resultCategory
+    },
+  });
 };
 
 const getRecipesByIdController = async (req, res) => {
   const id = req.params.id;
-
   const result = await getRecipesById(id);
   res.json({ result });
 };

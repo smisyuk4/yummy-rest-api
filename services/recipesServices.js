@@ -54,9 +54,6 @@ const getCategory = async (category, { skip, limit }) => {
     .skip(skip)
     .limit(limit);
 
-  if (!result) {
-    throw new HttpError(404, `Recipes with id ${category} not found`);
-  }
   return result;
 };
 
@@ -67,7 +64,7 @@ const getAllCategoryWithFourRecipes = async (resultCategory, { limit }) => {
     const element = resultCategory[index];
     const result = await Recipes.find({ category: element }).limit(limit);
     if (!result) {
-      throw new HttpError(404, `Recipes with id ${element} not found`);
+      throw new HttpError(404, `Category not found`);
     }
     AllCategoryWithFourRecipes = [...AllCategoryWithFourRecipes, result];
     // AllCategoryWithFourRecipes.push(result);
