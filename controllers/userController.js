@@ -86,7 +86,11 @@ const login = async (req, res) => {
 	user.token = token;
 	user.save();
 	res.json({
-		user: {email: user.email, subscription: user.subscription},
+		user: {
+			email: user.email,
+			name: user.name,
+			avatarURL: user.avatarURL,
+		},
 		token,
 	});
 };

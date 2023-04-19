@@ -330,6 +330,7 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/GetCategoriesOfRecipes"
+
                                 }
                             }
                         }
@@ -664,8 +665,9 @@
                             "type": "string",
                             "description": "Recipes id",
                             "example": "643d3fa2adbcdfdd8d8496fa"
+
                         },
-                        "title": {
+                        "ttl": {
                             "type": "string",
                             "description": "Title recipe",
                             "example": "Irish stew"
@@ -674,8 +676,9 @@
                             "type": "string",
                             "description": "Category name",
                             "example": "Beef"
+
                         },
-                        "area": {
+                        "desc": {
                             "type": "string",
                             "description": "Area recipe",
                             "example": "Irish"
@@ -859,10 +862,13 @@
                                     "measure": "2kg cut into 3cm cubes"
                                 }
                             ]
+
                         }
                     }
                 }
             }
+
         }
     }
 }
+

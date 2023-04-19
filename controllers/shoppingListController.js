@@ -38,8 +38,20 @@ if (!user) return res.status(404).json({ msg: 'User not found' });
 res.status(200).json(user);
 });
 
+// get user`s shopping list by user id
+// router.get('/:userId/shopping-list', getShoppingList)
+const getShoppingList = asyncWrapper(async (req, res) => {
+  const { userId } = req.params;
+
+  const user = await User.findById(userId);
+
+  const userShoppingList = user.shoppingList;
+
+  res.json({ userShoppingList });
+});
 
 module.exports = {
   postIngredientShoppingList,
   deleteItemShoppingList,
+  getShoppingList,
 }
