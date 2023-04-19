@@ -1,6 +1,5 @@
-const { Ingredients } = require('./schemas/ingredients');
-const { Recipes } = require('./schemas/recipes');
-const { User } = require('./schemas/users');
+const { Ingredients } = require('./schemas/ingredients')
+
 
 const getAllIngredients = async () => {
   return Ingredients.find();
@@ -24,6 +23,7 @@ const getAllRecipesByIngredient = async (ingredient, userId) => {
 const getIdIngredient = (field) => {
   return Ingredients.findOne(field);
 }
+
 module.exports = {
   getAllIngredients,
   getAllRecipesByIngredient,
