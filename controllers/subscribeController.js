@@ -1,31 +1,32 @@
 
 const { createSubscription } = require('../services/subsctiptionServices');
-const { getUserByFild, updateUser } = require('../services/userServices');
+const { getUserByFild, getUserById, updateUser } = require('../services/userServices');
 const sendEmail = require('../helpers/sendEmail');
 const { HttpError } = require('../helpers/HttpError');
 
 
 const subscribe = async (req, res) => {
 	const {email} = req.body;
+  const user = await getUserByFild({email});
 
+  if (!user) {
+    throw HttpError(400, `Not found user with ${email}`);
+  }
 
 // find current user
-  const user = await getUserByFild({email});
-  const id = user._id;
+  const id = req.user._id;
+  const currentUser = await getUserById(id)
 
 //compare email in form with email of current user 
-  if (email != user.email) {
-    throw HttpError(404, `Not found user with ${email}`);
+  if (email != currentUser.email) {
+    throw HttpError(404, `It' s not your ${email}`);
   }
 
 // update subscription of current user in users collection
   const sub = {
     subscription: true,
   };
-  const data = await updateUser(id, sub);
-  if (!data) {
-    throw HttpError(400, 'Not found user');
-  }
+  await updateUser(id, sub);
 
 // create subscription with current user in subscriptions collection
   await createSubscription({email, id})

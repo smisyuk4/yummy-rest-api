@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
 const {
@@ -13,46 +13,30 @@ const {
   getAllFavoriteController,
   addToFavoriteController,
   removeFromFavoriteController,
-} = require("../controllers/recipesController");
+} = require('../controllers/recipesController');
 
-// const { popularRecipes } = require("../controllers/popularRecipesController");
+const { asyncWrapper } = require('../helpers/asyncWrapper');
 
-const { asyncWrapper } = require("../helpers/asyncWrapper");
-const { protectPath } = require("../middlewares/authMiddleware");
+router.get('/', asyncWrapper(get));
 
-// const {getAllRecipes} = require
-// const { authMiddleware } =  require('../middlewares/authMiddleware')
-// const { upload } = require('../middlewares/uploadMiddleware')
+router.get('/category-list', getCategoryListController);
 
-// recipes/category-list
-// recipes/main-page
-// recipes/:category
-// recipes/:id
-// recipes/search
-// recipes/ownRecipes
-// recipes/favorite
-// recipes/popular-recipe
+router.get('/main-page', asyncWrapper(getAllRecipesController));
 
-router.get("/", asyncWrapper(get));
+router.get('/category/:category', asyncWrapper(getCategoryController));
 
-router.get("/category-list", getCategoryListController);
+router.get('/search', asyncWrapper(searchByTitle));
 
-router.get("/main-page", asyncWrapper(getAllRecipesController));
-
-router.get("/category/:category", asyncWrapper(getCategoryController));
-
-router.get("/:id", asyncWrapper(getRecipesByIdController));
-
-router.get("/search", asyncWrapper(searchByTitle));
-
-router.get("/recipes/popular-recipes", asyncWrapper(popularRecipesController));
+router.get("/popular-recipes", asyncWrapper(popularRecipesController));
 
 router.get('/ingredients', asyncWrapper(searchByIngredients));
 
-router.get('/favorite',protectPath, asyncWrapper(getAllFavoriteController))
+router.get('/favorite', asyncWrapper(getAllFavoriteController));
 
-router.patch('/favotite/:id', protectPath, asyncWrapper(addToFavoriteController));
+router.patch('/favorite/:id', asyncWrapper(addToFavoriteController));
 
-router.patch('/favorite/:id', protectPath, asyncWrapper(removeFromFavoriteController));
+router.delete('/favorite/:id', asyncWrapper(removeFromFavoriteController));
+
+router.get('/:id', asyncWrapper(getRecipesByIdController));
 
 module.exports = { recipesRouter: router };
