@@ -17,7 +17,11 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static("public"));
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(
+	"/api-docs",
+	swaggerUi.serve,
+	swaggerUi.setup(swaggerDocument, {swaggerOptions: {showExplorer: true}})
+);
 app.use("/user", userRouter);
 app.use(protectPath);
 app.use("/recipes", recipesRouter);
