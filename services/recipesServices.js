@@ -97,7 +97,7 @@ const removeFromFavorite = async (id, user) => {
 
 const getAllFavorite = async user => {
   const allFavorite = await Recipes.find({
-    favorite: { $elemMatch: { $gte: user } },
+    favorite: { $elemMatch: { $eq: user } },
   });
 
   if (!allFavorite) {
