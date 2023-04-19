@@ -1,32 +1,35 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-require("dotenv").config();
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+require('dotenv').config();
 
-const { userRouter } = require("./routes/userRoutes");
-const { recipesRouter } = require("./routes/recipesRoutes");
 const { ownRecipesRouter } = require("./routes/ownRecipesRoutes");
-const { ingredientsRouter } = require("./routes/ingredientsRoutes");
+const { protectPath } = require('./middlewares/authMiddleware');
+const { userRouter } = require('./routes/userRoutes');
+const { recipesRouter } = require('./routes/recipesRoutes');
+const { ingredientsRouter } = require('./routes/ingredientsRoutes');
+const { errorMiddleware } = require('./middlewares/errorMiddleware');
 
-const { errorMiddleware } = require("./middlewares/errorMiddleware");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(express.static("public"));
+app.use(express.static('public'));
 
-app.use("/user", userRouter);
-app.use("/recipes", recipesRouter);
-app.use("/ingredients", ingredientsRouter);
-app.use("/ownRecipes", ownRecipesRouter);
-// app.use('/popular-recipe')
+app.use('/user', userRouter);
+app.use(protectPath);
+app.use('/recipes', recipesRouter);
+app.use('/ingredients', ingredientsRouter);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((_, res, __) => {
   res.status(404).json({
-    status: "error",
+    status: 'error',
     code: 404,
-    message: "Not found",
-    data: "Not found",
+    message: 'Not found',
+    data: 'Not found',
   });
 });
 
@@ -47,6 +50,7 @@ connection
       console.log(`Server running. Use our API on port: ${PORT}`);
     });
   })
-  .catch((err) =>
+
+  .catch(err =>
     console.log(`Server not running. Error message: ${err.message}`)
   );

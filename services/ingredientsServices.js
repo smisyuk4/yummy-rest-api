@@ -1,4 +1,3 @@
-const { WrongParametersError } = require('../helpers/error');
 const { Ingredients } = require('./schemas/ingredients');
 const { Recipes } = require('./schemas/recipes');
 const { User } = require('./schemas/users');
