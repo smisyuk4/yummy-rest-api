@@ -14,32 +14,6 @@ const getRecipes = async (condition, pagination) => {
   return recipes;
 };
 
-const getPopularRecipes = async (condition, pagination) => {
-  // const recipes = Recipes.aggregate([
-  //   {
-  //     $project: {
-  //       arrayLength: { $size: '$favorite' },
-  //     },
-  //   },
-  //   {
-  //     $sort: { arrayLength: -1 },
-  //   },
-  // ]);
-
-  
-  const recipes = Recipes.find(condition, '', pagination)
-
-  .sort({
-    favorite: -1,
-  });
-
-  return recipes;
-
-  // не працює бо прилітає query бази данних і метод не може викликатись
-  // const sortArr = recipes.sort((a, b) => b.favorite.length - a.favorite.length);
-  // return sortArr
-};
-
 const getRecipesById = async id => {
   const result = await Recipes.findOne({ _id: id });
 
@@ -111,7 +85,6 @@ module.exports = {
   getAllRecipes,
   getRecipes,
   getRecipesById,
-  getPopularRecipes,
   getCategory,
   getAllCategoryWithFourRecipes,
   getAllFavorite,

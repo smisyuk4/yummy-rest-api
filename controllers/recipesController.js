@@ -2,7 +2,6 @@ const {
   getAllRecipes,
   getRecipes,
   getRecipesById,
-  getPopularRecipes,
   getCategory,
   getAllCategoryWithFourRecipes,
   addToFavorite,
@@ -148,16 +147,32 @@ const getCategoryController = async (req, res, next) => {
 };
 
 const popularRecipesController = async (req, res) => {
-  const result = await getPopularRecipes({
-    $expr: { $gte: [{ $size: '$favorite' }, 1] },
-  });
+  const recipesByPopular = await Recipes.aggregate([
+    {
+      $project: {
+        title: 1,
+        description: 1,
+        preview: 1,
+        arrayLength: { $size: '$favorite' },
+        numberOfFavorites: {
+          $cond: {
+            if: { $isArray: "$favorites" },
+            then: { $size: "$favorites" },
+            else: "NA",
+          },
+        },
+      },
+    },
+    {$sort: { arrayLength: -1 }},
+    { $limit: 5 },
+  ]);
 
   res.json({
     status: 'Success',
     code: 200,
     data: {
-      countRecipes: result.length,
-      result,
+      countRecipes: recipesByPopular.length,
+      recipesByPopular,
     },
   });
 };
