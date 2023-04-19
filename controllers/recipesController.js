@@ -7,12 +7,10 @@ const {
   addToFavorite,
   removeFromFavorite,
   getAllFavorite,
-
-} = require("../services/recipesServices");
-const { Recipes } = require("../services/schemas/recipes");
-const { getAllIngredients } = require("../services/ingredientsServices");
-const { HttpError } = require("../helpers/HttpError");
-
+} = require('../services/recipesServices');
+const { Recipes } = require('../services/schemas/recipes');
+const { getAllIngredients } = require('../services/ingredientsServices');
+const { HttpError } = require('../helpers/HttpError');
 
 const resultCategory = [
   'Beef',
@@ -103,10 +101,10 @@ const getCategoryListController = (req, res) => {
     throw new HttpError(404, `Categories ${category} not found`);
   }
   res.json({
-    status: "success",
+    status: 'success',
     code: 200,
     data: {
-      resultCategory
+      resultCategory,
     },
   });
 };
@@ -156,15 +154,15 @@ const popularRecipesController = async (req, res) => {
         arrayLength: { $size: '$favorite' },
         numberOfFavorites: {
           $cond: {
-            if: { $isArray: "$favorites" },
-            then: { $size: "$favorites" },
-            else: "NA",
+            if: { $isArray: '$favorites' },
+            then: { $size: '$favorites' },
+            else: 'NA',
           },
         },
       },
     },
-    {$sort: { arrayLength: -1 }},
-    { $limit: 5 },
+    { $sort: { arrayLength: -1 } },
+    { $limit: 4 },
   ]);
 
   res.json({
