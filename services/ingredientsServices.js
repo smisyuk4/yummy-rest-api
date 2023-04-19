@@ -21,7 +21,11 @@ const getAllRecipesByIngredient = async (ingredient, userId) => {
   // return globalRecipes
 };
 
+const getIdIngredient = (field) => {
+  return Ingredients.findOne(field);
+}
 module.exports = {
   getAllIngredients,
   getAllRecipesByIngredient,
+  getIdIngredient,
 };

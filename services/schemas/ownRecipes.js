@@ -50,6 +50,7 @@ const ownRecipesSchema = new Schema(
       of: new Schema({
         item: String,
         quantity: String,
+        // idIngredient: String,
       }),
       require: [true, "Add at least one ingredient"],
     },
