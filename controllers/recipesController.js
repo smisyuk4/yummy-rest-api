@@ -164,7 +164,9 @@ const popularRecipesController = async (req, res) => {
     { $sort: { arrayLength: -1 } },
     { $limit: 4 },
   ]);
-
+if(!recipesByPopular){
+  throw new HttpError(404, `Popular recipes not found`);
+}
   res.json({
     status: 'Success',
     code: 200,
