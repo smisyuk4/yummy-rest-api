@@ -33,7 +33,7 @@ const { protectPath } = require("../middlewares/authMiddleware");
 // recipes/favorite
 // recipes/popular-recipe
 
-router.get("/", asyncWrapper(get));
+// router.get("/", asyncWrapper(get));
 
 router.get("/category-list", getCategoryListController);
 

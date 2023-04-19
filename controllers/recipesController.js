@@ -2,7 +2,6 @@ const {
   getAllRecipes,
   getRecipes,
   getRecipesById,
-  getRecipesMain,
   getPopularRecipes,
   getCategory,
   getAllCategoryWithFourRecipes,
@@ -12,6 +11,7 @@ const {
 } = require("../services/recipesServices");
 const { Recipes } = require("../services/schemas/recipes");
 const { getAllIngredients } = require("../services/ingredientsServices");
+const { HttpError } = require("../helpers/HttpError");
 
 // const { contactValidSchema } = require('../service/schemas/contactValidSchema');
 // const { ValidationError } = require('../helpers/error');
@@ -100,12 +100,20 @@ const searchByIngredients = async (req, res) => {
 };
 
 const getCategoryListController = (req, res) => {
-  res.json({ resultCategory });
+  if (!resultCategory) {
+    throw new HttpError(404, `Categories ${category} not found`);
+  }
+  res.json({
+    status: "success",
+    code: 200,
+    data: {
+      resultCategory
+    },
+  });
 };
 
 const getRecipesByIdController = async (req, res) => {
   const id = req.params.id;
-  console.log(id);
   const result = await getRecipesById(id);
   res.json({ result });
 };
@@ -139,7 +147,7 @@ const getCategoryController = async (req, res, next) => {
 
   const resultCategory = await getCategory(category, { skip, limit });
   res.json({ resultCategory });
-  
+
   const recipes = await Recipes.find({});
   res.json({
     status: "success",
@@ -164,19 +172,19 @@ const popularRecipesController = async (req, res) => {
 };
 
 const addToFavoriteController = async (req, res) => {
-    await addToFavorite(req.params.id, req.user._id);
-    res.json({ message: "success" })
-}
+  await addToFavorite(req.params.id, req.user._id);
+  res.json({ message: "success" });
+};
 
 const removeFromFavoriteController = async (req, res) => {
-    await removeFromFavorite(req.params.id, req.user._id);
-    res.json({ message: "success" })
-}
+  await removeFromFavorite(req.params.id, req.user._id);
+  res.json({ message: "success" });
+};
 
 const getAllFavoriteController = async (req, res) => {
-    const allFavorite = await getAllFavorite(req.user._id);
-    res.json({allFavorite});
-}
+  const allFavorite = await getAllFavorite(req.user._id);
+  res.json({ allFavorite });
+};
 
 module.exports = {
   get,

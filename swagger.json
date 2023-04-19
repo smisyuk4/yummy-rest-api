@@ -4,8 +4,13 @@
         "title": "Yummy API",
         "version": "v1"
     },
-    "consumes": ["application/json", "multipart/form-data"],
-    "produces": ["application/json"],
+    "consumes": [
+        "application/json",
+        "multipart/form-data"
+    ],
+    "produces": [
+        "application/json"
+    ],
     "servers": [
         {
             "url": "http://localhost:3000"
@@ -25,14 +30,13 @@
             "description": "Ingredients endpoints"
         }
     ],
-
-
     "paths": {
         "/user/register": {
             "post": {
-                "tags": ["Auth"],
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "Registration user",
-
                 "parameters": [],
                 "requestBody": {
                     "description": "registration body",
@@ -69,9 +73,10 @@
         },
         "/user/login": {
             "post": {
-                "tags": ["Auth"],
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "Login user",
-
                 "parameters": [],
                 "requestBody": {
                     "description": "registration body",
@@ -108,9 +113,10 @@
         },
         "/user/logout": {
             "post": {
-                "tags": ["Auth"],
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "Logout user",
-
                 "parameters": [],
                 "requestBody": {
                     "description": "logout body",
@@ -126,7 +132,7 @@
                 "responses": {
                     "204": {
                         "description": "User is logout",
-                        "content": { }
+                        "content": {}
                     },
                     "401": {
                         "description": "Not authorized",
@@ -137,7 +143,9 @@
         },
         "/user/current": {
             "get": {
-                "tags": ["Auth"],
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "Get current user",
                 "parameters": [],
                 "requestBody": {
@@ -171,7 +179,9 @@
         },
         "/user/verify": {
             "post": {
-                "tags": ["Auth"],
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "Reverify user",
                 "parameters": [],
                 "requestBody": {
@@ -188,7 +198,7 @@
                 "responses": {
                     "200": {
                         "description": "Verify user success",
-                        "content": { }
+                        "content": {}
                     },
                     "404": {
                         "description": "Not found",
@@ -203,7 +213,9 @@
         },
         "/user/verify/{verificationToken}": {
             "get": {
-                "tags": ["Auth"],
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "Verify user",
                 "parameters": [
                     {
@@ -231,7 +243,7 @@
                 "responses": {
                     "200": {
                         "description": "Verification successful",
-                        "content": { }
+                        "content": {}
                     },
                     "404": {
                         "description": "Not found",
@@ -242,9 +254,10 @@
         },
         "/user/update": {
             "patch": {
-                "tags": ["Auth"],
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "Update user",
-
                 "parameters": [],
                 "requestBody": {
                     "description": "update body",
@@ -260,7 +273,7 @@
                 "responses": {
                     "202": {
                         "description": "Succesfully update user",
-                        "content": { }
+                        "content": {}
                     },
                     "400": {
                         "description": "error validation req body",
@@ -271,9 +284,10 @@
         },
         "/user/subscribe": {
             "post": {
-                "tags": ["Auth"],
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "Update subscription user",
-
                 "parameters": [],
                 "requestBody": {
                     "description": "update subscription body",
@@ -289,7 +303,7 @@
                 "responses": {
                     "200": {
                         "description": "Subscription letter send",
-                        "content": { }
+                        "content": {}
                     },
                     "400": {
                         "description": "Not found user",
@@ -302,13 +316,89 @@
                 }
             }
         },
-        "/recipes": {
+        "/recipes/category-list": {
             "get": {
-                "tags": ["Recipes"],
-                "summary": "Get all recipes",
-
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Get categories of recipes",
                 "parameters": [],
-                "requestBody": { },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetCategoriesOfRecipes"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Categories ${category} not found",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/recipes/main-page": {
+            "get": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Get all recipes on main page",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetAllRecipes"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/recipes/category/{category}": {
+            "get": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Get recipes by category",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetRecipesByCategory"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Categories ${category} not found",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/recipesss": {
+            "get": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Get categories of recipes",
+                "parameters": [],
+                "requestBody": {},
                 "responses": {
                     "200": {
                         "description": "Get all recipes success",
@@ -320,20 +410,23 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Not found recipes",
+                    "404": {
+                        "description": "Categories not found",
                         "content": {}
                     }
                 }
             }
         }
-
     },
     "components": {
         "schemas": {
             "RegistrationRequest": {
                 "type": "object",
-                "required": ["name", "email", "password"],
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
                 "properties": {
                     "name": {
                         "type": "string",
@@ -377,10 +470,12 @@
                     }
                 }
             },
-
             "LoginRequest": {
                 "type": "object",
-                "required": ["email", "password"],
+                "required": [
+                    "email",
+                    "password"
+                ],
                 "properties": {
                     "email": {
                         "type": "string",
@@ -417,12 +512,13 @@
                         "description": "User's token",
                         "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M"
                     }
-                    
                 }
             },
             "LogoutRequest": {
                 "type": "object",
-                "required": ["id"],
+                "required": [
+                    "id"
+                ],
                 "properties": {
                     "id": {
                         "type": "string",
@@ -433,7 +529,9 @@
             },
             "CurrentUserRequest": {
                 "type": "object",
-                "required": ["id"],
+                "required": [
+                    "id"
+                ],
                 "properties": {
                     "id": {
                         "type": "string",
@@ -469,7 +567,9 @@
             },
             "VerifyRequest": {
                 "type": "object",
-                "required": ["email"],
+                "required": [
+                    "email"
+                ],
                 "properties": {
                     "email": {
                         "type": "string",
@@ -480,7 +580,9 @@
             },
             "UpdateUserRequest": {
                 "type": "object",
-                "required": ["id"],
+                "required": [
+                    "id"
+                ],
                 "properties": {
                     "id": {
                         "type": "string",
@@ -491,10 +593,14 @@
             },
             "UpdateSubscriptionRequest": {
                 "type": "object",
-                "required": ["id"],
+                "required": [
+                    "id"
+                ],
                 "properties": {
                     "type": "object",
-                    "required": ["email"],
+                    "required": [
+                        "email"
+                    ],
                     "properties": {
                         "email": {
                             "type": "string",
@@ -523,12 +629,12 @@
                             "type": "string",
                             "description": "Area recipe",
                             "example": "Italian"
-                        }, 
+                        },
                         "instructions": {
                             "type": "string",
                             "description": "instructions recipe",
                             "example": "instructions text"
-                        }, 
+                        },
                         "description": {
                             "type": "string",
                             "description": "description recipe",
@@ -539,11 +645,155 @@
                             "description": "url img recipe",
                             "example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
                         }
-
+                    }
+                }
+            },
+            "GetCategoriesOfRecipes": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "categories": {
+                            "type": "string",
+                            "description": "Categories of recipes",
+                            "example": [
+                                "Beef",
+                                "Breakfast",
+                                "Chicken",
+                                "Dessert",
+                                "Goat",
+                                "Lamb",
+                                "Miscellaneous",
+                                "Pasta",
+                                "Pork",
+                                "Seafood",
+                                "Side",
+                                "Starter",
+                                "Vegan",
+                                "Vegetarian"
+                            ]
+                        }
+                    }
+                }
+            },
+            "GetAllRecipes": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "description": "Recipes id",
+                            "example": "643d3fa2adbcdfdd8d8496fa"
+                        },
+                        "title": {
+                            "type": "string",
+                            "description": "Title recipe",
+                            "example": "Irish stew"
+                        },
+                        "category": {
+                            "type": "string",
+                            "description": "Category name",
+                            "example": "Beef"
+                        },
+                        "area": {
+                            "type": "string",
+                            "description": "Area recipe",
+                            "example": "Irish"
+                        },
+                        "instructions": {
+                            "type": "string",
+                            "description": "instructions recipe",
+                            "example": "Heat the oven to 180C/350F/gas mark 4..."
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "description recipe",
+                            "example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+                        },
+                        "thumb": {
+                            "type": "string",
+                            "description": "url img recipe",
+                            "example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+                        },
+                        "preview": {
+                            "type": "string",
+                            "description": "url img recipe",
+                            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+                        },
+                        "time": {
+                            "type": "string",
+                            "description": "Сooking time",
+                            "example": "160"
+                        },
+                        "youtube": {
+                            "type": "string",
+                            "description": "Сooking video",
+                            "example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+                        },
+                        "tags": {
+                            "type": "array",
+                            "description": "tags of recipes",
+                            "example": [
+                                "Stew",
+                                "Meat"
+                            ]
+                        },
+                        "createdAt": {
+                            "type": "string",
+                            "description": "When a recipe is added",
+                            "example": "2023-03-11T19:25:33.240Z"
+                        },
+                        "updatedAt": {
+                            "type": "string",
+                            "description": "When a recipe was updated",
+                            "example": "2023-04-18T23:21:07.061Z"
+                        },
+                        "ingredients": {
+                            "type": "array",
+                            "description": "ingredients of recipe",
+                            "example": [
+                                {
+                                    "id": "640c2dd963a319ea671e3796",
+                                    "measure": "300g soaked overnight in water"
+                                },
+                                {
+                                    "id": "640c2dd963a319ea671e370c",
+                                    "measure": "2kg cut into 3cm cubes"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "GetRecipesByCategory": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "categories": {
+                            "type": "string",
+                            "description": "Categories of recipes",
+                            "example": [
+                                "Beef",
+                                "Breakfast",
+                                "Chicken",
+                                "Dessert",
+                                "Goat",
+                                "Lamb",
+                                "Miscellaneous",
+                                "Pasta",
+                                "Pork",
+                                "Seafood",
+                                "Side",
+                                "Starter",
+                                "Vegan",
+                                "Vegetarian"
+                            ]
+                        }
                     }
                 }
             }
-
-            }
         }
     }
+}
