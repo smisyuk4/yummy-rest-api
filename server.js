@@ -24,8 +24,9 @@ app.use(
 );
 app.use("/user", userRouter);
 app.use(protectPath);
-app.use("/recipes", recipesRouter);
 app.use("/ingredients", ingredientsRouter);
+app.use("/recipes", recipesRouter);
+
 
 app.use((_, res, __) => {
 	res.status(404).json({
