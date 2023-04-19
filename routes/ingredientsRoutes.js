@@ -8,11 +8,12 @@ const {
   getAllRecipesByIngredientController,
 } = require('../controllers/ingredientsController');
 const { asyncWrapper } = require('../helpers/asyncWrapper');
+const { ingredientValidation } = require('../services/schemas/ingredientsValidation');
 
 
 router.get('/', asyncWrapper(get));
 
-router.get('/global', asyncWrapper(getAllRecipesByIngredientController));
+router.get('/global', ingredientValidation, asyncWrapper(getAllRecipesByIngredientController));
 
 router.get('/list', asyncWrapper(get));
 
