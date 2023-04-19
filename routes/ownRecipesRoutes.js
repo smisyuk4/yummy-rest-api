@@ -16,7 +16,7 @@ const validateBody = require("../helpers/validation");
 const { protectPath } = require("../middlewares/authMiddleware");
 const { asyncWrapper } = require("../helpers/asyncWrapper");
 
-router.use(protectPath);
+// router.use(protectPath);
 router
   .route("/")
   .get(asyncWrapper(get))

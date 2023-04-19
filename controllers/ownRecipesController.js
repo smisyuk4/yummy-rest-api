@@ -1,5 +1,5 @@
 const gravatar = require("gravatar");
-
+const {getIdIngredient} = require('../services/ingredientsServices')
 const {
   getAllOwnRecipes,
   getOwnRecipesById,
@@ -26,6 +26,18 @@ const getById = async (req, res, next) => {
 
 const create = async (req, res, next) => {
   const { _id: owner } = req.user;
+  const arrIngredients = req.body.ingredients
+  const arrNamesIngredient = arrIngredients.map(async (ingredient) => {
+    const nameIngred = ingredient.item;
+    const amount = ingredient.quantity
+    const idIngred = await getIdIngredient({nameIngred})
+    return {
+      item: nameIngred,
+      quantity : amount,
+      idIngredient: idIngred,
+    }
+  })
+
   const recipeData = {
     ...req.body,
     imageURL: gravatar.url(req.body.title, {
