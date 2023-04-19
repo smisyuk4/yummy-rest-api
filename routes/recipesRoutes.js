@@ -27,7 +27,7 @@ router.get('/category/:category', asyncWrapper(getCategoryController));
 
 router.get('/search', asyncWrapper(searchByTitle));
 
-// router.get("/recipes/popular-recipes", asyncWrapper(popularRecipesController));
+router.get("/popular-recipes", asyncWrapper(popularRecipesController));
 
 router.get('/ingredients', asyncWrapper(searchByIngredients));
 

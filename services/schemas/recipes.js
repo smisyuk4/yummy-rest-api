@@ -48,6 +48,7 @@ const recipesSchema = new Schema({
   },
   favorite: {
     type: Array,
+    default: [],
   },
 },
 {versionKey: false, timestamps: true}
