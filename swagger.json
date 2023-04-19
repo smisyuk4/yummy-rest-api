@@ -505,6 +505,67 @@
           }
         }
       }
+    },
+    "/recipes/search?title={value}&page={pageCount}&limit={cardsLimit}": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get recipes by title with pagination",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "value",
+            "description": "Title",
+            "schema": {
+              "type": "string",
+              "example": "Cheese"
+            }
+          },
+          {
+            "in": "path",
+            "name": "pageCount",
+            "description": "page count",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          },
+
+          {
+            "in": "path",
+            "name": "cardsLimit",
+            "description": "count cards of page",
+            "schema": {
+              "type": "string",
+              "example": "10"
+            }
+          },
+
+          {
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "name": "auth",
+            "description": "Bearer token to access these api endpoints",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRecipesByTitleWithPagination"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipes with Beef not found",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
@@ -996,7 +1057,28 @@
             }
           }
         }
+      },
+      "GetRecipesByTitleWithPagination": {
+        "type": "object",
+        "properties": {
+          "currentPage": {
+            "type": "string",
+            "description": "sdsdsd",
+            "example": 1
+          },
+          "countRecipes": {
+            "type": "string",
+            "description": "sdsdsd",
+            "example": 10
+          },
+          "recipes": {
+            "type": "array",
+            "items": {
+             
+          }
+        }
       }
     }
   }
+}
 }
