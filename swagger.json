@@ -390,6 +390,15 @@
 				"summary": "Get recipes by category",
 				"parameters": [
 					{
+						"in": "path",
+						"name": "category",
+						"description": "Recipes by category",
+						"schema": {
+							"type": "string",
+							"example": "Beef"
+						}
+					},
+					{
 						"in": "header",
 						"type": "string",
 						"required": true,
@@ -421,6 +430,15 @@
 				"tags": ["Recipes"],
 				"summary": "Get recipes by id",
 				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"description": "Numeric id of the recipes",
+						"schema": {
+							"type": "string",
+							"example": "640cd5ac2d9fecf12e8897f8"
+						}
+					},
 					{
 						"in": "header",
 						"type": "string",
