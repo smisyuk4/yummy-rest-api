@@ -5,12 +5,13 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 require('dotenv').config();
 
+const { ownRecipesRouter } = require("./routes/ownRecipesRoutes");
 const { protectPath } = require('./middlewares/authMiddleware');
 const { userRouter } = require('./routes/userRoutes');
 const { recipesRouter } = require('./routes/recipesRoutes');
 const { ingredientsRouter } = require('./routes/ingredientsRoutes');
-
 const { errorMiddleware } = require('./middlewares/errorMiddleware');
+
 
 const app = express();
 app.use(express.json());
@@ -49,6 +50,7 @@ connection
       console.log(`Server running. Use our API on port: ${PORT}`);
     });
   })
+
   .catch(err =>
     console.log(`Server not running. Error message: ${err.message}`)
   );
