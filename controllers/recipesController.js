@@ -102,7 +102,7 @@ const getCategoryListController = (req, res) => {
 
 const getRecipesByIdController = async (req, res) => {
   const id = req.params.id;
-  console.log(id);
+
   const result = await getRecipesById(id);
   res.json({ result });
 };
@@ -137,13 +137,15 @@ const getCategoryController = async (req, res, next) => {
 };
 
 const popularRecipesController = async (req, res) => {
-  const favourite = req.params.favourite;
-  const result = await getPopularRecipes(favourite);
+  const result = await getPopularRecipes({
+    $expr: { $gte: [{ $size: '$favorite' }, 1] },
+  });
 
   res.json({
     status: 'Success',
     code: 200,
     data: {
+      countRecipes: result.length,
       result,
     },
   });
@@ -160,8 +162,6 @@ const removeFromFavoriteController = async (req, res) => {
 };
 
 const getAllFavoriteController = async (req, res) => {
-  console.log('getAllFavoriteController = req.user._id:', req.user._id);
-
   const allFavorite = await getAllFavorite(req.user._id);
   res.json({ allFavorite });
 };
