@@ -1,35 +1,39 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
+require("dotenv").config();
 
+const { protectPath } = require("./middlewares/authMiddleware");
+const { userRouter } = require("./routes/userRoutes");
+const { recipesRouter } = require("./routes/recipesRoutes");
+const { ingredientsRouter } = require("./routes/ingredientsRoutes");
 const { ownRecipesRouter } = require("./routes/ownRecipesRoutes");
-const { protectPath } = require('./middlewares/authMiddleware');
-const { userRouter } = require('./routes/userRoutes');
-const { recipesRouter } = require('./routes/recipesRoutes');
-const { ingredientsRouter } = require('./routes/ingredientsRoutes');
-const { errorMiddleware } = require('./middlewares/errorMiddleware');
-
+const { errorMiddleware } = require("./middlewares/errorMiddleware");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-app.use('/user', userRouter);
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, { swaggerOptions: { showExplorer: true } })
+);
+app.use("/user", userRouter);
 app.use(protectPath);
-app.use('/recipes', recipesRouter);
-app.use('/ingredients', ingredientsRouter);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/ingredients", ingredientsRouter);
+app.use("/recipes", recipesRouter);
+app.use("/ownRecipes", ownRecipesRouter);
 
 app.use((_, res, __) => {
   res.status(404).json({
-    status: 'error',
+    status: "error",
     code: 404,
-    message: 'Not found',
-    data: 'Not found',
+    message: "Not found",
+    data: "Not found",
   });
 });
 
@@ -51,6 +55,6 @@ connection
     });
   })
 
-  .catch(err =>
+  .catch((err) =>
     console.log(`Server not running. Error message: ${err.message}`)
   );

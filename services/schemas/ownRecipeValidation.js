@@ -14,7 +14,6 @@ const newRecipeSchema = Joi.object({
     .required(),
   instructions: Joi.string().required(),
   imageURL: Joi.string().uri(),
-  favorite: Joi.boolean(),
 });
 
 const ownRecipeStatusSchema = Joi.object({

@@ -8,7 +8,13 @@
 	"produces": ["application/json"],
 	"servers": [
 		{
+			"url": "https://so-yammy.herokuapp.com/"
+		},
+		{
 			"url": "http://localhost:3000"
+		},
+		{
+			"url": "https://vitalii-volianyk-upgraded-waddle-jpx7pp5jw9r3jgx9-4000.preview.app.github.dev"
 		}
 	],
 	"tags": [
@@ -25,13 +31,11 @@
 			"description": "Ingredients endpoints"
 		}
 	],
-
 	"paths": {
 		"/user/register": {
 			"post": {
 				"tags": ["Auth"],
 				"summary": "Registration user",
-
 				"parameters": [],
 				"requestBody": {
 					"description": "registration body",
@@ -50,18 +54,21 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/RegistrationResponse"
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/RegistrationResponse"
+									}
 								}
 							}
 						}
 					},
 					"400": {
 						"description": "error validation req body",
-						"content": {"message": "error message"}
+						"content": {}
 					},
 					"409": {
 						"description": "Email in use",
-						"content": {"message": "Email in use"}
+						"content": {}
 					}
 				}
 			}
@@ -70,10 +77,9 @@
 			"post": {
 				"tags": ["Auth"],
 				"summary": "Login user",
-
 				"parameters": [],
 				"requestBody": {
-					"description": "registration body",
+					"description": "auth body",
 					"required": true,
 					"content": {
 						"application/json": {
@@ -89,14 +95,17 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/LoginResponse"
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/LoginResponse"
+									}
 								}
 							}
 						}
 					},
 					"400": {
 						"description": "error validation req body",
-						"content": {"message": "error message"}
+						"content": {}
 					}
 				}
 			}
@@ -105,19 +114,16 @@
 			"post": {
 				"tags": ["Auth"],
 				"summary": "Logout user",
-
-				"parameters": [],
-				"requestBody": {
-					"description": "logout body",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/LogoutRequest"
-							}
-						}
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
 					}
-				},
+				],
 				"responses": {
 					"204": {
 						"description": "User is logout",
@@ -125,7 +131,7 @@
 					},
 					"401": {
 						"description": "Not authorized",
-						"content": {"message": "Not authorized"}
+						"content": {}
 					}
 				}
 			}
@@ -134,36 +140,37 @@
 			"get": {
 				"tags": ["Auth"],
 				"summary": "Get current user",
-				"parameters": [],
-				"requestBody": {
-					"description": "current user body",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CurrentUserRequest"
-							}
-						}
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
 					}
-				},
+				],
 				"responses": {
 					"200": {
 						"description": "Current user",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/CurrentUserResponse"
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/CurrentUserResponse"
+									}
 								}
 							}
 						}
 					},
 					"404": {
 						"description": "Not found",
-						"content": {"message": "User not found"}
+						"content": {}
 					},
 					"401": {
 						"description": "Not authorized",
-						"content": {"message": "Not authorized"}
+						"content": {}
 					}
 				}
 			}
@@ -187,21 +194,19 @@
 				"responses": {
 					"200": {
 						"description": "Verify user success",
-						"content": {"message": "Verification successful"}
+						"content": {}
 					},
 					"404": {
 						"description": "Not found",
-						"content": {"message": "User not found"}
+						"content": {}
 					},
 					"400": {
 						"description": "Verification has already been passed",
-						"content": {
-							"message": "Verification has already been passed"
-						}
+						"content": {}
 					},
 					"401": {
 						"description": "Not authorized",
-						"content": {"message": "Not authorized"}
+						"content": {}
 					}
 				}
 			}
@@ -222,25 +227,14 @@
 						}
 					}
 				],
-				"requestBody": {
-					"description": "verify body",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/VerifyRequest"
-							}
-						}
-					}
-				},
 				"responses": {
 					"200": {
 						"description": "Verification successful",
-						"content": {"message": "Verification successful"}
+						"content": {}
 					},
 					"404": {
 						"description": "Not found",
-						"content": {"message": "User not found"}
+						"content": {}
 					}
 				}
 			}
@@ -249,8 +243,16 @@
 			"patch": {
 				"tags": ["Auth"],
 				"summary": "Update user",
-
-				"parameters": [],
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					}
+				],
 				"requestBody": {
 					"description": "update body",
 					"required": true,
@@ -265,11 +267,11 @@
 				"responses": {
 					"202": {
 						"description": "Succesfully update user",
-						"content": {"message": "User updated"}
+						"content": {}
 					},
 					"400": {
 						"description": "error validation req body",
-						"content": {"message": "error message"}
+						"content": {}
 					}
 				}
 			}
@@ -278,8 +280,16 @@
 			"post": {
 				"tags": ["Auth"],
 				"summary": "Update subscription user",
-
-				"parameters": [],
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					}
+				],
 				"requestBody": {
 					"description": "update subscription body",
 					"required": true,
@@ -307,58 +317,453 @@
 				}
 			}
 		},
-		"/recipes": {
+		"/recipes/category-list": {
 			"get": {
 				"tags": ["Recipes"],
-				"summary": "Get all recipes",
-
-				"parameters": [],
-				"requestBody": {},
+				"summary": "Get categories of recipes",
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					}
+				],
 				"responses": {
 					"200": {
-						"description": "Get all recipes success",
+						"description": "success",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/AllRecipesResponse"
+									"$ref": "#/components/schemas/GetCategoriesOfRecipes"
 								}
 							}
 						}
 					},
-					"400": {
-						"description": "Not found recipes",
+					"404": {
+						"description": "Categories ${category} not found",
 						"content": {}
 					}
 				}
 			}
 		},
-      "/ingredients/list": {
-            "get": {
-                "tags": ["Ingredients"],
-                "summary": "Get all ingredients ",
+		"/recipes/main-page": {
+			"get": {
+				"tags": ["Recipes"],
+				"summary": "Get all recipes on main page",
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetAllRecipes"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Category not found",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/recipes/category/{category}": {
+			"get": {
+				"tags": ["Recipes"],
+				"summary": "Get recipes by category",
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					},
+					{
+						"in": "path",
+						"name": "category",
+						"required": true,
+						"description": "Recipes by category",
+						"schema": {
+							"type": "string",
+							"example": "Beef"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetRecipesByCategory"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Categories ${category} not found",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/recipes/{id}": {
+			"get": {
+				"tags": ["Recipes"],
+				"summary": "Get recipes by id",
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetRecipesById"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Recipes with id 640cd5ac2d9fecf12e8897f8 not found",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/recipes/popular-recipes": {
+			"get": {
+				"tags": ["Recipes"],
+				"summary": "Get popular recipes",
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetPopularRecipes"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Popular recipes not found",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/recipes/search?title={text}": {
+			"get": {
+				"tags": ["Recipes"],
+				"summary": "Get recipes by title",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "text",
+						"description": "Recipes by title",
+						"schema": {
+							"type": "string",
+							"example": "Beef"
+						}
+					},
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetRecipesByTitle"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Recipes with Beef not found",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/recipes/search?title={text}&page={numP}&limit={numL}": {
+			"get": {
+				"tags": ["Recipes"],
+				"summary": "Get recipes by title with pagination",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "text",
+						"description": "Title",
+						"schema": {
+							"type": "string",
+							"example": "beef"
+						}
+					},
+					{
+						"in": "path",
+						"name": "numP",
+						"description": "page count",
+						"schema": {
+							"type": "string",
+							"example": "1"
+						}
+					},
 
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "Get all ingredients  success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AllIngredientsList"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Not found ingredients",
-                        "content": {}
-                    }
-                }
-            }
-        }
+					{
+						"in": "path",
+						"name": "numL",
+						"description": "count cards of page",
+						"schema": {
+							"type": "string",
+							"example": "10"
+						}
+					},
 
-    },
-	
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetRecipesByTitleWithPagination"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Recipes with Cheese not found",
+						"content": {}
+					}
+				}
+			}
+		},
+
+		"/recipes/favorite/": {
+			"get": {
+				"tags": ["Recipes"],
+				"summary": "Get favorite recipes by user",
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetFavoriteRecipes"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "error validation req body",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/recipes/favorite/{id}": {
+			"patch": {
+				"tags": ["Recipes"],
+				"summary": "Adding recipe to user's favorites ",
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					},
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"description": "Numeric id of the recipes",
+						"schema": {
+							"type": "string",
+							"example": "640cd5ac2d9fecf12e8897f8"
+						}
+					}
+				],
+				"responses": {
+					"202": {
+						"description": "Succesfully update favorite",
+						"content": {}
+					},
+					"400": {
+						"description": "error validation req body",
+						"content": {}
+					},
+					"404": {
+						"description": "Recipes with id 640cd5ac2d9fecf12e8897f8 not found",
+						"content": {}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Recipes"],
+				"summary": "Deleting a recipe from user favorites",
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					},
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"description": "Numeric id of the recipes",
+						"schema": {
+							"type": "string",
+							"example": "640cd5ac2d9fecf12e8897f8"
+						}
+					}
+				],
+				"responses": {
+					"202": {
+						"description": "Succesfully update favorite",
+						"content": {}
+					},
+					"400": {
+						"description": "error validation req body",
+						"content": {}
+					},
+					"404": {
+						"description": "Recipes with id 640cd5ac2d9fecf12e8897f8 not found",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/ingredients/list": {
+			"get": {
+				"tags": ["Ingredients"],
+				"summary": "Get all ingredients ",
+
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Get all ingredients  success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AllIngredientsList"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found ingredients",
+						"content": {}
+					}
+				}
+			}
+		},
+
+		"/ingredients/global": {
+			"get": {
+				"tags": ["Ingredients"],
+				"summary": "get all recipes by ingredient",
+				"parameters": [],
+				"requestBody": {
+					"description": "ingredients body",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/GetAllRecipesByIngredientRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Succesfull search",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetAllRecipesByIngredientResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "error validation req body",
+						"content": {}
+					},
+					"404": {
+						"description": "invalid ingredient",
+						"content": {}
+					}
+				}
+			}
+		}
+	},
 	"components": {
 		"schemas": {
 			"RegistrationRequest": {
@@ -368,7 +773,7 @@
 					"name": {
 						"type": "string",
 						"description": "User's name",
-						"example": "Devid Jonson"
+						"example": "Поліщук Їван"
 					},
 					"email": {
 						"type": "string",
@@ -378,7 +783,7 @@
 					"password": {
 						"type": "string",
 						"description": "User's password",
-						"example": "HhJOg325656*35"
+						"example": "HhJOg3!2565635"
 					}
 				}
 			},
@@ -407,7 +812,6 @@
 					}
 				}
 			},
-
 			"LoginRequest": {
 				"type": "object",
 				"required": ["email", "password"],
@@ -435,20 +839,10 @@
 								"description": "User's email",
 								"example": "test@gmail.com"
 							},
-							"name": {
-								"type": "string",
-								"description": "User's name",
-								"example": "Devid Jonson"
-							},
-							"avatarURL": {
-								"type": "string",
-								"description": "User's url avatar",
-								"example": "https://s.gravatar.com/avatar/561db9e65d56a1ae3cc98fefc629d"
-							},
-							"registeredAt": {
-								"type": "date",
-								"description": "User's created date",
-								"example": "2023-04-18T07:04:03.102+00:00"
+							"subscription": {
+								"type": "boolean",
+								"description": "User's subscription",
+								"example": "true"
 							}
 						}
 					},
@@ -519,26 +913,12 @@
 			},
 			"UpdateUserRequest": {
 				"type": "object",
+				"required": ["id"],
 				"properties": {
-					"name": {
+					"id": {
 						"type": "string",
-						"description": "User's name",
-						"example": "Devid Jonson"
-					},
-					"email": {
-						"type": "string",
-						"description": "User's email",
-						"example": "test@gmail.com"
-					},
-					"avatarURL": {
-						"type": "string",
-						"description": "User's url avatar",
-						"example": "https://s.gravatar.com/avatar/561db9e65d56a1ae3cc98fefc629d"
-					},
-					"password": {
-						"type": "string",
-						"description": "User's password",
-						"example": "HhJOg325656=*35"
+						"description": "User's id",
+						"example": "643d3fa2adbcdfdd8d8496fa"
 					}
 				}
 			},
@@ -557,78 +937,824 @@
 					}
 				}
 			},
-			"AllRecipesResponse": {
+			"GetCategoriesOfRecipes": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"categories": {
+							"type": "string",
+							"description": "Categories of recipes",
+							"example": [
+								"Beef",
+								"Breakfast",
+								"Chicken",
+								"Dessert",
+								"Goat",
+								"Lamb",
+								"Miscellaneous",
+								"Pasta",
+								"Pork",
+								"Seafood",
+								"Side",
+								"Starter",
+								"Vegan",
+								"Vegetarian"
+							]
+						}
+					}
+				}
+			},
+			"GetAllRecipes": {
 				"type": "array",
 				"items": {
 					"type": "object",
 					"properties": {
 						"id": {
 							"type": "string",
-							"description": "User's id",
+							"description": "Recipes id",
 							"example": "643d3fa2adbcdfdd8d8496fa"
 						},
-						"title": {
+						"ttl": {
 							"type": "string",
 							"description": "Title recipe",
-							"example": "Mediterranean Pasta Salad"
+							"example": "Irish stew"
 						},
-						"area": {
+						"category": {
+							"type": "string",
+							"description": "Category name",
+							"example": "Beef"
+						},
+						"desc": {
 							"type": "string",
 							"description": "Area recipe",
-							"example": "Italian"
+							"example": "Irish"
 						},
 						"instructions": {
 							"type": "string",
 							"description": "instructions recipe",
-							"example": "instructions text"
+							"example": "Heat the oven to 180C/350F/gas mark 4..."
 						},
 						"description": {
 							"type": "string",
 							"description": "description recipe",
-							"example": "description recipe"
+							"example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
 						},
 						"thumb": {
 							"type": "string",
 							"description": "url img recipe",
 							"example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+						},
+						"preview": {
+							"type": "string",
+							"description": "url img recipe",
+							"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+						},
+						"time": {
+							"type": "string",
+							"description": "Сooking time",
+							"example": "160"
+						},
+						"youtube": {
+							"type": "string",
+							"description": "Сooking video",
+							"example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+						},
+						"tags": {
+							"type": "array",
+							"description": "tags of recipes",
+							"example": ["Stew", "Meat"]
+						},
+						"createdAt": {
+							"type": "string",
+							"description": "When a recipe is added",
+							"example": "2023-03-11T19:25:33.240Z"
+						},
+						"updatedAt": {
+							"type": "string",
+							"description": "When a recipe was updated",
+							"example": "2023-04-18T23:21:07.061Z"
+						},
+						"ingredients": {
+							"type": "array",
+							"description": "ingredients of recipe",
+							"example": [
+								{
+									"id": "640c2dd963a319ea671e3796",
+									"measure": "300g soaked overnight in water"
+								},
+								{
+									"id": "640c2dd963a319ea671e370c",
+									"measure": "2kg cut into 3cm cubes"
+								}
+							]
 						}
 					}
 				}
 			},
-			 "AllIngredientsList": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "properties": {
+			"GetRecipesByCategory": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string",
+							"description": "Recipes id",
+							"example": "643d3fa2adbcdfdd8d8496fa"
+						},
+						"ttl": {
+							"type": "string",
+							"description": "Title recipe",
+							"example": "Irish stew"
+						},
+						"category": {
+							"type": "string",
+							"description": "Category name",
+							"example": "Beef"
+						},
+						"desc": {
+							"type": "string",
+							"description": "Area recipe",
+							"example": "Irish"
+						},
+						"instructions": {
+							"type": "string",
+							"description": "instructions recipe",
+							"example": "Heat the oven to 180C/350F/gas mark 4..."
+						},
+						"description": {
+							"type": "string",
+							"description": "description recipe",
+							"example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+						},
+						"thumb": {
+							"type": "string",
+							"description": "url img recipe",
+							"example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+						},
+						"preview": {
+							"type": "string",
+							"description": "url img recipe",
+							"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+						},
+						"time": {
+							"type": "string",
+							"description": "Сooking time",
+							"example": "160"
+						},
+						"youtube": {
+							"type": "string",
+							"description": "Сooking video",
+							"example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+						},
+						"tags": {
+							"type": "array",
+							"description": "tags of recipes",
+							"example": ["Stew", "Meat"]
+						},
+						"createdAt": {
+							"type": "string",
+							"description": "When a recipe is added",
+							"example": "2023-03-11T19:25:33.240Z"
+						},
+						"updatedAt": {
+							"type": "string",
+							"description": "When a recipe was updated",
+							"example": "2023-04-18T23:21:07.061Z"
+						},
+						"ingredients": {
+							"type": "array",
+							"description": "ingredients of recipe",
+							"example": [
+								{
+									"id": "640c2dd963a319ea671e3796",
+									"measure": "300g soaked overnight in water"
+								},
+								{
+									"id": "640c2dd963a319ea671e370c",
+									"measure": "2kg cut into 3cm cubes"
+								}
+							]
+						}
+					}
+				}
+			},
+			"GetRecipesById": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string",
+							"description": "Recipes id",
+							"example": "643d3fa2adbcdfdd8d8496fa"
+						},
+						"title": {
+							"type": "string",
+							"description": "Title recipe",
+							"example": "Irish stew"
+						},
+						"category": {
+							"type": "string",
+							"description": "Category name",
+							"example": "Beef"
+						},
+						"area": {
+							"type": "string",
+							"description": "Area recipe",
+							"example": "Irish"
+						},
+						"instructions": {
+							"type": "string",
+							"description": "instructions recipe",
+							"example": "Heat the oven to 180C/350F/gas mark 4..."
+						},
+						"description": {
+							"type": "string",
+							"description": "description recipe",
+							"example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+						},
+						"thumb": {
+							"type": "string",
+							"description": "url img recipe",
+							"example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+						},
+						"preview": {
+							"type": "string",
+							"description": "url img recipe",
+							"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+						},
+						"time": {
+							"type": "string",
+							"description": "Сooking time",
+							"example": "160"
+						},
+						"youtube": {
+							"type": "string",
+							"description": "Сooking video",
+							"example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+						},
+						"tags": {
+							"type": "array",
+							"description": "tags of recipes",
+							"example": ["Stew", "Meat"]
+						},
+						"createdAt": {
+							"type": "string",
+							"description": "When a recipe is added",
+							"example": "2023-03-11T19:25:33.240Z"
+						},
+						"updatedAt": {
+							"type": "string",
+							"description": "When a recipe was updated",
+							"example": "2023-04-18T23:21:07.061Z"
+						},
+						"ingredients": {
+							"type": "array",
+							"description": "ingredients of recipe",
+							"example": [
+								{
+									"id": "640c2dd963a319ea671e3796",
+									"measure": "300g soaked overnight in water"
+								},
+								{
+									"id": "640c2dd963a319ea671e370c",
+									"measure": "2kg cut into 3cm cubes"
+								}
+							]
+						}
+					}
+				}
+			},
+			"GetPopularRecipes": {
+                "type": "object",
+                "properties": {
+                  "countRecipes": {
+                    "type": "number",
+                    "description": "Count popular recipes",
+                    "example": 4
+                  },
+                  "recipesByPopular": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
                         "id": {
-                            "type": "string",
-                            "description": "id",
-                            "example": "640c2dd963a319ea671e3691"
+                          "type": "string",
+                          "description": "Recipes id",
+                          "example": "643d3fa2adbcdfdd8d8496fa"
                         },
-                        "ttl": {
-                            "type": "string",
-                            "description": "Ingredient's title",
-                            "example": "Cherry Tomatoes"
+                        "title": {
+                          "type": "string",
+                          "description": "Title recipe",
+                          "example": "Teriyaki Chicken Casserole"
                         },
-                        "desc": {
-                            "type": "string",
-                            "description": "Description",
-                            "example": "Small, bite-sized tomatoes that are typically sweeter and more flavorful than larger varieties. They are often used in salads or as a snack."
-                        }, 
-                        "t": {
-                            "type": "string",
-                            "description": "t",
-                            "example": ""
-                        }, 
-                        "thb": {
-                            "type": "string",
-                            "description": "url img",
-                            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564673/nxuuo1bmhrnuqbnm9skh.png"
+                        "description": {
+                          "type": "string",
+                          "description": "description recipe",
+                          "example": "A Japanese-inspired casserole made with chicken, teriyaki sauce, rice, and vegetables."
+                        },
+                        "preview": {
+                          "type": "string",
+                          "description": "url img recipe",
+                          "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560401/g7gww5fdeu7kjti0fk7s.jpg"
+                        },
+                        "arrayLength": {
+                          "type": "number",
+                          "description": "Array length",
+                          "example": 4
+                        },
+                        "numberOfFavorites": {
+                          "type": "string",
+                          "description": "Count of favorites recipes",
+                          "example": "NA"
                         }
-
+                      }
                     }
+                  }
                 }
-            }
+              },
+			"GetRecipesByTitle": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string",
+							"description": "Recipes id",
+							"example": "643d3fa2adbcdfdd8d8496fa"
+						},
+						"title": {
+							"type": "string",
+							"description": "Title recipe",
+							"example": "Irish stew"
+						},
+						"category": {
+							"type": "string",
+							"description": "Category name",
+							"example": "Beef"
+						},
+						"area": {
+							"type": "string",
+							"description": "Area recipe",
+							"example": "Irish"
+						},
+						"instructions": {
+							"type": "string",
+							"description": "instructions recipe",
+							"example": "Heat the oven to 180C/350F/gas mark 4..."
+						},
+						"description": {
+							"type": "string",
+							"description": "description recipe",
+							"example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+						},
+						"thumb": {
+							"type": "string",
+							"description": "url img recipe",
+							"example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+						},
+						"preview": {
+							"type": "string",
+							"description": "url img recipe",
+							"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+						},
+						"time": {
+							"type": "string",
+							"description": "Сooking time",
+							"example": "160"
+						},
+						"youtube": {
+							"type": "string",
+							"description": "Сooking video",
+							"example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+						},
+						"tags": {
+							"type": "array",
+							"description": "tags of recipes",
+							"example": ["Stew", "Meat"]
+						},
+						"createdAt": {
+							"type": "string",
+							"description": "When a recipe is added",
+							"example": "2023-03-11T19:25:33.240Z"
+						},
+						"updatedAt": {
+							"type": "string",
+							"description": "When a recipe was updated",
+							"example": "2023-04-18T23:21:07.061Z"
+						},
+						"ingredients": {
+							"type": "array",
+							"description": "ingredients of recipe",
+							"example": [
+								{
+									"id": "640c2dd963a319ea671e3796",
+									"measure": "300g soaked overnight in water"
+								},
+								{
+									"id": "640c2dd963a319ea671e370c",
+									"measure": "2kg cut into 3cm cubes"
+								}
+							]
+						}
+					}
+				}
+			},
+
+			"GetRecipesByTitleWithPagination": {
+				"type": "object",
+				"properties": {
+					"currentPage": {
+						"type": "string",
+						"example": "1"
+					},
+					"countRecipes": {
+						"type": "string",
+						"example": "10"
+					},
+					"recipes": {
+						"type": "array",
+						"example": [
+							{
+								"_id": {
+									"type": "string",
+									"example": "640cd5ac2d9fecf12e889811"
+								},
+								"title": {
+									"type": "string",
+									"example": "Beef Brisket Pot Roast"
+								},
+								"category": {
+									"type": "string",
+									"example": "Beef"
+								},
+								"area": {
+									"type": "string",
+									"example": "American"
+								},
+								"instructions": {
+									"type": "string",
+									"example": "1 Prepare the brisket for cooking: On one side of the brisket there should be a layer of fat, which you want. If there are any large chunks of fat, cut them off and discard them. Large pieces of fat will not be able to render out completely.\r\nUsing a sharp knife, score the fat in parallel lines, about 3/4-inch apart. Slice through the fat, not the beef. Repeat in the opposite direction to make a cross-hatch pattern.\r\nSalt the brisket well and let it sit at room temperature for 30 minutes.\r\n \r\n2 Sear the brisket: You'll need an oven-proof, thick-bottomed pot with a cover, or Dutch oven, that is just wide enough to hold the brisket roast with a little room for the onions.\r\nPat the brisket dry and place it, fatty side down, into the pot and place it on medium high heat. Cook for 5-8 minutes, lightly sizzling, until the fat side is nicely browned. (If the roast seems to be cooking too fast, turn the heat down to medium. You want a steady sizzle, not a raging sear.)\r\nTurn the brisket over and cook for a few minutes more to brown the other side.\r\n\r\n3 Sauté the onions and garlic: When the brisket has browned, remove it from the pot and set aside. There should be a couple tablespoons of fat rendered in the pot, if not, add some olive oil.\r\nAdd"
+								},
+								"description": {
+									"type": "string",
+									"example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+								},
+								"thumb": {
+									"type": "string",
+									"example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+								},
+								"preview": {
+									"type": "string",
+									"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+								},
+								"time": {
+									"type": "string",
+									"example": "160"
+								},
+								"youtube": {
+									"type": "string",
+									"example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+								},
+								"tags": {
+									"type": "array",
+									"example": ["Stew", "Meat"]
+								},
+								"createdAt": {
+									"type": "string",
+									"example": "2023-03-11T19:25:33.240Z"
+								},
+								"updatedAt": {
+									"type": "string",
+									"example": "2023-04-18T23:21:07.061Z"
+								},
+								"ingredients": {
+									"type": "array",
+									"example": [
+										{
+											"id": "640c2dd963a319ea671e3796",
+											"measure": "300g soaked overnight in water"
+										},
+										{
+											"id": "640c2dd963a319ea671e370c",
+											"measure": "2kg cut into 3cm cubes"
+										}
+									]
+								},
+								"favorite": {
+									"type": "array",
+									"example": [
+										"640cd5ac2d9fecfasdasd12e889811",
+										"w4rt434terfsdcfadsfasd",
+										"erwerwfsdfcas"
+									]
+								}
+							},
+							{
+								"_id": {
+									"type": "string",
+									"example": "640cd5ac2d9fecf12e889811"
+								},
+								"title": {
+									"type": "string",
+									"example": "Beef Brisket Pot Roast"
+								},
+								"category": {
+									"type": "string",
+									"example": "Beef"
+								},
+								"area": {
+									"type": "string",
+									"example": "American"
+								},
+								"instructions": {
+									"type": "string",
+									"example": "1 Prepare the brisket for cooking: On one side of the brisket there should be a layer of fat, which you want. If there are any large chunks of fat, cut them off and discard them. Large pieces of fat will not be able to render out completely.\r\nUsing a sharp knife, score the fat in parallel lines, about 3/4-inch apart. Slice through the fat, not the beef. Repeat in the opposite direction to make a cross-hatch pattern.\r\nSalt the brisket well and let it sit at room temperature for 30 minutes.\r\n \r\n2 Sear the brisket: You'll need an oven-proof, thick-bottomed pot with a cover, or Dutch oven, that is just wide enough to hold the brisket roast with a little room for the onions.\r\nPat the brisket dry and place it, fatty side down, into the pot and place it on medium high heat. Cook for 5-8 minutes, lightly sizzling, until the fat side is nicely browned. (If the roast seems to be cooking too fast, turn the heat down to medium. You want a steady sizzle, not a raging sear.)\r\nTurn the brisket over and cook for a few minutes more to brown the other side.\r\n\r\n3 Sauté the onions and garlic: When the brisket has browned, remove it from the pot and set aside. There should be a couple tablespoons of fat rendered in the pot, if not, add some olive oil.\r\nAdd"
+								},
+								"description": {
+									"type": "string",
+									"example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+								},
+								"thumb": {
+									"type": "string",
+									"example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+								},
+								"preview": {
+									"type": "string",
+									"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+								},
+								"time": {
+									"type": "string",
+									"example": "160"
+								},
+								"youtube": {
+									"type": "string",
+									"example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+								},
+								"tags": {
+									"type": "array",
+									"example": ["Stew", "Meat"]
+								},
+								"createdAt": {
+									"type": "string",
+									"example": "2023-03-11T19:25:33.240Z"
+								},
+								"updatedAt": {
+									"type": "string",
+									"example": "2023-04-18T23:21:07.061Z"
+								},
+								"ingredients": {
+									"type": "array",
+									"example": [
+										{
+											"id": "640c2dd963a319ea671e3796",
+											"measure": "300g soaked overnight in water"
+										},
+										{
+											"id": "640c2dd963a319ea671e370c",
+											"measure": "2kg cut into 3cm cubes"
+										}
+									]
+								},
+								"favorite": {
+									"type": "array",
+									"example": [
+										"640cd5ac2d9fecfasdasd12e889811",
+										"w4rt434terfsdcfadsfasd",
+										"erwerwfsdfcas"
+									]
+								}
+							}
+						]
+					}
+				}
+			},
+
+			"GetAllRecipesByIngredientRequest": {
+				"type": "object",
+				"required": ["ingredient"],
+				"properties": {
+					"ingredient": {
+						"type": "string",
+						"description": "Request ingredient",
+						"example": "Challots"
+					}
+				}
+			},
+			"GetAllRecipesByIngredientResponse": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string",
+							"description": "Recipes id",
+							"example": "643d3fa2adbcdfdd8d8496fa"
+						},
+						"title": {
+							"type": "string",
+							"description": "Title recipe",
+							"example": "Irish stew"
+						},
+						"category": {
+							"type": "string",
+							"description": "Category name",
+							"example": "Beef"
+						},
+						"area": {
+							"type": "string",
+							"description": "Area recipe",
+							"example": "Irish"
+						},
+						"instructions": {
+							"type": "string",
+							"description": "instructions recipe",
+							"example": "Heat the oven to 180C/350F/gas mark 4..."
+						},
+						"description": {
+							"type": "string",
+							"description": "description recipe",
+							"example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+						},
+						"thumb": {
+							"type": "string",
+							"description": "url img recipe",
+							"example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+						},
+						"preview": {
+							"type": "string",
+							"description": "url img recipe",
+							"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+						},
+						"time": {
+							"type": "string",
+							"description": "Сooking time",
+							"example": "160"
+						},
+						"youtube": {
+							"type": "string",
+							"description": "Сooking video",
+							"example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+						},
+						"tags": {
+							"type": "array",
+							"description": "tags of recipes",
+							"example": ["Stew", "Meat"]
+						},
+						"createdAt": {
+							"type": "string",
+							"description": "When a recipe is added",
+							"example": "2023-03-11T19:25:33.240Z"
+						},
+						"updatedAt": {
+							"type": "string",
+							"description": "When a recipe was updated",
+							"example": "2023-04-18T23:21:07.061Z"
+						},
+						"ingredients": {
+							"type": "array",
+							"description": "ingredients of recipe",
+							"example": [
+								{
+									"id": "640c2dd963a319ea671e3796",
+									"measure": "300g soaked overnight in water"
+								},
+								{
+									"id": "640c2dd963a319ea671e370c",
+									"measure": "2kg cut into 3cm cubes"
+								}
+							]
+						}
+					}
+				}
+			},
+
+			"AllIngredientsList": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string",
+							"description": "id",
+							"example": "640c2dd963a319ea671e3691"
+						},
+						"ttl": {
+							"type": "string",
+							"description": "Ingredient's title",
+							"example": "Cherry Tomatoes"
+						},
+						"desc": {
+							"type": "string",
+							"description": "Description",
+							"example": "Small, bite-sized tomatoes that are typically sweeter and more flavorful than larger varieties. They are often used in salads or as a snack."
+						},
+						"t": {
+							"type": "string",
+							"description": "t",
+							"example": ""
+						},
+						"thb": {
+							"type": "string",
+							"description": "url img",
+							"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564673/nxuuo1bmhrnuqbnm9skh.png"
+						}
+					}
+				}
+			},
+			"GetFavoriteRecipes": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string",
+							"description": "Recipes id",
+							"example": "643d3fa2adbcdfdd8d8496fa"
+						},
+						"title": {
+							"type": "string",
+							"description": "Title recipe",
+							"example": "Irish stew"
+						},
+						"category": {
+							"type": "string",
+							"description": "Category name",
+							"example": "Beef"
+						},
+						"area": {
+							"type": "string",
+							"description": "Area recipe",
+							"example": "Irish"
+						},
+						"instructions": {
+							"type": "string",
+							"description": "instructions recipe",
+							"example": "Heat the oven to 180C/350F/gas mark 4..."
+						},
+						"description": {
+							"type": "string",
+							"description": "description recipe",
+							"example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+						},
+						"thumb": {
+							"type": "string",
+							"description": "url img recipe",
+							"example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+						},
+						"preview": {
+							"type": "string",
+							"description": "url img recipe",
+							"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+						},
+						"time": {
+							"type": "string",
+							"description": "Сooking time",
+							"example": "160"
+						},
+						"youtube": {
+							"type": "string",
+							"description": "Сooking video",
+							"example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+						},
+						"tags": {
+							"type": "array",
+							"items": {
+								"description": "tags of recipes",
+								"example": "Stew"
+							}
+						},
+						"createdAt": {
+							"type": "string",
+							"description": "When a recipe is added",
+							"example": "2023-03-11T19:25:33.240Z"
+						},
+						"updatedAt": {
+							"type": "string",
+							"description": "When a recipe was updated",
+							"example": "2023-04-18T23:21:07.061Z"
+						},
+						"ingredients": {
+							"type": "array",
+							"items": {
+								"description": "ingredients of recipe",
+								"example": {
+									"id": "640c2dd963a319ea671e3796",
+									"measure": "300g soaked overnight in water"
+								}
+							}
+						},
+						"favorite": {
+							"type": "array",
+							"items": {
+								"description": "users who added the recipe to favorites",
+								"example": "643d3fa2adbcdfdd8d8496fa"
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

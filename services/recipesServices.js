@@ -14,32 +14,6 @@ const getRecipes = async (condition, pagination) => {
   return recipes;
 };
 
-const getPopularRecipes = async (condition, pagination) => {
-  // const recipes = Recipes.aggregate([
-  //   {
-  //     $project: {
-  //       arrayLength: { $size: '$favorite' },
-  //     },
-  //   },
-  //   {
-  //     $sort: { arrayLength: -1 },
-  //   },
-  // ]);
-
-  
-  const recipes = Recipes.find(condition, '', pagination)
-
-  .sort({
-    favorite: -1,
-  });
-
-  return recipes;
-
-  // не працює бо прилітає query бази данних і метод не може викликатись
-  // const sortArr = recipes.sort((a, b) => b.favorite.length - a.favorite.length);
-  // return sortArr
-};
-
 const getRecipesById = async id => {
   const result = await Recipes.findOne({ _id: id });
 
@@ -54,9 +28,6 @@ const getCategory = async (category, { skip, limit }) => {
     .skip(skip)
     .limit(limit);
 
-  if (!result) {
-    throw new HttpError(404, `Recipes with id ${category} not found`);
-  }
   return result;
 };
 
@@ -67,7 +38,7 @@ const getAllCategoryWithFourRecipes = async (resultCategory, { limit }) => {
     const element = resultCategory[index];
     const result = await Recipes.find({ category: element }).limit(limit);
     if (!result) {
-      throw new HttpError(404, `Recipes with id ${element} not found`);
+      throw new HttpError(404, `Category not found`);
     }
     AllCategoryWithFourRecipes = [...AllCategoryWithFourRecipes, result];
     // AllCategoryWithFourRecipes.push(result);
@@ -114,7 +85,6 @@ module.exports = {
   getAllRecipes,
   getRecipes,
   getRecipesById,
-  getPopularRecipes,
   getCategory,
   getAllCategoryWithFourRecipes,
   getAllFavorite,

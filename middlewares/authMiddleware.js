@@ -2,12 +2,11 @@ const jwt = require("jsonwebtoken");
 const {getUserById} = require("../services/userServices");
 
 const protectPath = async (req, res, next) => {
-	const {authorization} = req.headers;
-	if (!authorization) {
+	const {auth} = req.headers;
+	if (!auth) {
 		return res.status(401).json({message: "Not authorized"});
 	}
-	const token =
-		authorization?.startsWith("Bearer") && authorization.split(" ")[1];
+	const token = auth?.startsWith("Bearer") && auth.split(" ")[1];
 
 	if (!token) {
 		return res.status(401).json({message: "Not authorized"});
