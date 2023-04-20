@@ -69,27 +69,30 @@ const searchByIngredients = async (req, res) => {
   const condition = { ttl: { $regex: ttl, $options: 'i' } };
   const pagination = { skip, limit };
 
-  console.log(condition, pagination);
   const allIngredients = await getAllIngredients(condition, pagination);
 
-  // const exampleEngredients = [
-  //   { _id: '640c2dd963a319ea671e3746', ttl: 'Potatoes' },
-  //   { _id: '640c2dd963a319ea671e3768', ttl: 'Small Potatoes' },
-  // ];
+  if (allIngredients.length === 0) {
+    throw new HttpError(404, `Ingredients ${ttl} not found`);
+  }
 
-  console.log(allIngredients);
+  const ingredientsIdArr = allIngredients.map(({_id}) => {
+    return {id: _id}})
+
   const conditionSearch = {
-    ingredients: { $elemMatch: { id: allIngredients[0]._id } },
+    ingredients: {
+      $elemMatch: {
+        $or: ingredientsIdArr
+      },
+    },
   };
 
-  console.log(conditionSearch);
   const recipesByIngredients = await getRecipes(conditionSearch, pagination);
 
   res.json({
     status: 'Success',
     code: 200,
     data: {
-      // currentPage: page,
+      currentPage: page,
       countRecipes: recipesByIngredients.length,
       recipes: recipesByIngredients,
     },
@@ -164,9 +167,9 @@ const popularRecipesController = async (req, res) => {
     { $sort: { arrayLength: -1 } },
     { $limit: 4 },
   ]);
-if(!recipesByPopular){
-  throw new HttpError(404, `Popular recipes not found`);
-}
+  if (!recipesByPopular) {
+    throw new HttpError(404, `Popular recipes not found`);
+  }
   res.json({
     status: 'Success',
     code: 200,
