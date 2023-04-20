@@ -15,6 +15,7 @@ const { subscribe } = require('../controllers/subscribeController');
 const { asyncWrapper } = require('../helpers/asyncWrapper');
 const { protectPath } = require('../middlewares/authMiddleware');
 const { uploadCloud } = require('../middlewares/uploadMiddleware');
+const { deleteItemShoppingList } = require('../controllers/shoppingListController');
 
 router.post('/subscribe', asyncWrapper(subscribe));
 
@@ -32,5 +33,8 @@ router.post(
   asyncWrapper(updateUserAvatar)
 );
 router.post('/subscribe', asyncWrapper(subscribe));
+
+// :userId/shoppingList/:ingredientId
+router.delete(':userId/shopping-list/:ingredientId', asyncWrapper(deleteItemShoppingList))
 
 module.exports = { userRouter: router };
