@@ -1227,52 +1227,53 @@
 				}
 			},
 			"GetPopularRecipes": {
-				"type": "array",
-				"items": {
-					"type": "object",
-					"properties": {
-						"countRecipes": {
-							"type": "number",
-							"description": "Count popular recipes",
-							"example": 4
-						},
-						"recipesByPopular": [
-							{
-								"id": {
-									"type": "string",
-									"description": "Recipes id",
-									"example": "643d3fa2adbcdfdd8d8496fa"
-								},
-								"title": {
-									"type": "string",
-									"description": "Title recipe",
-									"example": "Teriyaki Chicken Casserole"
-								},
-								"description": {
-									"type": "string",
-									"description": "description recipe",
-									"example": "A Japanese-inspired casserole made with chicken, teriyaki sauce, rice, and vegetables."
-								},
-								"preview": {
-									"type": "string",
-									"description": "url img recipe",
-									"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560401/g7gww5fdeu7kjti0fk7s.jpg"
-								},
-								"arrayLength": {
-									"type": "number",
-									"description": "Array length",
-									"example": 4
-								},
-								"numberOfFavorites": {
-									"type": "string",
-									"description": "Count of favorites recipes",
-									"example": "NA"
-								}
-							}
-						]
-					}
-				}
-			},
+                "type": "object",
+                "properties": {
+                  "countRecipes": {
+                    "type": "number",
+                    "description": "Count popular recipes",
+                    "example": 4
+                  },
+                  "recipesByPopular": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Recipes id",
+                          "example": "643d3fa2adbcdfdd8d8496fa"
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Title recipe",
+                          "example": "Teriyaki Chicken Casserole"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "description recipe",
+                          "example": "A Japanese-inspired casserole made with chicken, teriyaki sauce, rice, and vegetables."
+                        },
+                        "preview": {
+                          "type": "string",
+                          "description": "url img recipe",
+                          "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560401/g7gww5fdeu7kjti0fk7s.jpg"
+                        },
+                        "arrayLength": {
+                          "type": "number",
+                          "description": "Array length",
+                          "example": 4
+                        },
+                        "numberOfFavorites": {
+                          "type": "string",
+                          "description": "Count of favorites recipes",
+                          "example": "NA"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
 			"GetRecipesByTitle": {
 				"type": "array",
 				"items": {
