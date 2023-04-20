@@ -54,7 +54,7 @@ const deleteItemShoppingList = async (req, res) => {
   console.log(`arrayIngredients ${arrayIngredients}`);
   
   const findIngredient = arrayIngredients.filter((it) => it.ingredientId === ingredientIdParams);
-  console.log(findIngredient);
+  // console.log(findIngredient);
 
   const index = arrayIngredients.findIndex(findIngredient);
   // console.log(index)
