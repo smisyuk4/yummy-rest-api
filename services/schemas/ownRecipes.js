@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 
 const handleMongooseError = require("../../helpers/handleMongooseError");
 
-const { getAllIngredients } = require("../ingredientsServices");
-
-const ingredients = getAllIngredients();
-
 const Schema = mongoose.Schema;
 
 const ownRecipesSchema = new Schema(
@@ -67,8 +63,8 @@ const ownRecipesSchema = new Schema(
       required: [true, "Image is required"],
     },
     favorite: {
-      type: Boolean,
-      default: false,
+      type: Array,
+      default: [],
     },
     owner: {
       type: Schema.Types.ObjectId,
