@@ -18,13 +18,13 @@ router.get('/list', asyncWrapper(get));
 
 
 // add ingredient to shopping-list
-router.post('/shopping-list', postIngredientShoppingList);
+router.post('/shopping-list', asyncWrapper(postIngredientShoppingList));
 
 // delete ingredient from shopping list
-router.delete('/shopping-list/:id', deleteItemShoppingList)
+router.delete('/shopping-list/:ingredientId', asyncWrapper(deleteItemShoppingList));
 
 // get user`s shopping list
-router.get('/shopping-list/:userId', getShoppingList);
+router.get('/shopping-list/:userId',asyncWrapper(getShoppingList));
 
 module.exports = { ingredientsRouter: router };
 
