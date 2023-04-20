@@ -586,10 +586,35 @@
         }
       }
     },
+     "/ingredients/list": {
+            "get": {
+                "tags": ["Ingredients"],
+                "summary": "Get all ingredients ",
+
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Get all ingredients  success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AllIngredientsList"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found ingredients",
+                        "content": {}
+                    }
+                }
+            }
+        },
+
 
     "/ingredients/global": {
       "get": {
-        "tags": ["ingredients"],
+        "tags": ["Ingredients"],
         "summary": "get all recipes by ingredient",
         "parameters": [],
         "requestBody": {
@@ -1391,6 +1416,41 @@
           }
         }
       },
+      
+      "AllIngredientsList": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "description": "id",
+                            "example": "640c2dd963a319ea671e3691"
+                        },
+                        "ttl": {
+                            "type": "string",
+                            "description": "Ingredient's title",
+                            "example": "Cherry Tomatoes"
+                        },
+                        "desc": {
+                            "type": "string",
+                            "description": "Description",
+                            "example": "Small, bite-sized tomatoes that are typically sweeter and more flavorful than larger varieties. They are often used in salads or as a snack."
+                        }, 
+                        "t": {
+                            "type": "string",
+                            "description": "t",
+                            "example": ""
+                        }, 
+                        "thb": {
+                            "type": "string",
+                            "description": "url img",
+                            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564673/nxuuo1bmhrnuqbnm9skh.png"
+                        }
+
+                    }
+                }
+            },
 
       "GetAllRecipesByIngredientRequest": {
         "type": "object",
@@ -1493,3 +1553,4 @@
     }
   }
 }
+
