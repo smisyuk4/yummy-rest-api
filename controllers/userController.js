@@ -8,7 +8,7 @@ const {
 	getUserById,
 } = require("../services/userServices");
 const {userValidation} = require("../services/schemas/userValidation");
-const {sendEmailToken} = require("../services/emailService");
+// const {sendEmailToken} = require("../services/emailService");
 
 // Sign jwt helper function
 const signToken = id =>
