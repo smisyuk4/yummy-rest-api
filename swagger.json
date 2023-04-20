@@ -706,7 +706,16 @@
 				"tags": ["Ingredients"],
 				"summary": "Get all ingredients ",
 
-				"parameters": [],
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "Get all ingredients  success",
