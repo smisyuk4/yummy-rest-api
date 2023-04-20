@@ -34,7 +34,4 @@ router.post(
 );
 router.post('/subscribe', asyncWrapper(subscribe));
 
-// :userId/shoppingList/:ingredientId
-router.delete(':userId/shopping-list/:ingredientId', asyncWrapper(deleteItemShoppingList))
-
 module.exports = { userRouter: router };
