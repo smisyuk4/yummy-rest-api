@@ -16,16 +16,9 @@ const deleteRecipe = (id) => {
   return OwnRecipes.findByIdAndRemove({ _id: id });
 };
 
-const updateRecipeStatus = (id, body) => {
-  return OwnRecipes.findByIdAndUpdate({ _id: id }, body, {
-    new: true,
-  });
-};
-
 module.exports = {
   getAllOwnRecipes,
   getOwnRecipesById,
   deleteRecipe,
   addRecipe,
-  updateRecipeStatus,
 };
