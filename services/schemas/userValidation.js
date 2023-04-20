@@ -1,12 +1,11 @@
 const Joi = require("joi");
-const nameRegex = /^[A-ZА-Я][a-z`-а-я0-9]{2,}[\s][A-ZА-Я][a-z`-а-я0-9]{2,}$/;
 const passwordRegex = /^[@!#$%&a-zA-Z\d]{8,}$/;
 const emailDomain = ["com", "net", "org", "uk"];
 const makeRequired = x => x.required();
 
 const userValidation = (data, strict = []) => {
 	let schema = Joi.object({
-		name: Joi.string().trim().min(3).regex(nameRegex).messages({
+		name: Joi.string().trim().min(3).messages({
 			"string.pattern.base": `Name may contain letters, numbers, apostrophe, dash and spaces. For example Jacob Mercer.`,
 		}),
 		email: Joi.string().email({
