@@ -8,7 +8,7 @@
 	"produces": ["application/json"],
 	"servers": [
 		{
-			"url": "https://so-yammy.herokuapp.com/"
+			"url": "https://yummy-rest-api.onrender.com"
 		},
 		{
 			"url": "http://localhost:3000"
@@ -16,6 +16,7 @@
 		{
 			"url": "https://vitalii-volianyk-upgraded-waddle-jpx7pp5jw9r3jgx9-4000.preview.app.github.dev"
 		}
+
 	],
 	"tags": [
 		{
