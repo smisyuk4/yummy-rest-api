@@ -42,7 +42,7 @@ const postIngredientShoppingList = async (req, res) => {
 // remove ingredient in user`s shopping list
 const deleteItemShoppingList = async (req, res) => {
   const user = await User.findById(req.user._id);
-  // console.log(`User ${user}`);
+
 
   if (!user) {
     throw new HttpError(404, `${user} not found.`);
