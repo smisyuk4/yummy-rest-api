@@ -1,5 +1,5 @@
 const gravatar = require("gravatar");
-// const { getIdIngredient } = require("../services/ingredientsServices");
+
 const {
   getAllOwnRecipes,
   getOwnRecipesById,
@@ -7,7 +7,7 @@ const {
   deleteRecipe,
 } = require("../services/ownRecipesServices");
 
-const HttpError = require("../helpers/HttpError");
+const { HttpError } = require("../helpers/HttpError");
 
 const get = async (req, res, next) => {
   const { _id: owner } = req.user;
@@ -25,27 +25,13 @@ const getById = async (req, res, next) => {
 
 const create = async (req, res, next) => {
   const { _id: owner } = req.user;
-  // const arrIngredients = req.body.ingredients;
-  // const arrNamesIngredient = arrIngredients.map(async (ingredient) => {
-  //   const nameIngred = ingredient.item;
-  //   const amount = ingredient.quantity;
-  //   const idIngred = await getIdIngredient({ nameIngred });
-  //   return {
-  //     item: nameIngred,
-  //     quantity: amount,
-  //     idIngredient: idIngred,
-  //   };
-  // });
 
   let recipeImg;
 
   if (req.file) {
     recipeImg = req.file.path;
   } else {
-    recipeImg = gravatar.url(req.body.title, {
-      protocol: "https",
-      s: "250",
-    });
+    recipeImg = "/recipeDefaultImg.png";
   }
 
   const recipeData = { ...req.body, imageURL: recipeImg };
