@@ -439,7 +439,17 @@
             "name": "auth",
             "description": "Bearer token to access these api endpoints",
             "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
-          }
+          },
+		  {
+			"in":"path",
+			"name":"id",
+			"required":true,
+			"description":"Numeric id of the recipes",
+			"schema": {
+				"type": "string",
+				"example": "640cd5ac2d9fecf12e8897f8"
+			}
+		}
         ],
         "responses": {
           "200": {
