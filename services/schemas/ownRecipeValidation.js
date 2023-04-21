@@ -7,7 +7,7 @@ const newRecipeSchema = Joi.object({
   time: Joi.string().required(),
   ingredients: Joi.array()
     .items({
-      // id: Joi.string().required(),
+      id: Joi.string().required(),
       measure: Joi.string().required(),
     })
     .required()
