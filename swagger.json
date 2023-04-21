@@ -772,6 +772,123 @@
 					}
 				}
 			}
+		},
+
+		"/ingredients/shopping-list": {
+			"get": {
+				"tags": ["Ingredients"],
+				"summary": "Get shopping-list",
+
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get shopping-list success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ShoppingList"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found user",
+						"content": {}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Ingredients"],
+				"summary": "Add ingredient to shopping-list",
+
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					}
+				],
+				"requestBody": {
+					"description": "ingredient body",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AddIngredientRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Ingredient added to shopping list success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AddIngredientResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Your may writes all fields.",
+						"content": {}
+					},
+					"404": {
+						"description": "User not found",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/ingredients/shopping-list/{id}": {
+			"delete": {
+				"tags": ["Ingredients"],
+				"summary": "Delete ingredient from shopping-list",
+
+				"parameters": [
+					{
+						"in": "header",
+						"type": "string",
+						"required": true,
+						"name": "auth",
+						"description": "Bearer token to access these api endpoints",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+					},
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"description": "User's id",
+						"schema": {
+							"type": "string",
+							"example": "640cd5ac2d9fecf12e8897f8"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ingredient removed from shopping list success",
+						"content": {}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {}
+					}
+				}
+			}
 		}
 	},
 	"components": {
@@ -1761,6 +1878,93 @@
 								"description": "users who added the recipe to favorites",
 								"example": "643d3fa2adbcdfdd8d8496fa"
 							}
+						}
+					}
+				}
+			},
+			"ShoppingList": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"ingredientId": {
+							"type": "string",
+							"description": "Ingredient id",
+							"example": "640c2dd963a319ea671e3672"
+						},
+						"measure": {
+							"type": "string",
+							"description": "Quantity ingredient",
+							"example": "2 tbsp"
+						},
+						"ttl": {
+							"type": "string",
+							"description": "Ingredient name",
+							"example": "Black Pepper"
+						},
+						"thb": {
+							"type": "string",
+							"description": "Category name",
+							"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564216/c6pfcmnzzmra22yqgyjq.png"
+						},
+						"id": {
+							"type": "string",
+							"description": "Unique id ingredient of shopping list",
+							"example": "64421c6c444e1df17d5c3d5f"
+						}
+					}
+				}
+			},
+			"AddIngredientRequest": {
+					"type": "object",
+					"properties": {
+						"ingredientId": {
+							"type": "string",
+							"description": "Ingredient id",
+							"example": "640c2dd963a319ea671e3672"
+						},
+						"measure": {
+							"type": "string",
+							"description": "Quantity ingredient",
+							"example": "2 tbsp"
+						},
+						"ttl": {
+							"type": "string",
+							"description": "Ingredient name",
+							"example": "Black Pepper"
+						},
+						"thb": {
+							"type": "string",
+							"description": "Category name",
+							"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564216/c6pfcmnzzmra22yqgyjq.png"
+						}
+					}
+			},
+
+			"AddIngredientResponse": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"ingredientId": {
+							"type": "string",
+							"description": "Ingredient id",
+							"example": "640c2dd963a319ea671e3672"
+						},
+						"measure": {
+							"type": "string",
+							"description": "Quantity ingredient",
+							"example": "2 tbsp"
+						},
+						"ttl": {
+							"type": "string",
+							"description": "Ingredient name",
+							"example": "Black Pepper"
+						},
+						"thb": {
+							"type": "string",
+							"description": "Category name",
+							"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564216/c6pfcmnzzmra22yqgyjq.png"
 						}
 					}
 				}
