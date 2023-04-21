@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const passwordRegex = /^[@!#$%&a-zA-Zа-яА-Я\d]{6,}$/;
+const passwordRegex = /^[@!#$%&a-zа-я\d]{3,}[@!#$%&A-ZА-Я\d]{3,}$/;
 const makeRequired = x => x.required();
 
 const userValidation = (data, strict = []) => {
