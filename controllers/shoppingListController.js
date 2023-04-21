@@ -27,46 +27,42 @@ const postIngredientShoppingList = async (req, res) => {
       thb,
     };
 
-    const addIngredients = await User.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       user._id,
       { $push: { shoppingList: { ...newIngredient } } },
       {
         new: true,
       })
-       
+    const updatedShoppingList = updatedUser.shoppingList
+
     await user.save();
 
-    res.status(200).json({ addIngredients, message: "Ingredient added to shopping list" });
+    res.status(200).json({ updatedShoppingList, message: "Ingredient added to shopping list success" });
 };
 
 // remove ingredient in user`s shopping list
 const deleteItemShoppingList = async (req, res) => {
   const user = await User.findById(req.user._id);
-
-
+  const idUser = user.id
   if (!user) {
     throw new HttpError(404, `${user} not found.`);
   };
-  const ingredientIdParams = req.params.ingredientId;
-  // console.log(`ingredientId ${ingredientIdParams}`);
+  const {ingredientId} = req.params;
 
   const arrayIngredients = user.shoppingList;
-  console.log(`arrayIngredients ${arrayIngredients}`);
   
-  const findIngredient = arrayIngredients.filter((it) => it.ingredientId === ingredientIdParams);
-  // console.log(findIngredient);
-
-  const index = arrayIngredients.findIndex(findIngredient);
-  // console.log(index)
+  const index = arrayIngredients.findIndex(item => item.id === ingredientId);
   if(index === -1) {
     return res.status(404).json({ message: "Ingredient not found" })
   }
-  const newArrayIngr = arrayIngredients.splice(index, 1);
-  // console.log(newArrayIngr)
-  const newUser = await updateUser({id: user.id, shoppingList: newArrayIngr });
-  // console.log(newUser)
+  arrayIngredients.splice(index, 1);
+
+  const newArr = {
+    shoppingList: [...arrayIngredients],
+  };
+  const newUser = await updateUser(idUser, newArr);
   
-  res.status(200).json({ newUser, message: "Ingredient removed from shopping list" });
+  res.status(200).json({newUser, message: "Ingredient removed from shopping list success" });
 };
 
 // get user`s shopping list by user id
