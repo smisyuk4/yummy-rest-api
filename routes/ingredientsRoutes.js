@@ -25,7 +25,7 @@ router.post('/shopping-list', asyncWrapper(postIngredientShoppingList));
 router.delete('/shopping-list/:ingredientId', asyncWrapper(deleteItemShoppingList));
 
 // get user`s shopping list
-router.get('/shopping-list/:userId',asyncWrapper(getShoppingList));
+router.get('/shopping-list', asyncWrapper(getShoppingList));
 
 module.exports = { ingredientsRouter: router };
 

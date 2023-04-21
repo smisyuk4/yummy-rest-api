@@ -909,11 +909,11 @@
         ],
         "responses": {
           "200": {
-            "description": "Get shopping-list success",
+            "description": "Shopping list of current user",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ShoppingList"
+                  "$ref": "#/components/schemas/AllIngredientsList"
                 }
               }
             }
@@ -971,7 +971,7 @@
         }
       }
     },
-    "/ingredients/shopping-list/{id}": {
+    "/ingredients/shopping-list/{ingredientId}": {
       "delete": {
         "tags": ["Ingredients"],
         "summary": "Delete ingredient from shopping-list",
@@ -987,9 +987,9 @@
           },
           {
             "in": "path",
-            "name": "id",
+            "name": "ingredientId",
             "required": true,
-            "description": "User's id",
+            "description": "Ingredient's id",
             "schema": {
               "type": "string",
               "example": "640cd5ac2d9fecf12e8897f8"
@@ -2263,7 +2263,7 @@
             },
             "thb": {
               "type": "string",
-              "description": "Category name",
+              "description": "Imgurl ingredient",
               "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564216/c6pfcmnzzmra22yqgyjq.png"
             },
             "id": {

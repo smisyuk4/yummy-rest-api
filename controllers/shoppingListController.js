@@ -68,8 +68,8 @@ const deleteItemShoppingList = async (req, res) => {
 // get user`s shopping list by user id
 const getShoppingList = async (req, res) => {
   const { userId } = req.params;
-
-  const user = await User.findById(userId);
+  const idUser = req.user.id
+  const user = await User.findById(idUser);
 
   if (!user) {
     throw new HttpError(404, `${user} not found.`);
@@ -77,7 +77,7 @@ const getShoppingList = async (req, res) => {
 
   const userShoppingList = user.shoppingList;
 
-  res.json({ userShoppingList });
+  res.status(200).json({ userShoppingList,  message: "Shopping list of current user" });
 };
 
 module.exports = {
