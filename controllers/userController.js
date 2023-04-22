@@ -49,10 +49,10 @@ const signup = async (req, res) => {
 
 	res.status(201).json({
 		user: {
-			email: user.email,
-			name: user.name,
-			avatarURL: user.avatarURL,
-			registeredAt: user.createdAt,
+			email: newUser.email,
+			name: newUser.name,
+			avatarURL: newUser.avatarURL,
+			registeredAt: newUser.createdAt,
 		},
 		token,
 	});

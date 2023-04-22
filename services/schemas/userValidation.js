@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+const passwordRegex = /^(?=.*[0-9])(?=.*[A-Z])([a-zA-Z0-9]+)$/;
 const nameRegex = /^[a-zA-Zа-яА-ЯґҐєЄїЇіІ\d]{6,}$/;
 const emailRegex = /^[\w\.]+@([\w]+\.)+[\w]{2,4}$/;
 const makeRequired = x => x.required();
@@ -9,15 +9,9 @@ const userValidation = (data, strict = []) => {
 		name: Joi.string().trim().min(1).max(16).regex(nameRegex).messages({
 			"string.pattern.base": `Name may contain letters and numbers. For example Jacob Mercer.`,
 		}),
-		email: Joi.string()
-			.email({
-				minDomainSegments: 2,
-			})
-			.trim()
-			.regex(emailRegex)
-			.messages({
-				"string.pattern.base": `Email may only latin letters, numbers and _ @ . symbols.`,
-			}),
+		email: Joi.string().trim().regex(emailRegex).messages({
+			"string.pattern.base": `Email may only latin letters, numbers and _ @ . symbols.`,
+		}),
 		password: Joi.string()
 			.trim()
 			.min(6)
