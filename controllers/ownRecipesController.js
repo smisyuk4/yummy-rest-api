@@ -2,6 +2,7 @@ const gravatar = require("gravatar");
 
 const {
   getAllOwnRecipes,
+  getAllOwnRecipesWithPagination,
   getOwnRecipesById,
   addRecipe,
   deleteRecipe,
@@ -9,10 +10,29 @@ const {
 
 const { HttpError } = require("../helpers/HttpError");
 
-const get = async (req, res, next) => {
+const getAll = async (req, res, next) => {
   const { _id: owner } = req.user;
   const recipes = await getAllOwnRecipes({ owner });
+  if (!recipes) {
+    throw HttpError(404, "Not found");
+  }
   res.status(200).json(recipes);
+};
+
+const getAllWithPagination = async (req, res, next) => {
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 1 } = req.query;
+  const skip = (page - 1) * limit;
+  const pagination = { skip, limit };
+  const recipes = await getAllOwnRecipesWithPagination({ owner }, pagination);
+  if (!recipes) {
+    throw HttpError(404, "Not found");
+  }
+  res.status(200).json({
+    currentPage: page,
+    countRecipes: recipes.length,
+    recipes: recipes,
+  });
 };
 
 const getById = async (req, res, next) => {
@@ -38,17 +58,6 @@ const create = async (req, res, next) => {
 
   const newRecipe = await addRecipe({ ...recipeData, owner });
   res.status(201).json(newRecipe);
-
-  // if (req.body.imageURL) {
-  //   const uploadRes = await cloudinary.uploader.upload(imageURL, {
-  //     upload_preset: "recipe-images",
-  //   });
-  //   if (uploadRes) {
-  //     const recipeData = { ...req.body, imageURL: uploadRes };
-  //     const newRecipe = await addRecipe({ ...recipeData, owner });
-  //     res.status(201).json(newRecipe);
-  //   }
-  // }
 };
 
 const remove = async (req, res, next) => {
@@ -60,7 +69,8 @@ const remove = async (req, res, next) => {
 };
 
 module.exports = {
-  get,
+  getAllWithPagination,
+  getAll,
   getById,
   remove,
   create,
