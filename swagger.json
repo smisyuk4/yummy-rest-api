@@ -1037,6 +1037,49 @@
         }
       }
     },
+    "/ownRecipes":{
+      "post": {
+        "tags": ["Own recipes"],
+        "summary": "Add own recipe",
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "name": "auth",
+            "description": "Bearer token to access these api endpoints",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+          }
+        ],
+        "requestBody": {
+          "description": "add new recipe",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewRecipeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recipe is added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewRecipeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "error validation req body",
+            "content": {}
+          }
+        }
+      }
+    },
     "/ownRecipes?page={numP}&limit={numL}": {
       "get": {
         "tags": ["Own recipes"],
