@@ -892,11 +892,10 @@
       }
     },
 
-    "/ingredients/shopping-list": {
+    "/ingredients/shopping-list/{idUser}": {
       "get": {
         "tags": ["Ingredients"],
-        "summary": "Get shopping-list",
-
+        "summary": "Get shopping list current user",
         "parameters": [
           {
             "in": "header",
@@ -904,26 +903,33 @@
             "required": true,
             "name": "auth",
             "description": "Bearer token to access these api endpoints",
-            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDE5OTNjODYzZWFmOWJiYTQ2YzY2NSIsImlhdCI6MTY4MjAyMDY2OCwiZXhwIjoxNjg0NjEyNjY4fQ.cc5YEHIsXZ2ZkIFUGCySz5LtjnoU7kjVbeYXtQpyCIw"
+          },
+          {
+            "in": "path",
+            "name": "idUser",
+            "required": true,
+            "description": "Id user",
+            "value": "6441993c863eaf9bba46c665",
+            "schema": {
+              "type": "string",
+              "example": "6441993c863eaf9bba46c665"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Get shopping-list success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ShoppingList"
-                }
-              }
-            }
+            "description": "Shopping list of current user",
+            "content": {}
           },
-          "404": {
-            "description": "Not found user",
+          "400": {
+            "description": "error validation req body",
             "content": {}
           }
         }
-      },
+      }
+    },
+    "/ingredients/shopping-list": {
       "post": {
         "tags": ["Ingredients"],
         "summary": "Add ingredient to shopping-list",
@@ -935,7 +941,7 @@
             "required": true,
             "name": "auth",
             "description": "Bearer token to access these api endpoints",
-            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDE5OTNjODYzZWFmOWJiYTQ2YzY2NSIsImlhdCI6MTY4MjAyMDY2OCwiZXhwIjoxNjg0NjEyNjY4fQ.cc5YEHIsXZ2ZkIFUGCySz5LtjnoU7kjVbeYXtQpyCIw"
           }
         ],
         "requestBody": {
@@ -971,7 +977,7 @@
         }
       }
     },
-    "/ingredients/shopping-list/{id}": {
+    "/ingredients/shopping-list/{ingredientId}": {
       "delete": {
         "tags": ["Ingredients"],
         "summary": "Delete ingredient from shopping-list",
@@ -983,13 +989,13 @@
             "required": true,
             "name": "auth",
             "description": "Bearer token to access these api endpoints",
-            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDE5OTNjODYzZWFmOWJiYTQ2YzY2NSIsImlhdCI6MTY4MjAyMDY2OCwiZXhwIjoxNjg0NjEyNjY4fQ.cc5YEHIsXZ2ZkIFUGCySz5LtjnoU7kjVbeYXtQpyCIw"
           },
           {
             "in": "path",
-            "name": "id",
+            "name": "ingredientId",
             "required": true,
-            "description": "User's id",
+            "description": "Ingredient's id",
             "schema": {
               "type": "string",
               "example": "640cd5ac2d9fecf12e8897f8"
@@ -2241,36 +2247,36 @@
           }
         }
       },
-      "ShoppingList": {
-        "type": "array",
+      "ShoppingListResponce": {
+        "type": "object",
+        "properties": {
+          "userShoppingList": {
+            "type": "array",
         "items": {
           "type": "object",
           "properties": {
             "ingredientId": {
               "type": "string",
-              "description": "Ingredient id",
-              "example": "640c2dd963a319ea671e3672"
+              "description": "id",
+              "example": "640c2dd963a319ea671e3691"
             },
             "measure": {
               "type": "string",
-              "description": "Quantity ingredient",
+              "description": "Ingredient's title",
               "example": "2 tbsp"
             },
             "ttl": {
               "type": "string",
-              "description": "Ingredient name",
-              "example": "Black Pepper"
+              "description": "Description",
+              "example": "Ingredient's title"
             },
             "thb": {
               "type": "string",
-              "description": "Category name",
-              "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564216/c6pfcmnzzmra22yqgyjq.png"
-            },
-            "id": {
-              "type": "string",
-              "description": "Unique id ingredient of shopping list",
-              "example": "64421c6c444e1df17d5c3d5f"
+              "description": "url img",
+              "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564673/nxuuo1bmhrnuqbnm9skh.png"
             }
+          }
+        }
           }
         }
       },
