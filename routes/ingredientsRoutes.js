@@ -17,6 +17,8 @@ router.get('/global', ingredientValidation, asyncWrapper(getAllRecipesByIngredie
 
 router.get('/list', asyncWrapper(get));
 
+// get user`s shopping list
+router.get('/shopping-list/:id', asyncWrapper(getShoppingList));
 
 // add ingredient to shopping-list
 router.post('/shopping-list', asyncWrapper(postIngredientShoppingList));
@@ -24,8 +26,6 @@ router.post('/shopping-list', asyncWrapper(postIngredientShoppingList));
 // delete ingredient from shopping list
 router.delete('/shopping-list/:ingredientId', asyncWrapper(deleteItemShoppingList));
 
-// get user`s shopping list
-router.get('/shopping-list', asyncWrapper(getShoppingList));
 
 module.exports = { ingredientsRouter: router };
 

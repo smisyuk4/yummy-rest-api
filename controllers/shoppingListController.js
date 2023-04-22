@@ -4,6 +4,8 @@ const { getIdIngredient } = require('../services/ingredientsServices');
 const { shoppingListValidation } = require('../services/schemas/shoppingListValidation');
 // const { Recipes } = require('../services/schemas/recipes');
 const { HttpError } = require('../helpers/HttpError');
+const {getUserById} = require('../services/userServices')
+
 
 // add ingredient in user`s shopping list
 const postIngredientShoppingList = async (req, res) => {
@@ -67,17 +69,17 @@ const deleteItemShoppingList = async (req, res) => {
 
 // get user`s shopping list by user id
 const getShoppingList = async (req, res) => {
-  const { userId } = req.params;
-  const idUser = req.user.id
-  const user = await User.findById(idUser);
+  const {id} = req.params;
+  const user = await getUserById(id);
 
   if (!user) {
     throw new HttpError(404, `${user} not found.`);
   }
 
-  const userShoppingList = user.shoppingList;
+  const {shoppingList} = user;
 
-  res.status(200).json({ userShoppingList,  message: "Shopping list of current user" });
+  res.status(200).json({shoppingList, message: "Shopping list of current user" });
+
 };
 
 module.exports = {
