@@ -19,8 +19,10 @@ const get = async (req, res) => {
 };
 
 const getAllRecipesByIngredientController = async (req, res) => {
+  const { query } = req
+
   const { _id } = req.user;
-  const results = await getAllRecipesByIngredient(req.body, _id);
+  const results = await getAllRecipesByIngredient(query.ingredient, _id);
 
   res.json({
     status: "Success",

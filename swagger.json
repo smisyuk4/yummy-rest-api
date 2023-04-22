@@ -875,18 +875,23 @@
       "get": {
         "tags": ["Ingredients"],
         "summary": "get all recipes by ingredient",
-        "parameters": [],
-        "requestBody": {
-          "description": "ingredients body",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetAllRecipesByIngredientRequest"
-              }
-            }
-          }
-        },
+        "parameters": [          
+          {
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "name": "auth",
+            "description": "Bearer token to access these api endpoints",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDE5OTNjODYzZWFmOWJiYTQ2YzY2NSIsImlhdCI6MTY4MjAyMDY2OCwiZXhwIjoxNjg0NjEyNjY4fQ.cc5YEHIsXZ2ZkIFUGCySz5LtjnoU7kjVbeYXtQpyCIw"
+          },       
+          {
+            "in": "query",
+            "type": "string",
+            "required": true,
+            "name": "ingredient",
+            "description": "Request ingredient",
+            "example": "Challots"
+          }],
         "responses": {
           "200": {
             "description": "Succesfull search",
@@ -2041,100 +2046,158 @@
         }
       },
 
-      "GetAllRecipesByIngredientRequest": {
-        "type": "object",
-        "required": ["ingredient"],
-        "properties": {
-          "ingredient": {
-            "type": "string",
-            "description": "Request ingredient",
-            "example": "Challots"
-          }
-        }
-      },
       "GetAllRecipesByIngredientResponse": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
-            "id": {
-              "type": "string",
-              "description": "Recipes id",
-              "example": "643d3fa2adbcdfdd8d8496fa"
-            },
-            "title": {
-              "type": "string",
-              "description": "Title recipe",
-              "example": "Irish stew"
-            },
-            "category": {
-              "type": "string",
-              "description": "Category name",
-              "example": "Beef"
-            },
-            "area": {
-              "type": "string",
-              "description": "Area recipe",
-              "example": "Irish"
-            },
-            "instructions": {
-              "type": "string",
-              "description": "instructions recipe",
-              "example": "Heat the oven to 180C/350F/gas mark 4..."
-            },
-            "description": {
-              "type": "string",
-              "description": "description recipe",
-              "example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
-            },
-            "thumb": {
-              "type": "string",
-              "description": "url img recipe",
-              "example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
-            },
-            "preview": {
-              "type": "string",
-              "description": "url img recipe",
-              "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
-            },
-            "time": {
-              "type": "string",
-              "description": "Сooking time",
-              "example": "160"
-            },
-            "youtube": {
-              "type": "string",
-              "description": "Сooking video",
-              "example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
-            },
-            "tags": {
+            "ownRecipes": {
               "type": "array",
-              "description": "tags of recipes",
-              "example": ["Stew", "Meat"]
-            },
-            "createdAt": {
-              "type": "string",
-              "description": "When a recipe is added",
-              "example": "2023-03-11T19:25:33.240Z"
-            },
-            "updatedAt": {
-              "type": "string",
-              "description": "When a recipe was updated",
-              "example": "2023-04-18T23:21:07.061Z"
-            },
-            "ingredients": {
-              "type": "array",
-              "description": "ingredients of recipe",
-              "example": [
-                {
-                  "id": "640c2dd963a319ea671e3796",
-                  "measure": "300g soaked overnight in water"
-                },
-                {
-                  "id": "640c2dd963a319ea671e370c",
-                  "measure": "2kg cut into 3cm cubes"
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Own recipe id",
+                    "example": "643d3fa2adbcdfdd8d8496fa"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Title of the recipe",
+                    "example": "Irish stew"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Category name",
+                    "example": "Beef"
+                  },
+                  "time": {
+                    "type": "string",
+                    "description": "Сooking time",
+                    "example": "30m"
+                  },
+                  "instructions": {
+                    "type": "string",
+                    "description": "Instructions for preparing the recipe",
+                    "example": "Heat the oven to 180C/350F/gas mark 4..."
+                  },
+                  "imageURL": {
+                    "type": "string",
+                    "description": "url img recipe",
+                    "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+                  },
+                  "ingredients": {
+                    "type": "array",
+                    "description": "Ingredients of recipe",
+                    "example": [
+                      {
+                        "id": "640c2dd963a319ea671e3796",
+                        "measure": "300g soaked overnight in water"
+                      },
+                      {
+                        "id": "640c2dd963a319ea671e370c",
+                        "measure": "2kg cut into 3cm cubes"
+                      }
+                    ]
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User id",
+                    "example": "64405697c0e7778c67a7d6e9"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "When a recipe is added",
+                    "example": "2023-03-11T19:25:33.240Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "When a recipe was updated",
+                    "example": "2023-04-18T23:21:07.061Z"
+                  }
                 }
-              ]
+              }
+            },
+            "AllRecipes": {
+              "id": {
+                "type": "string",
+                "description": "Recipes id",
+                "example": "643d3fa2adbcdfdd8d8496fa"
+              },
+              "title": {
+                "type": "string",
+                "description": "Title recipe",
+                "example": "Irish stew"
+              },
+              "category": {
+                "type": "string",
+                "description": "Category name",
+                "example": "Beef"
+              },
+              "area": {
+                "type": "string",
+                "description": "Area recipe",
+                "example": "Irish"
+              },
+              "instructions": {
+                "type": "string",
+                "description": "instructions recipe",
+                "example": "Heat the oven to 180C/350F/gas mark 4..."
+              },
+              "description": {
+                "type": "string",
+                "description": "description recipe",
+                "example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+              },
+              "thumb": {
+                "type": "string",
+                "description": "url img recipe",
+                "example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+              },
+              "preview": {
+                "type": "string",
+                "description": "url img recipe",
+                "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+              },
+              "time": {
+                "type": "string",
+                "description": "Сooking time",
+                "example": "160"
+              },
+              "youtube": {
+                "type": "string",
+                "description": "Сooking video",
+                "example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+              },
+              "tags": {
+                "type": "array",
+                "description": "tags of recipes",
+                "example": ["Stew", "Meat"]
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "When a recipe is added",
+                "example": "2023-03-11T19:25:33.240Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "When a recipe was updated",
+                "example": "2023-04-18T23:21:07.061Z"
+              },
+              "ingredients": {
+                "type": "array",
+                "description": "ingredients of recipe",
+                "example": [
+                  {
+                    "id": "640c2dd963a319ea671e3796",
+                    "measure": "300g soaked overnight in water"
+                  },
+                  {
+                    "id": "640c2dd963a319ea671e370c",
+                    "measure": "2kg cut into 3cm cubes"
+                  }
+                ]
+              }
             }
           }
         }
@@ -2185,127 +2248,129 @@
             "example": "10"
           },
           "recipes": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Recipes id",
-            "example": "643d3fa2adbcdfdd8d8496fa"
-          },
-          "title": {
-            "type": "string",
-            "description": "Title recipe",
-            "example": "Irish stew"
-          },
-          "category": {
-            "type": "string",
-            "description": "Category name",
-            "example": "Beef"
-          },
-          "area": {
-            "type": "string",
-            "description": "Area recipe",
-            "example": "Irish"
-          },
-          "instructions": {
-            "type": "string",
-            "description": "instructions recipe",
-            "example": "Heat the oven to 180C/350F/gas mark 4..."
-          },
-          "description": {
-            "type": "string",
-            "description": "description recipe",
-            "example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
-          },
-          "thumb": {
-            "type": "string",
-            "description": "url img recipe",
-            "example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
-          },
-          "preview": {
-            "type": "string",
-            "description": "url img recipe",
-            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
-          },
-          "time": {
-            "type": "string",
-            "description": "Сooking time",
-            "example": "160"
-          },
-          "youtube": {
-            "type": "string",
-            "description": "Сooking video",
-            "example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
-          },
-          "tags": {
             "type": "array",
             "items": {
-              "description": "tags of recipes",
-              "example": "Stew"
-            }
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "When a recipe is added",
-            "example": "2023-03-11T19:25:33.240Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "When a recipe was updated",
-            "example": "2023-04-18T23:21:07.061Z"
-          },
-          "ingredients": {
-            "type": "array",
-            "items": {
-              "description": "ingredients of recipe",
-              "example": {
-                "id": "640c2dd963a319ea671e3796",
-                "measure": "300g soaked overnight in water"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Recipes id",
+                  "example": "643d3fa2adbcdfdd8d8496fa"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Title recipe",
+                  "example": "Irish stew"
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Category name",
+                  "example": "Beef"
+                },
+                "area": {
+                  "type": "string",
+                  "description": "Area recipe",
+                  "example": "Irish"
+                },
+                "instructions": {
+                  "type": "string",
+                  "description": "instructions recipe",
+                  "example": "Heat the oven to 180C/350F/gas mark 4..."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "description recipe",
+                  "example": "A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy."
+                },
+                "thumb": {
+                  "type": "string",
+                  "description": "url img recipe",
+                  "example": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg"
+                },
+                "preview": {
+                  "type": "string",
+                  "description": "url img recipe",
+                  "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+                },
+                "time": {
+                  "type": "string",
+                  "description": "Сooking time",
+                  "example": "160"
+                },
+                "youtube": {
+                  "type": "string",
+                  "description": "Сooking video",
+                  "example": "https://www.youtube.com/watch?v=kYH2qJXnSMo"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "description": "tags of recipes",
+                    "example": "Stew"
+                  }
+                },
+                "createdAt": {
+                  "type": "string",
+                  "description": "When a recipe is added",
+                  "example": "2023-03-11T19:25:33.240Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "description": "When a recipe was updated",
+                  "example": "2023-04-18T23:21:07.061Z"
+                },
+                "ingredients": {
+                  "type": "array",
+                  "items": {
+                    "description": "ingredients of recipe",
+                    "example": {
+                      "id": "640c2dd963a319ea671e3796",
+                      "measure": "300g soaked overnight in water"
+                    }
+                  }
+                },
+                "favorite": {
+                  "type": "array",
+                  "items": {
+                    "description": "users who added the recipe to favorites",
+                    "example": "643d3fa2adbcdfdd8d8496fa"
+                  }
+                }
               }
-            }
-          },
-          "favorite": {
-            "type": "array",
-            "items": {
-              "description": "users who added the recipe to favorites",
-              "example": "643d3fa2adbcdfdd8d8496fa"
             }
           }
         }
-      }}}
       },
       "ShoppingListResponce": {
         "type": "object",
         "properties": {
           "userShoppingList": {
             "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "ingredientId": {
-              "type": "string",
-              "description": "id",
-              "example": "640c2dd963a319ea671e3691"
-            },
-            "measure": {
-              "type": "string",
-              "description": "Ingredient's title",
-              "example": "2 tbsp"
-            },
-            "ttl": {
-              "type": "string",
-              "description": "Description",
-              "example": "Ingredient's title"
-            },
-            "thb": {
-              "type": "string",
-              "description": "url img",
-              "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564673/nxuuo1bmhrnuqbnm9skh.png"
+            "items": {
+              "type": "object",
+              "properties": {
+                "ingredientId": {
+                  "type": "string",
+                  "description": "id",
+                  "example": "640c2dd963a319ea671e3691"
+                },
+                "measure": {
+                  "type": "string",
+                  "description": "Ingredient's title",
+                  "example": "2 tbsp"
+                },
+                "ttl": {
+                  "type": "string",
+                  "description": "Description",
+                  "example": "Ingredient's title"
+                },
+                "thb": {
+                  "type": "string",
+                  "description": "url img",
+                  "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564673/nxuuo1bmhrnuqbnm9skh.png"
+                }
+              }
             }
-          }
-        }
           }
         }
       },
