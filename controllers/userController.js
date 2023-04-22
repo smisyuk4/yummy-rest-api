@@ -49,11 +49,12 @@ const signup = async (req, res) => {
 
 	res.status(201).json({
 		user: {
-			id: newUser._id,
-			email: newUser.email,
-			name: newUser.name,
-			avatarURL: newUser.avatarURL,
+			email: user.email,
+			name: user.name,
+			avatarURL: user.avatarURL,
+			registeredAt: user.createdAt,
 		},
+		token,
 	});
 };
 
@@ -90,6 +91,7 @@ const login = async (req, res) => {
 			email: user.email,
 			name: user.name,
 			avatarURL: user.avatarURL,
+			registeredAt: user.createdAt,
 		},
 		token,
 	});
