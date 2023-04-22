@@ -4,9 +4,9 @@ const { OwnRecipes } = require("./schemas/ownRecipes");
 const { Recipes } = require("./schemas/recipes");
 
 const getAllRecipesByIngredient = async (request, owner) => {
-  console.log(owner);
+
   const searchedIngredient = await Ingredients.findOne({
-    ttl: `${request.ingredient}`,
+    ttl: `${request}`,
   });
 
   if (!searchedIngredient) {
@@ -26,8 +26,6 @@ const getAllRecipesByIngredient = async (request, owner) => {
   const baseRecipesByIngredients = await Recipes.find({
     ingredients: { $elemMatch: { id: searchedIngredient._id } },
   });
-
-  console.log(userRecipecByIngredients);
   const globalRecipes = [
     ...userRecipecByIngredients,
     ...baseRecipesByIngredients,
