@@ -7,6 +7,7 @@ const {
   addToFavorite,
   removeFromFavorite,
   getAllFavorite,
+  getAllFavoritePagination,
 } = require('../services/recipesServices');
 const { Recipes } = require('../services/schemas/recipes');
 const { getAllIngredients } = require('../services/ingredientsServices');
@@ -75,13 +76,14 @@ const searchByIngredients = async (req, res) => {
     throw new HttpError(404, `Ingredients ${ttl} not found`);
   }
 
-  const ingredientsIdArr = allIngredients.map(({_id}) => {
-    return {id: _id}})
+  const ingredientsIdArr = allIngredients.map(({ _id }) => {
+    return { id: _id };
+  });
 
   const conditionSearch = {
     ingredients: {
       $elemMatch: {
-        $or: ingredientsIdArr
+        $or: ingredientsIdArr,
       },
     },
   };
@@ -121,10 +123,7 @@ const getRecipesByIdController = async (req, res) => {
 const getAllRecipesController = async (req, res, next) => {
   const limit = 4;
 
-  const resultAllCategory = await getAllCategoryWithFourRecipes(
-    resultCategory,
-    { limit }
-  );
+  const resultAllCategory = await getAllCategoryWithFourRecipes(resultCategory, { limit });
   res.json({ resultAllCategory });
 };
 
@@ -191,8 +190,20 @@ const removeFromFavoriteController = async (req, res) => {
 };
 
 const getAllFavoriteController = async (req, res) => {
-  const allFavorite = await getAllFavorite(req.user._id);
-  res.json({ allFavorite });
+  const { page = 1, limit = 4 } = req.query;
+  const skip = (page - 1) * limit;
+  const pagination = { skip, limit };
+  const allFavorite = await getAllFavoritePagination(req.user._id, pagination);
+  const all = await getAllFavorite(req.user._id);
+  res.json({
+    status: 'Success',
+    code: 200,
+    data: {
+      currentPage: page,
+      countRecipes: all.length,
+      recipes: allFavorite,
+    },
+  });
 };
 
 module.exports = {
