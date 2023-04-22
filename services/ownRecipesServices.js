@@ -4,6 +4,10 @@ const getAllOwnRecipes = async (owner) => {
   return OwnRecipes.find(owner);
 };
 
+const getAllOwnRecipesWithPagination = async (owner, pagination) => {
+  return OwnRecipes.find(owner, "", pagination);
+};
+
 const getOwnRecipesById = (id) => {
   return OwnRecipes.findOne({ _id: id });
 };
@@ -18,6 +22,7 @@ const deleteRecipe = (id) => {
 
 module.exports = {
   getAllOwnRecipes,
+  getAllOwnRecipesWithPagination,
   getOwnRecipesById,
   deleteRecipe,
   addRecipe,

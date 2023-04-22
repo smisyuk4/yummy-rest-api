@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  get,
+  getAllWithPagination,
   create,
   getById,
   remove,
@@ -14,7 +14,7 @@ const { uploadCloud } = require("../middlewares/uploadMiddleware");
 
 router
   .route("/")
-  .get(asyncWrapper(get))
+  .get(asyncWrapper(getAllWithPagination))
   .post(
     uploadCloud.single("imageURL"),
     validateBody(newRecipeSchema),

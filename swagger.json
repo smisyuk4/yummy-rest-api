@@ -440,16 +440,16 @@
             "description": "Bearer token to access these api endpoints",
             "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
           },
-		  {
-			"in":"path",
-			"name":"id",
-			"required":true,
-			"description":"Numeric id of the recipes",
-			"schema": {
-				"type": "string",
-				"example": "640cd5ac2d9fecf12e8897f8"
-			}
-		}
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric id of the recipes",
+            "schema": {
+              "type": "string",
+              "example": "640cd5ac2d9fecf12e8897f8"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -1037,12 +1037,29 @@
         }
       }
     },
-    "/ownRecipes": {
+    "/ownRecipes?page={numP}&limit={numL}": {
       "get": {
         "tags": ["Own recipes"],
-        "summary": "Get all own recipes",
-
+        "summary": "Get all own recipes with pagination",
         "parameters": [
+          {
+            "in": "path",
+            "name": "numP",
+            "description": "page count",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          },
+          {
+            "in": "path",
+            "name": "numL",
+            "description": "count cards of page",
+            "schema": {
+              "type": "string",
+              "example": "10"
+            }
+          },
           {
             "in": "header",
             "type": "string",
@@ -1058,7 +1075,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetAllOwnRecipes"
+                  "$ref": "#/components/schemas/GetAllOwnRecipesWithPagination"
                 }
               }
             }
@@ -1068,50 +1085,8 @@
             "content": {}
           }
         }
-      },
-      "post": {
-        "tags": ["Own recipes"],
-        "summary": "Add own recipe",
-        "parameters": [
-          {
-            "in": "header",
-            "type": "string",
-            "required": true,
-            "name": "auth",
-            "description": "Bearer token to access these api endpoints",
-            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2QyZTFjNjk1YWIyMDE2NTljMWQxZCIsImlhdCI6MTY4MTczMTEwMCwiZXhwIjoxNjg0MzIzMTAwfQ.f-Xq6kf8hTqluWMDDOfclhUB2VlqphnUOzCd1z3woZk"
-          }
-        ],
-        "requestBody": {
-          "description": "add new recipe",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewRecipeRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Recipe is added",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewRecipeResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "error validation req body",
-            "content": {}
-          }
-        }
       }
     },
-
     "/ownRecipes/{id}": {
       "get": {
         "tags": ["Own recipes"],
@@ -2428,69 +2403,85 @@
           }
         }
       },
-      "GetAllOwnRecipes": {
+      "GetAllOwnRecipesWithPagination": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
-            "id": {
+            "currentPage": {
               "type": "string",
-              "description": "Own recipe id",
-              "example": "643d3fa2adbcdfdd8d8496fa"
+              "example": "1"
             },
-            "title": {
+            "countRecipes": {
               "type": "string",
-              "description": "Title of the recipe",
-              "example": "Irish stew"
+              "example": "10"
             },
-            "category": {
-              "type": "string",
-              "description": "Category name",
-              "example": "Beef"
-            },
-            "time": {
-              "type": "string",
-              "description": "Сooking time",
-              "example": "30m"
-            },
-            "instructions": {
-              "type": "string",
-              "description": "Instructions for preparing the recipe",
-              "example": "Heat the oven to 180C/350F/gas mark 4..."
-            },
-            "imageURL": {
-              "type": "string",
-              "description": "url img recipe",
-              "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
-            },
-            "ingredients": {
+            "recipes": {
               "type": "array",
-              "description": "Ingredients of recipe",
-              "example": [
-                {
-                  "id": "640c2dd963a319ea671e3796",
-                  "measure": "300g soaked overnight in water"
-                },
-                {
-                  "id": "640c2dd963a319ea671e370c",
-                  "measure": "2kg cut into 3cm cubes"
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Own recipe id",
+                    "example": "643d3fa2adbcdfdd8d8496fa"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Title of the recipe",
+                    "example": "Irish stew"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Category name",
+                    "example": "Beef"
+                  },
+                  "time": {
+                    "type": "string",
+                    "description": "Сooking time",
+                    "example": "30m"
+                  },
+                  "instructions": {
+                    "type": "string",
+                    "description": "Instructions for preparing the recipe",
+                    "example": "Heat the oven to 180C/350F/gas mark 4..."
+                  },
+                  "imageURL": {
+                    "type": "string",
+                    "description": "url img recipe",
+                    "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560408/kknfjaqupiqhufj5kspx.jpg"
+                  },
+                  "ingredients": {
+                    "type": "array",
+                    "description": "Ingredients of recipe",
+                    "example": [
+                      {
+                        "id": "640c2dd963a319ea671e3796",
+                        "measure": "300g soaked overnight in water"
+                      },
+                      {
+                        "id": "640c2dd963a319ea671e370c",
+                        "measure": "2kg cut into 3cm cubes"
+                      }
+                    ]
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User id",
+                    "example": "64405697c0e7778c67a7d6e9"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "When a recipe is added",
+                    "example": "2023-03-11T19:25:33.240Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "When a recipe was updated",
+                    "example": "2023-04-18T23:21:07.061Z"
+                  }
                 }
-              ]
-            },
-            "owner": {
-              "type": "string",
-              "description": "User id",
-              "example": "64405697c0e7778c67a7d6e9"
-            },
-            "createdAt": {
-              "type": "string",
-              "description": "When a recipe is added",
-              "example": "2023-03-11T19:25:33.240Z"
-            },
-            "updatedAt": {
-              "type": "string",
-              "description": "When a recipe was updated",
-              "example": "2023-04-18T23:21:07.061Z"
+              }
             }
           }
         }
