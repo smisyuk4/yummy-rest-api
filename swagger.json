@@ -1683,7 +1683,6 @@
 					}
 				}
 			},
-
 			"GetRecipesByTitleWithPagination": {
 				"type": "object",
 				"properties": {
