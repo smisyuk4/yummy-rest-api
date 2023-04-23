@@ -113,7 +113,7 @@ const logout = async (req, res) => {
 	await user.save();
 
 	res.status(204).json({
-		message: "No content",
+		message: "User logout successfully",
 	});
 };
 
