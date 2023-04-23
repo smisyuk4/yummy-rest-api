@@ -1,6 +1,6 @@
 const Joi = require("joi");
 const passwordRegex = /^(?=.*[0-9])(?=.*[A-Z])([a-zA-Z0-9]+)$/;
-const nameRegex = /^[a-zA-Zа-яА-ЯґҐєЄїЇіІ\d]{6,}$/;
+const nameRegex = /^[a-zA-Zа-яА-ЯґҐєЄїЇіІ\d\s]{6,}$/;
 const emailRegex = /^[\w\.]+@([\w]+\.)+[\w]{2,4}$/;
 const makeRequired = x => x.required();
 
