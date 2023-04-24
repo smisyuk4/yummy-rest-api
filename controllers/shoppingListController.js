@@ -82,7 +82,7 @@ const deleteItemShoppingList = async (req, res) => {
 
 // get user`s shopping list by user id
 const getShoppingList = async (req, res) => {
-  const { shoppingList } = req.user.shoppingList;
+  const shoppingList = req.user.shoppingList;
 
   res
     .status(200)
