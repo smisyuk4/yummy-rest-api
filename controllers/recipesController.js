@@ -46,11 +46,14 @@ const get = async (req, res) => {
 
 const searchByTitle = async (req, res) => {
   const { title, page = 1, limit = 10 } = req.query;
+
+  if (title === '') {
+    throw new HttpError(400, `Empty search fild`);
+  }
+
   const skip = (page - 1) * limit;
   const condition = { title: { $regex: title, $options: 'i' } };
   const pagination = { skip, limit };
-
-  console.log(condition, pagination);
   const results = await getRecipes(condition, pagination);
 
   res.json({
@@ -66,6 +69,11 @@ const searchByTitle = async (req, res) => {
 
 const searchByIngredients = async (req, res) => {
   const { ttl, page = 1, limit = 10 } = req.query;
+
+  if (ttl === '') {
+    throw new HttpError(400, `Empty search fild`);
+  }
+
   const skip = (page - 1) * limit;
   const condition = { ttl: { $regex: ttl, $options: 'i' } };
   const pagination = { skip, limit };
