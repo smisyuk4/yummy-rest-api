@@ -5,7 +5,12 @@ const {
 const { getAllRecipesByIngredient } = require("../services/recipeByIngredientService");
 
 const get = async (req, res) => {
-  const condition = {};
+  const { arrayId } = req.body
+  
+  // console.log(req.body)
+
+  console.log(arrayId)
+  const condition = { _id: { $in: arrayId } } ;
 
   const results = await getAllIngredients(condition);
 
@@ -13,6 +18,7 @@ const get = async (req, res) => {
     status: "Success",
     code: 200,
     data: {
+      totalIngretients: results.length,
       ingretients: results,
     },
   });
