@@ -144,8 +144,9 @@ const getUser = async (req, res) => {
  * @description Avatar upload controller
  */
 const updateUserAvatar = async (req, res) => {
+	if (!req.file) return res.status(400).json({message: "No file uploaded"});
 	let user = await getUserById(req.user._id);
-	if (!user) return res.status(404).json({message: "Not found"});
+	if (!user) return res.status(404).json({message: "User not found"});
 	user.avatarURL = req.file.path;
 	await user.save();
 	res.status(201).json({
@@ -158,11 +159,13 @@ const updateUserAvatar = async (req, res) => {
  *@description Update subscription controller
  */
 const updateUser = async (req, res) => {
+	if (!req.body)
+		return res.status(400).json({message: "missing fields for update"});
 	const {error, value} = userValidation(req.body);
 	if (error) return res.status(400).json({message: error.message});
-	const user = getUserUpdate(req.user._id, value);
+	await getUserUpdate(req.user._id, value);
 	const user2 = await getUserById(req.user._id);
-	if (!user2) return res.status(404).json({message: "Not found"});
+	if (!user2) return res.status(404).json({message: "User not found"});
 	res.status(202).json({
 		email: user2.email,
 		name: user2.name,
