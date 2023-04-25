@@ -837,10 +837,11 @@
         }
       }
     },
+
     "/ingredients/list": {
-      "get": {
+      "post": {
         "tags": ["Ingredients"],
-        "summary": "Get all ingredients ",
+        "summary": "Get ingredients by array with id",
 
         "parameters": [
           {
@@ -852,13 +853,25 @@
             "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2ViYzUwZTlmZmE1MTk4ZmJiMDVkMyIsImlhdCI6MTY4MTgzMzA0MSwiZXhwIjoxNjg0NDI1MDQxfQ.iqfQ_bHHiks9P0_V7-ua0KSqvtmf0qDl2HJN5qw6IxU"
           }
         ],
+        
+        "requestBody": {
+          "description": "query body",
+          "required": true,
+          "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllIngredientsListRequest"
+                }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Get all ingredients  success",
+            "description": "Get ingredients success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AllIngredientsList"
+                  "$ref": "#/components/schemas/AllIngredientsListResponse"
                 }
               }
             }
@@ -870,6 +883,12 @@
         }
       }
     },
+
+
+
+
+
+
 
     "/ingredients/global": {
       "get": {
@@ -1037,7 +1056,7 @@
             "required": true,
             "name": "auth",
             "description": "Bearer token to access these api endpoints",
-            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDE5OTNjODYzZWFmOWJiYTQ2YzY2NSIsImlhdCI6MTY4MjAyMDY2OCwiZXhwIjoxNjg0NjEyNjY4fQ.cc5YEHIsXZ2ZkIFUGCySz5LtjnoU7kjVbeYXtQpyCIw"
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2ViYzUwZTlmZmE1MTk4ZmJiMDVkMyIsImlhdCI6MTY4MTgzMzA0MSwiZXhwIjoxNjg0NDI1MDQxfQ.iqfQ_bHHiks9P0_V7-ua0KSqvtmf0qDl2HJN5qw6IxU"
           }
         ],
         "requestBody": {
@@ -2218,7 +2237,18 @@
         }
       },
 
-      "AllIngredientsList": {
+      "AllIngredientsListRequest": {
+        "type": "object",
+        "required": ["arrayId"],
+        "properties": {
+          "arrayId": {
+            "type": "array",
+            "example":  ["640c2dd963a319ea671e3796","640c2dd963a319ea671e370c"]
+          }
+        }
+      },
+
+      "AllIngredientsListResponse": {
         "type": "array",
         "items": {
           "type": "object",
