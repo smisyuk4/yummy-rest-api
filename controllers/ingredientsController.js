@@ -3,7 +3,7 @@ const {
   getAllRecipesByIngredient,
 } = require('../services/recipeByIngredientService');
 
-const getAllIngredients = async (req, res) => {
+const get = async (req, res) => {
   const condition = {};
 
   const results = await getAllIngredients(condition);
@@ -21,9 +21,6 @@ const getAllIngredients = async (req, res) => {
 const getSomeIngredients = async (req, res) => {
   const { arrayId } = req.body;
 
-  // console.log(req.body)
-
-  console.log(arrayId);
   const condition = { _id: { $in: arrayId } };
 
   const results = await getAllIngredients(condition);
@@ -54,7 +51,7 @@ const getAllRecipesByIngredientController = async (req, res) => {
 };
 
 module.exports = {
-  getAllIngredients,
+  get,
   getSomeIngredients,
   getAllRecipesByIngredientController,
 };

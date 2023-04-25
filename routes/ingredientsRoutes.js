@@ -8,7 +8,7 @@ const {
 } = require('../controllers/shoppingListController');
 
 const {
-  getAllIngredients,
+  get,
   getSomeIngredients,
   getAllRecipesByIngredientController,
 } = require('../controllers/ingredientsController');
@@ -17,7 +17,7 @@ const {
   ingredientValidation,
 } = require('../services/schemas/ingredientsValidation');
 
-router.get('/', asyncWrapper(getAllIngredients));
+router.get('/', asyncWrapper(get));
 
 router.post('/', asyncWrapper(getSomeIngredients));
 
