@@ -17,7 +17,6 @@ const { protectPath } = require('../middlewares/authMiddleware');
 const { uploadCloud } = require('../middlewares/uploadMiddleware');
 const { deleteItemShoppingList } = require('../controllers/shoppingListController');
 
-router.post('/subscribe', asyncWrapper(subscribe));
 
 router.post('/register', asyncWrapper(signup));
 router.post('/login', asyncWrapper(login));
