@@ -1,12 +1,16 @@
+const { normalize } = require("path");
 const { HttpError } = require("../helpers/HttpError");
 const { Ingredients } = require("./schemas/ingredients");
 const { OwnRecipes } = require("./schemas/ownRecipes");
 const { Recipes } = require("./schemas/recipes");
 
 const getAllRecipesByIngredient = async (request, owner) => {
-
+  let normalizedRequest = ''
+  if (request !== undefined) {
+    normalizedRequest = request.charAt(0).toUpperCase() + request.slice(1).toLowerCase()
+  }
   const searchedIngredient = await Ingredients.findOne({
-    ttl: `${request}`,
+    ttl: `${normalizedRequest}`,
   });
 
   if (!searchedIngredient) {

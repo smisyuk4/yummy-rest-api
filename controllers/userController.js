@@ -6,6 +6,7 @@ const {
 	createUser,
 	getUserByFild,
 	getUserById,
+	getUserUpdate,
 } = require("../services/userServices");
 const {userValidation} = require("../services/schemas/userValidation");
 // const {sendEmailToken} = require("../services/emailService");
@@ -143,12 +144,13 @@ const getUser = async (req, res) => {
  * @description Avatar upload controller
  */
 const updateUserAvatar = async (req, res) => {
-	const {user: _id} = req;
-	let user = await getUserById(_id);
+	if (!req.file) return res.status(400).json({message: "No file uploaded"});
+	let user = await getUserById(req.user._id);
+	if (!user) return res.status(404).json({message: "User not found"});
 	user.avatarURL = req.file.path;
 	await user.save();
 	res.status(201).json({
-		message: "Avatar updated",
+		avatarURL: user.avatarURL,
 	});
 };
 /**
@@ -157,16 +159,18 @@ const updateUserAvatar = async (req, res) => {
  *@description Update subscription controller
  */
 const updateUser = async (req, res) => {
+	if (!req.body)
+		return res.status(400).json({message: "missing fields for update"});
 	const {error, value} = userValidation(req.body);
 	if (error) return res.status(400).json({message: error.message});
-
-	const {user: _id} = req;
-	let user = await getUserById(_id);
-	user = {...user, ...value};
-	await user.save();
-
+	await getUserUpdate(req.user._id, value);
+	const user2 = await getUserById(req.user._id);
+	if (!user2) return res.status(404).json({message: "User not found"});
 	res.status(202).json({
-		message: "User updated",
+		email: user2.email,
+		name: user2.name,
+		avatarURL: user2.avatarURL,
+		registeredAt: user2.createdAt,
 	});
 };
 
