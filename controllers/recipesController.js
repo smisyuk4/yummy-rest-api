@@ -46,7 +46,6 @@ const get = async (req, res) => {
 
 const searchByTitle = async (req, res) => {
   const { title: dirtyTitle, page = 1, limit = 10 } = req.query;
-
   const title = dirtyTitle.trim()
 
   if (title === '') {
@@ -57,6 +56,7 @@ const searchByTitle = async (req, res) => {
   const condition = { title: { $regex: title, $options: 'i' } };
   const pagination = { skip, limit };
   const results = await getRecipes(condition, pagination);
+  const totalRecipes = await getRecipes(condition, {});
 
   res.json({
     status: 'Success',
@@ -64,6 +64,7 @@ const searchByTitle = async (req, res) => {
     data: {
       currentPage: page,
       countRecipes: results.length,
+      totalRecipes: totalRecipes.length,
       recipes: results,
     },
   });
@@ -71,7 +72,6 @@ const searchByTitle = async (req, res) => {
 
 const searchByIngredients = async (req, res) => {
   const { ttl: dirtyTtl, page = 1, limit = 10 } = req.query;
-
   const ttl = dirtyTtl.trim()
 
   if (ttl === '') {
@@ -101,6 +101,7 @@ const searchByIngredients = async (req, res) => {
   };
 
   const recipesByIngredients = await getRecipes(conditionSearch, pagination);
+  const totalRecipes = await getRecipes(conditionSearch, {});
 
   res.json({
     status: 'Success',
@@ -108,6 +109,7 @@ const searchByIngredients = async (req, res) => {
     data: {
       currentPage: page,
       countRecipes: recipesByIngredients.length,
+      totalRecipes: totalRecipes.length,
       recipes: recipesByIngredients,
     },
   });
@@ -178,6 +180,7 @@ const popularRecipesController = async (req, res) => {
     { $sort: { arrayLength: -1 } },
     { $limit: 4 },
   ]);
+  
   if (!recipesByPopular) {
     throw new HttpError(404, `Popular recipes not found`);
   }
