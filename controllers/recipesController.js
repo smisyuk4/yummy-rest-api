@@ -45,7 +45,9 @@ const get = async (req, res) => {
 };
 
 const searchByTitle = async (req, res) => {
-  const { title, page = 1, limit = 10 } = req.query;
+  const { title: dirtyTitle, page = 1, limit = 10 } = req.query;
+
+  const title = dirtyTitle.trim()
 
   if (title === '') {
     throw new HttpError(400, `Empty search fild`);
@@ -68,7 +70,9 @@ const searchByTitle = async (req, res) => {
 };
 
 const searchByIngredients = async (req, res) => {
-  const { ttl, page = 1, limit = 10 } = req.query;
+  const { ttl: dirtyTtl, page = 1, limit = 10 } = req.query;
+
+  const ttl = dirtyTtl.trim()
 
   if (ttl === '') {
     throw new HttpError(400, `Empty search fild`);
