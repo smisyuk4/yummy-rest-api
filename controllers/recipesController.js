@@ -46,7 +46,7 @@ const get = async (req, res) => {
 
 const searchByTitle = async (req, res) => {
   const { title: dirtyTitle, page = 1, limit = 10 } = req.query;
-  const title = dirtyTitle.trim()
+  const title = dirtyTitle.trim();
 
   if (title === '') {
     throw new HttpError(400, `Empty search fild`);
@@ -72,7 +72,7 @@ const searchByTitle = async (req, res) => {
 
 const searchByIngredients = async (req, res) => {
   const { ttl: dirtyTtl, page = 1, limit = 10 } = req.query;
-  const ttl = dirtyTtl.trim()
+  const ttl = dirtyTtl.trim();
 
   if (ttl === '') {
     throw new HttpError(400, `Empty search fild`);
@@ -137,7 +137,10 @@ const getRecipesByIdController = async (req, res) => {
 const getAllRecipesController = async (req, res, next) => {
   const limit = 4;
 
-  const resultAllCategory = await getAllCategoryWithFourRecipes(resultCategory, { limit });
+  const resultAllCategory = await getAllCategoryWithFourRecipes(
+    resultCategory,
+    { limit }
+  );
   res.json({ resultAllCategory });
 };
 
@@ -180,7 +183,7 @@ const popularRecipesController = async (req, res) => {
     { $sort: { arrayLength: -1 } },
     { $limit: 4 },
   ]);
-  
+
   if (!recipesByPopular) {
     throw new HttpError(404, `Popular recipes not found`);
   }
@@ -210,12 +213,14 @@ const getAllFavoriteController = async (req, res) => {
   const pagination = { skip, limit };
   const allFavorite = await getAllFavoritePagination(req.user._id, pagination);
   const all = await getAllFavorite(req.user._id);
+
   res.json({
     status: 'Success',
     code: 200,
     data: {
       currentPage: page,
-      countRecipes: all.length,
+      countRecipes: allFavorite.length,
+      totalRecipes: all.length,
       recipes: allFavorite,
     },
   });

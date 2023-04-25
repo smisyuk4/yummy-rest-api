@@ -2260,7 +2260,11 @@
           },
           "countRecipes": {
             "type": "string",
-            "example": "10"
+            "example": "4"
+          },
+          "totalRecipes": {
+            "type": "string",
+            "example": "150"
           },
           "recipes": {
             "type": "array",
@@ -2455,6 +2459,10 @@
             "countRecipes": {
               "type": "string",
               "example": "10"
+            },
+            "totalRecipes": {
+              "type": "string",
+              "example": "145"
             },
             "recipes": {
               "type": "array",

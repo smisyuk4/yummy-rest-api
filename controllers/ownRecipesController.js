@@ -25,12 +25,15 @@ const getAllWithPagination = async (req, res, next) => {
   const skip = (page - 1) * limit;
   const pagination = { skip, limit };
   const recipes = await getAllOwnRecipesWithPagination({ owner }, pagination);
+  const totalRecipes = await getAllOwnRecipes({ owner })
+
   if (!recipes) {
     throw HttpError(404, "Not found");
   }
   res.status(200).json({
     currentPage: page,
     countRecipes: recipes.length,
+    totalRecipes: totalRecipes.length,
     recipes: recipes,
   });
 };
