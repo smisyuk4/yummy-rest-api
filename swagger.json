@@ -839,6 +839,38 @@
     },
 
     "/ingredients/list": {
+      "get": {
+        "tags": ["Ingredients"],
+        "summary": "Get all ingredients",
+
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "name": "auth",
+            "description": "Bearer token to access these api endpoints",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2ViYzUwZTlmZmE1MTk4ZmJiMDVkMyIsImlhdCI6MTY4MTgzMzA0MSwiZXhwIjoxNjg0NDI1MDQxfQ.iqfQ_bHHiks9P0_V7-ua0KSqvtmf0qDl2HJN5qw6IxU"
+          }
+        ],
+ 
+        "responses": {
+          "200": {
+            "description": "Get ingredients success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllIngredientsListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found ingredients",
+            "content": {}
+          }
+        }
+      },
       "post": {
         "tags": ["Ingredients"],
         "summary": "Get ingredients by array with id",

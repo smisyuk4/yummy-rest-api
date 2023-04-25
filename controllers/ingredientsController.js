@@ -1,21 +1,35 @@
+const { getAllIngredients } = require('../services/ingredientsServices');
 const {
-  getAllIngredients,
+  getAllRecipesByIngredient,
+} = require('../services/recipeByIngredientService');
 
-} = require("../services/ingredientsServices");
-const { getAllRecipesByIngredient } = require("../services/recipeByIngredientService");
-
-const get = async (req, res) => {
-  const { arrayId } = req.body
-  
-  // console.log(req.body)
-
-  console.log(arrayId)
-  const condition = { _id: { $in: arrayId } } ;
+const getAllIngredients = async (req, res) => {
+  const condition = {};
 
   const results = await getAllIngredients(condition);
 
   res.json({
-    status: "Success",
+    status: 'Success',
+    code: 200,
+    data: {
+      totalIngretients: results.length,
+      ingretients: results,
+    },
+  });
+};
+
+const getSomeIngredients = async (req, res) => {
+  const { arrayId } = req.body;
+
+  // console.log(req.body)
+
+  console.log(arrayId);
+  const condition = { _id: { $in: arrayId } };
+
+  const results = await getAllIngredients(condition);
+
+  res.json({
+    status: 'Success',
     code: 200,
     data: {
       totalIngretients: results.length,
@@ -25,13 +39,13 @@ const get = async (req, res) => {
 };
 
 const getAllRecipesByIngredientController = async (req, res) => {
-  const { query } = req
+  const { query } = req;
 
   const { _id } = req.user;
   const results = await getAllRecipesByIngredient(query.ingredient, _id);
 
   res.json({
-    status: "Success",
+    status: 'Success',
     code: 200,
     data: {
       ingretients: results,
@@ -40,6 +54,7 @@ const getAllRecipesByIngredientController = async (req, res) => {
 };
 
 module.exports = {
-  get,
+  getAllIngredients,
+  getSomeIngredients,
   getAllRecipesByIngredientController,
 };
