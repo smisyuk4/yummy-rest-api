@@ -148,7 +148,7 @@ const updateUserAvatar = async (req, res) => {
 	user.avatarURL = req.file.path;
 	await user.save();
 	res.status(201).json({
-		message: "Avatar updated",
+		avatarURL: user.avatarURL,
 	});
 };
 /**
@@ -166,7 +166,10 @@ const updateUser = async (req, res) => {
 	await user.save();
 
 	res.status(202).json({
-		message: "User updated",
+		email: user.email,
+		name: user.name,
+		avatarURL: user.avatarURL,
+		registeredAt: user.createdAt,
 	});
 };
 
