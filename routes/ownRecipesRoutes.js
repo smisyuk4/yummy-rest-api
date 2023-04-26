@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
 const {
@@ -6,21 +6,21 @@ const {
   create,
   getById,
   remove,
-} = require("../controllers/ownRecipesController");
-const { newRecipeSchema } = require("../services/schemas/ownRecipeValidation");
-const validateBody = require("../helpers/validation");
-const { asyncWrapper } = require("../helpers/asyncWrapper");
-const { uploadCloud } = require("../middlewares/uploadMiddleware");
+} = require('../controllers/ownRecipesController');
+const { newRecipeSchema } = require('../services/schemas/ownRecipeValidation');
+const validateBody = require('../helpers/validation');
+const { asyncWrapper } = require('../helpers/asyncWrapper');
+const { uploadCloud } = require('../middlewares/uploadMiddleware');
 
 router
-  .route("/")
+  .route('/')
   .get(asyncWrapper(getAllWithPagination))
   .post(
-    uploadCloud.single("imageURL"),
+    uploadCloud.single('imageURL'),
     validateBody(newRecipeSchema),
     asyncWrapper(create)
   );
 
-router.route("/:id").get(asyncWrapper(getById)).delete(asyncWrapper(remove));
+router.route('/:id').get(asyncWrapper(getById)).delete(asyncWrapper(remove));
 
 module.exports = { ownRecipesRouter: router };

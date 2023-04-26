@@ -1,4 +1,4 @@
-const gravatar = require("gravatar");
+const gravatar = require('gravatar');
 
 const {
   getAllOwnRecipes,
@@ -6,15 +6,15 @@ const {
   getOwnRecipesById,
   addRecipe,
   deleteRecipe,
-} = require("../services/ownRecipesServices");
+} = require('../services/ownRecipesServices');
 
-const { HttpError } = require("../helpers/HttpError");
+const { HttpError } = require('../helpers/HttpError');
 
 const getAll = async (req, res, next) => {
   const { _id: owner } = req.user;
   const recipes = await getAllOwnRecipes({ owner });
   if (!recipes) {
-    throw HttpError(404, "Not found");
+    throw HttpError(404, 'Not found');
   }
   res.status(200).json(recipes);
 };
@@ -28,7 +28,7 @@ const getAllWithPagination = async (req, res, next) => {
   const totalRecipes = await getAllOwnRecipes({ owner });
 
   if (!recipes) {
-    throw HttpError(404, "Not found");
+    throw HttpError(404, 'Not found');
   }
   res.status(200).json({
     currentPage: page,
@@ -41,7 +41,7 @@ const getAllWithPagination = async (req, res, next) => {
 const getById = async (req, res, next) => {
   const recipe = await getOwnRecipesById(req.params.id);
   if (!recipe) {
-    throw HttpError(404, "Not found");
+    throw HttpError(404, 'Not found');
   }
   res.status(200).json(recipe);
 };
@@ -54,7 +54,7 @@ const create = async (req, res, next) => {
   if (req.file) {
     recipeImg = req.file.path;
   } else {
-    recipeImg = "/default-img.png";
+    recipeImg = '/default-img.png';
   }
 
   const recipeData = { ...req.body, imageURL: recipeImg };
@@ -66,9 +66,9 @@ const create = async (req, res, next) => {
 const remove = async (req, res, next) => {
   const recipe = await deleteRecipe(req.params.id);
   if (!recipe) {
-    throw HttpError(404, "Not found");
+    throw HttpError(404, 'Not found');
   }
-  res.status(200).json({ message: "Recipe deleted" });
+  res.status(200).json({ message: 'Recipe deleted' });
 };
 
 module.exports = {

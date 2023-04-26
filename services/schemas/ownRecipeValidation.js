@@ -1,4 +1,4 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
 const newRecipeSchema = Joi.object({
   title: Joi.string().required(),

@@ -1,22 +1,22 @@
-const { OwnRecipes } = require("./schemas/ownRecipes");
+const { OwnRecipes } = require('./schemas/ownRecipes');
 
-const getAllOwnRecipes = async (owner) => {
+const getAllOwnRecipes = async owner => {
   return OwnRecipes.find(owner);
 };
 
 const getAllOwnRecipesWithPagination = async (owner, pagination) => {
-  return OwnRecipes.find(owner, "", pagination);
+  return OwnRecipes.find(owner, '', pagination);
 };
 
-const getOwnRecipesById = (id) => {
+const getOwnRecipesById = id => {
   return OwnRecipes.findOne({ _id: id });
 };
 
-const addRecipe = (body) => {
+const addRecipe = body => {
   return OwnRecipes.create(body);
 };
 
-const deleteRecipe = (id) => {
+const deleteRecipe = id => {
   return OwnRecipes.findByIdAndRemove({ _id: id });
 };
 

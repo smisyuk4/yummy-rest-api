@@ -59,20 +59,18 @@ const deleteItemShoppingList = async (req, res) => {
 
   const arrayIngredients = user.shoppingList;
 
-  const index = arrayIngredients.findIndex(({_id}) =>
+  const index = arrayIngredients.findIndex(({ _id }) =>
     _id.equals(ingredientId)
   );
 
-  console.log('index: ', index);
   if (index === -1) {
     return res.status(404).json({ message: 'Ingredient not found' });
   }
   arrayIngredients.splice(index, 1);
 
-  const newArr = {
+  const newUser = await updateUser(idUser, {
     shoppingList: [...arrayIngredients],
-  };
-  const newUser = await updateUser(idUser, newArr);
+  });
 
   res.status(200).json({
     newUser,
