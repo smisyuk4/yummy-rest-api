@@ -21,11 +21,11 @@ const getAll = async (req, res, next) => {
 
 const getAllWithPagination = async (req, res, next) => {
   const { _id: owner } = req.user;
-  const { page = 1, limit = 1 } = req.query;
+  const { page = 1, limit = 10 } = req.query;
   const skip = (page - 1) * limit;
   const pagination = { skip, limit };
   const recipes = await getAllOwnRecipesWithPagination({ owner }, pagination);
-  const totalRecipes = await getAllOwnRecipes({ owner })
+  const totalRecipes = await getAllOwnRecipes({ owner });
 
   if (!recipes) {
     throw HttpError(404, "Not found");
@@ -54,7 +54,7 @@ const create = async (req, res, next) => {
   if (req.file) {
     recipeImg = req.file.path;
   } else {
-    recipeImg = "/recipeDefaultImg.png";
+    recipeImg = "/default-img.png";
   }
 
   const recipeData = { ...req.body, imageURL: recipeImg };
