@@ -36,17 +36,29 @@ const getSomeIngredients = async (req, res) => {
 };
 
 const getAllRecipesByIngredientController = async (req, res) => {
-  const { query } = req;
-
+  const { ingredient, page = 1, limit = 10 } = req.query;
   const { _id } = req.user;
-  const results = await getAllRecipesByIngredient(query.ingredient, _id);
+
+  const skip = (page - 1) * limit;
+
+  const pagination = { skip, limit };
+
+  console.log(ingredient);
+  const results = await getAllRecipesByIngredient(ingredient, _id, pagination);
 
   res.json({
     status: 'Success',
     code: 200,
     data: {
-      totalRecipes: results.length,
-      ingretients: results,
+      currentPage: page,
+      countRecipes: limit,
+      totalRecipes: results.totalRecipes.length,
+
+      countRecipesBase: results.countRecipesBase,
+      AllcountRecipesBase: results.AllcountRecipesBase,
+      coutnRecipesMy: results.coutnRecipesMy,
+      AllcoutnRecipesMy: results.AllcoutnRecipesMy,
+      recipes: results.totalRecipes,
     },
   });
 };
