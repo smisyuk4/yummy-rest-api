@@ -1,14 +1,15 @@
-const { normalize } = require("path");
-const { HttpError } = require("../helpers/HttpError");
-const { Ingredients } = require("./schemas/ingredients");
-const { OwnRecipes } = require("./schemas/ownRecipes");
-const { Recipes } = require("./schemas/recipes");
+const { normalize } = require('path');
+const { HttpError } = require('../helpers/HttpError');
+const { Ingredients } = require('./schemas/ingredients');
+const { OwnRecipes } = require('./schemas/ownRecipes');
+const { Recipes } = require('./schemas/recipes');
 
 const getAllRecipesByIngredient = async (request, owner) => {
-  let normalizedRequest = ''
-  const trimRequest = request.trim()
+  let normalizedRequest = '';
+  const trimRequest = request.trim();
   if (request !== undefined) {
-    normalizedRequest = trimRequest.charAt(0).toUpperCase() + trimRequest.slice(1).toLowerCase()
+    normalizedRequest =
+      trimRequest.charAt(0).toUpperCase() + trimRequest.slice(1).toLowerCase();
   }
   const searchedIngredient = await Ingredients.findOne({
     ttl: `${normalizedRequest}`,

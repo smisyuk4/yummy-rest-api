@@ -1,5 +1,5 @@
-const Joi = require("joi");
-const { HttpError } = require("../../helpers/HttpError");
+const Joi = require('joi');
+const { HttpError } = require('../../helpers/HttpError');
 
 const ingredientValidation = (req, res, next) => {
   let schema = Joi.object({

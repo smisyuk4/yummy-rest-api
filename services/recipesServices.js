@@ -24,7 +24,9 @@ const getRecipesById = async id => {
 };
 
 const getCategory = async (category, { skip, limit }) => {
-  const result = await Recipes.find({ category: category }).skip(skip).limit(limit);
+  const result = await Recipes.find({ category: category })
+    .skip(skip)
+    .limit(limit);
 
   return result;
 };
@@ -47,7 +49,10 @@ const getAllCategoryWithFourRecipes = async (resultCategory, { limit }) => {
 const addToFavorite = async (id, user) => {
   console.log('addToFavorite = id ', id);
   try {
-    await Recipes.findByIdAndUpdate({ _id: id }, { $addToSet: { favorite: { $each: [user] } } });
+    await Recipes.findByIdAndUpdate(
+      { _id: id },
+      { $addToSet: { favorite: { $each: [user] } } }
+    );
   } catch (err) {
     throw new HttpError(404, `Recipes with id ${id} not found`);
   }
