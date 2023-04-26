@@ -29,9 +29,13 @@ const getAllRecipesByIngredient = async (request, owner) => {
       },
     ],
   });
+  console.log('userRecipecByIngredients: ', userRecipecByIngredients.length);
+
   const baseRecipesByIngredients = await Recipes.find({
     ingredients: { $elemMatch: { id: searchedIngredient._id } },
   });
+
+  console.log('baseRecipesByIngredients: ', baseRecipesByIngredients.length);
   const globalRecipes = [
     ...userRecipecByIngredients,
     ...baseRecipesByIngredients,

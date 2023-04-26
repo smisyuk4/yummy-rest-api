@@ -45,6 +45,7 @@ const getAllRecipesByIngredientController = async (req, res) => {
     status: 'Success',
     code: 200,
     data: {
+      totalRecipes: results.length,
       ingretients: results,
     },
   });
