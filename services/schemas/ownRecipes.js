@@ -43,12 +43,6 @@ const ownRecipesSchema = new Schema(
 		},
 		ingredients: {
 			type: Array,
-			// type: [
-			// 	{
-			// 		id: {type: Schema.Types.ObjectId, ref: "ingredient"},
-			// 		measure: String,
-			// 	},
-			// ],
 			default: [],
 			require: [true, "Add at least one ingredient"],
 		},
