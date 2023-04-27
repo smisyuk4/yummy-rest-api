@@ -198,8 +198,10 @@ const popularRecipesController = async (req, res) => {
 };
 
 const addToFavoriteController = async (req, res) => {
-  await addToFavorite(req.params.id, req.user._id);
-  res.json({ message: 'success' });
+  const result = await addToFavorite(req.params.id, req.user._id);
+  res.json({ 
+    totalCountFavorite: result,
+    message: 'success' });
 };
 
 const removeFromFavoriteController = async (req, res) => {
