@@ -42,12 +42,13 @@ const ownRecipesSchema = new Schema(
 			require: [true, "Set cooking time"],
 		},
 		ingredients: {
-			type: [
-				{
-					id: {type: Schema.Types.ObjectId, ref: "ingredient"},
-					measure: String,
-				},
-			],
+			type: Array,
+			// type: [
+			// 	{
+			// 		id: {type: Schema.Types.ObjectId, ref: "ingredient"},
+			// 		measure: String,
+			// 	},
+			// ],
 			default: [],
 			require: [true, "Add at least one ingredient"],
 		},
