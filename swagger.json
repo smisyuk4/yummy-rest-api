@@ -759,6 +759,7 @@
         }
       }
     },
+
     "/recipes/favorite/{id}": {
       "patch": {
         "tags": ["Recipes"],
@@ -786,7 +787,13 @@
         "responses": {
           "202": {
             "description": "Succesfully update favorite",
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddFavoriteRecipes"
+                }
+              }
+            }
           },
           "400": {
             "description": "error validation req body",
@@ -2304,6 +2311,19 @@
               "description": "url img",
               "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564673/nxuuo1bmhrnuqbnm9skh.png"
             }
+          }
+        }
+      },
+      "AddFavoriteRecipes": {
+        "type": "object",
+        "properties": {
+          "totalCountFavorite": {
+            "type": "string",
+            "example": "6"
+          },
+          "message": {
+            "type": "string",
+            "example": "success"
           }
         }
       },
