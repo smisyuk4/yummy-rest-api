@@ -1004,7 +1004,7 @@
             "required": true,
             "name": "auth",
             "description": "Bearer token to access these api endpoints",
-            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDE5OTNjODYzZWFmOWJiYTQ2YzY2NSIsImlhdCI6MTY4MjAyMDY2OCwiZXhwIjoxNjg0NjEyNjY4fQ.cc5YEHIsXZ2ZkIFUGCySz5LtjnoU7kjVbeYXtQpyCIw"
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDE4ZmNiMDY3OTE1Yjk2NGVjMjM4YiIsImlhdCI6MTY4MjAxODI1MSwiZXhwIjoxNjg0NjEwMjUxfQ.4Kbl1J0E1_oLaFxdhQIiKwxTQGQGFydD7OTDVqcOmKw"
           }
         ],
         "requestBody": {
@@ -2496,29 +2496,38 @@
       },
 
       "AddIngredientResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "ingredientId": {
-              "type": "string",
-              "description": "Ingredient id",
-              "example": "640c2dd963a319ea671e3672"
-            },
-            "measure": {
-              "type": "string",
-              "description": "Quantity ingredient",
-              "example": "2 tbsp"
-            },
-            "ttl": {
-              "type": "string",
-              "description": "Ingredient name",
-              "example": "Black Pepper"
-            },
-            "thb": {
-              "type": "string",
-              "description": "Category name",
-              "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564216/c6pfcmnzzmra22yqgyjq.png"
+        "type": "object",
+        "properties": {
+          "countIngredientsShoppingList": {
+            "type": "string",
+            "example": "2"
+          },
+          "updatedShoppingList": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "ingredientId": {
+                  "type": "string",
+                  "description": "Ingredient id",
+                  "example": "640c2dd963a319ea671e3672"
+                },
+                "measure": {
+                  "type": "string",
+                  "description": "Quantity ingredient",
+                  "example": "2 tbsp"
+                },
+                "ttl": {
+                  "type": "string",
+                  "description": "Ingredient name",
+                  "example": "Black Pepper"
+                },
+                "thb": {
+                  "type": "string",
+                  "description": "Category name",
+                  "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564216/c6pfcmnzzmra22yqgyjq.png"
+                }
+              }
             }
           }
         }

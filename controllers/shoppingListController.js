@@ -42,6 +42,7 @@ const postIngredientShoppingList = async (req, res) => {
   await user.save();
 
   res.status(200).json({
+    countIngredientsShoppingList: updatedShoppingList.length,
     updatedShoppingList,
     message: 'Ingredient added to shopping list success',
   });
