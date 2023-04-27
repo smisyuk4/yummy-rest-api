@@ -5,7 +5,7 @@ const newRecipeSchema = Joi.object({
 	description: Joi.string(),
 	category: Joi.string().required(),
 	time: Joi.string().required(),
-	ingredients: Joi.array().required(),
+	ingredients: Joi.object().required(),
 	instructions: Joi.string().required(),
 	imageURL: Joi.string().uri(),
 });
