@@ -1,4 +1,4 @@
-const { createSubscription } = require('../services/subsctiptionServices');
+const { createSubscription, findIsUserSubscribe } = require('../services/subsctiptionServices');
 const {
   getUserByFild,
   getUserById,
@@ -11,6 +11,11 @@ const subscribe = async (req, res) => {
   const { email } = req.body;
   const user = await getUserByFild({ email });
 
+  const isEmail = await findIsUserSubscribe({email})
+
+  if(isEmail) {
+    throw HttpError(400, 'User is already subscribed');
+  }
   if (!user) {
     throw HttpError(400, `Not found user with ${email}`);
   }
