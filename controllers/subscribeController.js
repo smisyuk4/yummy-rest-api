@@ -13,10 +13,14 @@ const subscribe = async (req, res) => {
 
   const isEmail = await findIsUserSubscribe({email})
   if(isEmail) {
-    throw HttpError(400, 'User is already subscribed');
+    return res
+      .status(400)
+      .json({ message: 'User is already subscribed'});
   }
   if (!user) {
-    throw HttpError(400, `Not found user with ${email}`);
+    return res
+      .status(404)
+      .json({ message: `Not found user with ${email}`});
   }
   // find current user
   const id = req.user._id;
@@ -24,7 +28,9 @@ const subscribe = async (req, res) => {
 
   //compare email in form with email of current user
   if (email != currentUser.email) {
-    throw HttpError(404, `It' s not your ${email}`);
+    return res
+      .status(404)
+      .json({ message: `It' s not your ${email}`});
   }
 
   // update subscription of current user in users collection
