@@ -12,14 +12,12 @@ const subscribe = async (req, res) => {
   const user = await getUserByFild({ email });
 
   const isEmail = await findIsUserSubscribe({email})
-
   if(isEmail) {
     throw HttpError(400, 'User is already subscribed');
   }
   if (!user) {
     throw HttpError(400, `Not found user with ${email}`);
   }
-
   // find current user
   const id = req.user._id;
   const currentUser = await getUserById(id);
