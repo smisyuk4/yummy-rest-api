@@ -5,6 +5,7 @@ const shoppingListValidation = Joi.object({
   measure: Joi.string().required(),
   ttl: Joi.string().required(),
   thb: Joi.string().uri(),
+  recipeId: Joi.string().required()
 });
 
 module.exports = {

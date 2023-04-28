@@ -59,6 +59,10 @@ const userSchema = new Schema(
           type: String,
           default: '',
         },
+        recipeId: {
+          type: String,
+          default: ''
+        }
       },
       require: [true, 'Add at least one ingredient'],
       default: [],

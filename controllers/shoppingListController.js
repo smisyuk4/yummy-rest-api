@@ -21,13 +21,14 @@ const postIngredientShoppingList = async (req, res) => {
     throw new HttpError(404, `${user} not found.`);
   }
 
-  const { ingredientId, measure, ttl, thb } = req.body;
+  const { ingredientId, measure, ttl, thb, recipeId } = req.body;
 
   const newIngredient = {
     ingredientId,
     measure,
     ttl,
     thb,
+    recipeId,
   };
 
   const updatedUser = await User.findByIdAndUpdate(

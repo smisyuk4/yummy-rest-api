@@ -2491,6 +2491,10 @@
             "type": "string",
             "description": "Category name",
             "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564216/c6pfcmnzzmra22yqgyjq.png"
+          },
+          "recipeId": {
+            "type": "string",
+            "example": "643d3fa2adbcdfdd8d8496fa"
           }
         }
       },
@@ -2526,6 +2530,10 @@
                   "type": "string",
                   "description": "Category name",
                   "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564216/c6pfcmnzzmra22yqgyjq.png"
+                },
+                "recipeId": {
+                  "type": "string",
+                  "example": "643d3fa2adbcdfdd8d8496fa"
                 }
               }
             }
