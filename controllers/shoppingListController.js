@@ -89,8 +89,28 @@ const getShoppingList = async (req, res) => {
     .json({ shoppingList, message: 'Shopping list of current user' });
 };
 
+// delete all shopping list
+const deleteAllShoppingList = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const idUser = user.id;
+
+  const clearList = {
+    shoppingList: [],
+  };
+  if (!clearList){return res.status(404).json({ message: 'Your list is empty' });
+}
+  const changeUser = await updateUser(idUser, clearList);
+  const cleanedShoppingList = changeUser.shoppingList;
+
+  res.status(200).json({
+    cleanedShoppingList,
+    message: 'Your shopping list is cleared.',
+  });
+
+}
 module.exports = {
   postIngredientShoppingList,
   deleteItemShoppingList,
   getShoppingList,
+  deleteAllShoppingList,
 };

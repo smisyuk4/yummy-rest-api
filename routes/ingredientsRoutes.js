@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const {
-  postIngredientShoppingList,
-  getShoppingList,
-  deleteItemShoppingList,
-} = require('../controllers/shoppingListController');
+
+const { postIngredientShoppingList, getShoppingList, deleteItemShoppingList, deleteAllShoppingList } = require('../controllers/shoppingListController');
 
 const {
   get,
@@ -33,9 +30,13 @@ router.get('/shopping-list', asyncWrapper(getShoppingList));
 
 router.post('/shopping-list', asyncWrapper(postIngredientShoppingList));
 
-router.delete(
-  '/shopping-list/:ingredientId',
-  asyncWrapper(deleteItemShoppingList)
-);
+
+// delete ingredient from shopping list
+router.delete('/shopping-list/:ingredientId', asyncWrapper(deleteItemShoppingList));
+
+// delete all shopping-list
+router.delete('/shopping-list', asyncWrapper(deleteAllShoppingList));
+
+
 
 module.exports = { ingredientsRouter: router };
