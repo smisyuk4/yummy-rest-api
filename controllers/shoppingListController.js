@@ -89,7 +89,7 @@ const getShoppingList = async (req, res) => {
     .json({ shoppingList, message: 'Shopping list of current user' });
 };
 
-// delete all shopping list by user
+// delete all shopping list
 const deleteAllShoppingList = async (req, res) => {
   const user = await User.findById(req.user._id);
   const idUser = user.id;
