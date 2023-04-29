@@ -988,6 +988,34 @@
         }
       }
     },
+    "/ingredients/shopping-list": {
+      "delete": {
+        "tags": ["Ingredients"],
+        "summary": "Delete all ingredients from shopping-list",
+
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "name": "auth",
+            "description": "Bearer token to access these api endpoints",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDE5OTNjODYzZWFmOWJiYTQ2YzY2NSIsImlhdCI6MTY4MjAyMDY2OCwiZXhwIjoxNjg0NjEyNjY4fQ.cc5YEHIsXZ2ZkIFUGCySz5LtjnoU7kjVbeYXtQpyCIw"
+          }
+        ],
+          "responses": {
+            "200": {
+              "description": "The shopping list of current user is cleared",
+              "content": {}
+            },
+            "404": {
+              "description": "Not found",
+              "content": {}
+            }
+          }
+       
+      }
+    },
     "/ingredients/shopping-list/{ingredientId}": {
       "delete": {
         "tags": ["Ingredients"],
