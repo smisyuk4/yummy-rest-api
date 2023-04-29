@@ -759,6 +759,7 @@
         }
       }
     },
+
     "/recipes/favorite/{id}": {
       "patch": {
         "tags": ["Recipes"],
@@ -786,7 +787,13 @@
         "responses": {
           "202": {
             "description": "Succesfully update favorite",
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddFavoriteRecipes"
+                }
+              }
+            }
           },
           "400": {
             "description": "error validation req body",
@@ -837,10 +844,11 @@
         }
       }
     },
+
     "/ingredients/list": {
       "get": {
         "tags": ["Ingredients"],
-        "summary": "Get all ingredients ",
+        "summary": "Get all ingredients",
 
         "parameters": [
           {
@@ -852,13 +860,57 @@
             "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2ViYzUwZTlmZmE1MTk4ZmJiMDVkMyIsImlhdCI6MTY4MTgzMzA0MSwiZXhwIjoxNjg0NDI1MDQxfQ.iqfQ_bHHiks9P0_V7-ua0KSqvtmf0qDl2HJN5qw6IxU"
           }
         ],
+
         "responses": {
           "200": {
-            "description": "Get all ingredients  success",
+            "description": "Get ingredients success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AllIngredientsList"
+                  "$ref": "#/components/schemas/AllIngredientsListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found ingredients",
+            "content": {}
+          }
+        }
+      },
+      "post": {
+        "tags": ["Ingredients"],
+        "summary": "Get ingredients by array with id",
+
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "name": "auth",
+            "description": "Bearer token to access these api endpoints",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2ViYzUwZTlmZmE1MTk4ZmJiMDVkMyIsImlhdCI6MTY4MTgzMzA0MSwiZXhwIjoxNjg0NDI1MDQxfQ.iqfQ_bHHiks9P0_V7-ua0KSqvtmf0qDl2HJN5qw6IxU"
+          }
+        ],
+
+        "requestBody": {
+          "description": "query body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AllIngredientsListRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Get ingredients success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllIngredientsListResponse"
                 }
               }
             }
@@ -882,7 +934,7 @@
             "required": true,
             "name": "auth",
             "description": "Bearer token to access these api endpoints",
-            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDE5OTNjODYzZWFmOWJiYTQ2YzY2NSIsImlhdCI6MTY4MjAyMDY2OCwiZXhwIjoxNjg0NjEyNjY4fQ.cc5YEHIsXZ2ZkIFUGCySz5LtjnoU7kjVbeYXtQpyCIw"
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2ZlZjY4ZmFjY2M2NWQ2YTc0MWU2MCIsImlhdCI6MTY4MTkxMTY1NiwiZXhwIjoxNjg0NTAzNjU2fQ.JzvIADKDWgng1KdFQ49diUilJ7zMPvKqLWiYG_HIOvU"
           },
           {
             "in": "query",
@@ -952,7 +1004,7 @@
             "required": true,
             "name": "auth",
             "description": "Bearer token to access these api endpoints",
-            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDE5OTNjODYzZWFmOWJiYTQ2YzY2NSIsImlhdCI6MTY4MjAyMDY2OCwiZXhwIjoxNjg0NjEyNjY4fQ.cc5YEHIsXZ2ZkIFUGCySz5LtjnoU7kjVbeYXtQpyCIw"
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDE4ZmNiMDY3OTE1Yjk2NGVjMjM4YiIsImlhdCI6MTY4MjAxODI1MSwiZXhwIjoxNjg0NjEwMjUxfQ.4Kbl1J0E1_oLaFxdhQIiKwxTQGQGFydD7OTDVqcOmKw"
           }
         ],
         "requestBody": {
@@ -1065,7 +1117,7 @@
             "required": true,
             "name": "auth",
             "description": "Bearer token to access these api endpoints",
-            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDE5OTNjODYzZWFmOWJiYTQ2YzY2NSIsImlhdCI6MTY4MjAyMDY2OCwiZXhwIjoxNjg0NjEyNjY4fQ.cc5YEHIsXZ2ZkIFUGCySz5LtjnoU7kjVbeYXtQpyCIw"
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2ViYzUwZTlmZmE1MTk4ZmJiMDVkMyIsImlhdCI6MTY4MTgzMzA0MSwiZXhwIjoxNjg0NDI1MDQxfQ.iqfQ_bHHiks9P0_V7-ua0KSqvtmf0qDl2HJN5qw6IxU"
           }
         ],
         "requestBody": {
@@ -1754,6 +1806,10 @@
             "type": "string",
             "example": "10"
           },
+          "totalRecipes": {
+            "type": "string",
+            "example": "230"
+          },
           "recipes": {
             "type": "array",
             "example": [
@@ -1922,6 +1978,10 @@
           "countRecipes": {
             "type": "string",
             "example": "10"
+          },
+          "totalRecipes": {
+            "type": "string",
+            "example": "350"
           },
           "recipes": {
             "type": "array",
@@ -2238,7 +2298,18 @@
         }
       },
 
-      "AllIngredientsList": {
+      "AllIngredientsListRequest": {
+        "type": "object",
+        "required": ["arrayId"],
+        "properties": {
+          "arrayId": {
+            "type": "array",
+            "example": ["640c2dd963a319ea671e3796", "640c2dd963a319ea671e370c"]
+          }
+        }
+      },
+
+      "AllIngredientsListResponse": {
         "type": "array",
         "items": {
           "type": "object",
@@ -2271,6 +2342,19 @@
           }
         }
       },
+      "AddFavoriteRecipes": {
+        "type": "object",
+        "properties": {
+          "totalCountFavorite": {
+            "type": "string",
+            "example": "6"
+          },
+          "message": {
+            "type": "string",
+            "example": "success"
+          }
+        }
+      },
       "GetFavoriteRecipes": {
         "type": "object",
         "properties": {
@@ -2280,7 +2364,11 @@
           },
           "countRecipes": {
             "type": "string",
-            "example": "10"
+            "example": "4"
+          },
+          "totalRecipes": {
+            "type": "string",
+            "example": "150"
           },
           "recipes": {
             "type": "array",
@@ -2431,34 +2519,51 @@
             "type": "string",
             "description": "Category name",
             "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564216/c6pfcmnzzmra22yqgyjq.png"
+          },
+          "recipeId": {
+            "type": "string",
+            "example": "643d3fa2adbcdfdd8d8496fa"
           }
         }
       },
 
       "AddIngredientResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "ingredientId": {
-              "type": "string",
-              "description": "Ingredient id",
-              "example": "640c2dd963a319ea671e3672"
-            },
-            "measure": {
-              "type": "string",
-              "description": "Quantity ingredient",
-              "example": "2 tbsp"
-            },
-            "ttl": {
-              "type": "string",
-              "description": "Ingredient name",
-              "example": "Black Pepper"
-            },
-            "thb": {
-              "type": "string",
-              "description": "Category name",
-              "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564216/c6pfcmnzzmra22yqgyjq.png"
+        "type": "object",
+        "properties": {
+          "countIngredientsShoppingList": {
+            "type": "string",
+            "example": "2"
+          },
+          "updatedShoppingList": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "ingredientId": {
+                  "type": "string",
+                  "description": "Ingredient id",
+                  "example": "640c2dd963a319ea671e3672"
+                },
+                "measure": {
+                  "type": "string",
+                  "description": "Quantity ingredient",
+                  "example": "2 tbsp"
+                },
+                "ttl": {
+                  "type": "string",
+                  "description": "Ingredient name",
+                  "example": "Black Pepper"
+                },
+                "thb": {
+                  "type": "string",
+                  "description": "Category name",
+                  "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564216/c6pfcmnzzmra22yqgyjq.png"
+                },
+                "recipeId": {
+                  "type": "string",
+                  "example": "643d3fa2adbcdfdd8d8496fa"
+                }
+              }
             }
           }
         }
@@ -2475,6 +2580,10 @@
             "countRecipes": {
               "type": "string",
               "example": "10"
+            },
+            "totalRecipes": {
+              "type": "string",
+              "example": "145"
             },
             "recipes": {
               "type": "array",

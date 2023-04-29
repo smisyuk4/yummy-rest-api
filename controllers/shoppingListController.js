@@ -21,13 +21,14 @@ const postIngredientShoppingList = async (req, res) => {
     throw new HttpError(404, `${user} not found.`);
   }
 
-  const { ingredientId, measure, ttl, thb } = req.body;
+  const { ingredientId, measure, ttl, thb, recipeId } = req.body;
 
   const newIngredient = {
     ingredientId,
     measure,
     ttl,
     thb,
+    recipeId,
   };
 
   const updatedUser = await User.findByIdAndUpdate(
@@ -42,6 +43,7 @@ const postIngredientShoppingList = async (req, res) => {
   await user.save();
 
   res.status(200).json({
+    countIngredientsShoppingList: updatedShoppingList.length,
     updatedShoppingList,
     message: 'Ingredient added to shopping list success',
   });
@@ -59,20 +61,18 @@ const deleteItemShoppingList = async (req, res) => {
 
   const arrayIngredients = user.shoppingList;
 
-  const index = arrayIngredients.findIndex(({_id}) =>
+  const index = arrayIngredients.findIndex(({ _id }) =>
     _id.equals(ingredientId)
   );
 
-  console.log('index: ', index);
   if (index === -1) {
     return res.status(404).json({ message: 'Ingredient not found' });
   }
   arrayIngredients.splice(index, 1);
 
-  const newArr = {
+  const newUser = await updateUser(idUser, {
     shoppingList: [...arrayIngredients],
-  };
-  const newUser = await updateUser(idUser, newArr);
+  });
 
   res.status(200).json({
     newUser,

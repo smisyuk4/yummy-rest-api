@@ -45,7 +45,8 @@ const get = async (req, res) => {
 };
 
 const searchByTitle = async (req, res) => {
-  const { title, page = 1, limit = 10 } = req.query;
+  const { title: dirtyTitle, page = 1, limit = 10 } = req.query;
+  const title = dirtyTitle.trim();
 
   if (title === '') {
     throw new HttpError(400, `Empty search fild`);
@@ -55,6 +56,7 @@ const searchByTitle = async (req, res) => {
   const condition = { title: { $regex: title, $options: 'i' } };
   const pagination = { skip, limit };
   const results = await getRecipes(condition, pagination);
+  const totalRecipes = await getRecipes(condition, {});
 
   res.json({
     status: 'Success',
@@ -62,13 +64,15 @@ const searchByTitle = async (req, res) => {
     data: {
       currentPage: page,
       countRecipes: results.length,
+      totalRecipes: totalRecipes.length,
       recipes: results,
     },
   });
 };
 
 const searchByIngredients = async (req, res) => {
-  const { ttl, page = 1, limit = 10 } = req.query;
+  const { ttl: dirtyTtl, page = 1, limit = 10 } = req.query;
+  const ttl = dirtyTtl.trim();
 
   if (ttl === '') {
     throw new HttpError(400, `Empty search fild`);
@@ -97,6 +101,7 @@ const searchByIngredients = async (req, res) => {
   };
 
   const recipesByIngredients = await getRecipes(conditionSearch, pagination);
+  const totalRecipes = await getRecipes(conditionSearch, {});
 
   res.json({
     status: 'Success',
@@ -104,6 +109,7 @@ const searchByIngredients = async (req, res) => {
     data: {
       currentPage: page,
       countRecipes: recipesByIngredients.length,
+      totalRecipes: totalRecipes.length,
       recipes: recipesByIngredients,
     },
   });
@@ -131,7 +137,10 @@ const getRecipesByIdController = async (req, res) => {
 const getAllRecipesController = async (req, res, next) => {
   const limit = 4;
 
-  const resultAllCategory = await getAllCategoryWithFourRecipes(resultCategory, { limit });
+  const resultAllCategory = await getAllCategoryWithFourRecipes(
+    resultCategory,
+    { limit }
+  );
   res.json({ resultAllCategory });
 };
 
@@ -174,6 +183,7 @@ const popularRecipesController = async (req, res) => {
     { $sort: { arrayLength: -1 } },
     { $limit: 4 },
   ]);
+
   if (!recipesByPopular) {
     throw new HttpError(404, `Popular recipes not found`);
   }
@@ -188,8 +198,10 @@ const popularRecipesController = async (req, res) => {
 };
 
 const addToFavoriteController = async (req, res) => {
-  await addToFavorite(req.params.id, req.user._id);
-  res.json({ message: 'success' });
+  const result = await addToFavorite(req.params.id, req.user._id);
+  res.json({ 
+    totalCountFavorite: result,
+    message: 'success' });
 };
 
 const removeFromFavoriteController = async (req, res) => {
@@ -203,12 +215,14 @@ const getAllFavoriteController = async (req, res) => {
   const pagination = { skip, limit };
   const allFavorite = await getAllFavoritePagination(req.user._id, pagination);
   const all = await getAllFavorite(req.user._id);
+
   res.json({
     status: 'Success',
     code: 200,
     data: {
       currentPage: page,
-      countRecipes: all.length,
+      countRecipes: allFavorite.length,
+      totalRecipes: all.length,
       recipes: allFavorite,
     },
   });
